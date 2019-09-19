@@ -1,5 +1,5 @@
 //
-// Created by twome on 19/09/2019.
+// Created by Twometer on 19/09/2019.
 //
 
 #include <cstring>
@@ -20,4 +20,13 @@ uint8_t *NetUtils::CreateVarInt(int val, int *len) {
     *len = allocated;
 
     return c;
+}
+
+int NetUtils::CountBits(uint32_t n) {
+    uint32_t count = 0;
+    while (n) {
+        count += n & 1u;
+        n >>= 1u;
+    }
+    return count;
 }
