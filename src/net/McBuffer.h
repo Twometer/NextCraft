@@ -45,6 +45,8 @@ public:
 
     void Write(void *data, int len);
 
+    void Write(McBuffer &buf);
+
     void WriteVarInt(int32_t value);
 
     void WriteUShort(uint16_t value);
@@ -58,6 +60,8 @@ public:
     void WriteFloat(float value);
 
     void WriteBool(bool value);
+
+    int32_t GetAllocated();
 
     inline uint8_t *GetPosition() {
         return data + offset;

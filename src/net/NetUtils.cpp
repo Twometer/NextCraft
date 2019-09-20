@@ -5,8 +5,7 @@
 #include <cstring>
 #include "NetUtils.h"
 
-uint8_t *NetUtils::CreateVarInt(int val, int *len) {
-    auto *c = new uint8_t[5];
+int NetUtils::WriteVarInt(uint8_t *target, int val) {
     int allocated = 0;
     do {
         uint8_t byte = (char) (val & 0b01111111);
@@ -14,11 +13,15 @@ uint8_t *NetUtils::CreateVarInt(int val, int *len) {
         if (val != 0) {
             byte |= 0b10000000;
         }
-        c[allocated++] = byte;
+        target[allocated++] = byte;
     } while (val != 0);
+    return allocated;
+}
 
+uint8_t *NetUtils::CreateVarInt(int val, int *len) {
+    auto *c = new uint8_t[5];
+    int allocated = WriteVarInt(c, val);
     *len = allocated;
-
     return c;
 }
 

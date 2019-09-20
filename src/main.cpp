@@ -1,6 +1,12 @@
 #include <iostream>
+#include "net/McClient.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    McClient client;
+    client.Connect("DevClient", "localhost", 25565);
+
+    while (true) {
+        // Keep the app running
+    }
     return 0;
 }

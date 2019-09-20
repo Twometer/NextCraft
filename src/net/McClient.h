@@ -7,17 +7,24 @@
 
 
 #include "McBuffer.h"
+#include "TcpClient.h"
 
 class McClient {
 private:
+    TcpClient *client = new TcpClient();
+
     bool closeRequested = false;
 
 public:
-    void Connect(const char* username, const char* hostname, unsigned short port);
+    void Connect(const char *username, const char *hostname, unsigned short port);
 
     void Disconnect();
 
-    void SendPacket(int packetId, McBuffer* buffer);
+    void SendPacket(int packetId, McBuffer &buffer);
+
+    void SendHandshake(int protocolVersion, const char* hostname, unsigned short port, int nextState);
+
+    void SendLogin(const char* username);
 
 };
 

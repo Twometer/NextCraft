@@ -7,7 +7,10 @@
 #include "McBuffer.h"
 #include "NetUtils.h"
 
-McBuffer::McBuffer() = default;
+McBuffer::McBuffer() {
+    this->data = new uint8_t[8192];
+    this->dataSize = 8192;
+};
 
 McBuffer::McBuffer(uint8_t *buf, int length) {
     this->data = buf;
@@ -93,10 +96,13 @@ void McBuffer::Write(void *data, int len) {
     offset += len;
 }
 
+void McBuffer::Write(McBuffer &buf) {
+    Write(buf.data, buf.offset);
+}
+
 void McBuffer::WriteVarInt(int32_t value) {
-    int len = 0;
-    uint8_t *varInt = NetUtils::CreateVarInt(value, &len);
-    Write(varInt, len);
+    int len = NetUtils::WriteVarInt(GetPosition(), value);
+    offset += len;
 }
 
 void McBuffer::WriteUShort(uint16_t value) {
@@ -123,4 +129,8 @@ void McBuffer::WriteFloat(float value) {
 
 void McBuffer::WriteBool(bool value) {
     Write(&value, sizeof(value));
+}
+
+int32_t McBuffer::GetAllocated() {
+    return offset;
 }

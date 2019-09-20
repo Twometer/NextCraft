@@ -10,6 +10,8 @@
 
 class NetUtils {
 public:
+    static int WriteVarInt(uint8_t *target, int val);
+
     static uint8_t *CreateVarInt(int val, int *len);
 
     static int CountBits(uint32_t n);
