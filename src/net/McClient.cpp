@@ -3,6 +3,7 @@
 //
 
 #include "McClient.h"
+#include "NetUtils.h"
 
 void McClient::Connect(const char *username, const char *hostname, unsigned short port) {
     if (!client->Connect(hostname, port))
@@ -18,14 +19,11 @@ void McClient::Disconnect() {
 
 void McClient::SendPacket(int packetId, McBuffer &buffer) {
     McBuffer buf;
+    buf.WriteVarInt(NetUtils::GetVarIntSize(packetId) + buffer.GetAllocated());
     buf.WriteVarInt(packetId);
     buf.Write(buffer);
 
-    McBuffer buf2;
-    buf2.WriteVarInt(buf.GetAllocated());
-    buf2.Write(buf);
-
-    client->Send(buf2.GetBytes(), buf2.GetAllocated());
+    client->Send(buf.GetBytes(), buf.GetAllocated());
 }
 
 void McClient::SendHandshake(int protocolVersion, const char *hostname, unsigned short port, int nextState) {

@@ -5,6 +5,15 @@
 #include <cstring>
 #include "NetUtils.h"
 
+int NetUtils::GetVarIntSize(int val) {
+    int size = 0;
+    do {
+        val >>= 7;
+        size++;
+    } while (val != 0);
+    return size;
+}
+
 int NetUtils::WriteVarInt(uint8_t *target, int val) {
     int allocated = 0;
     do {

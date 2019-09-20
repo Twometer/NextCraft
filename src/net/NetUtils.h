@@ -10,6 +10,8 @@
 
 class NetUtils {
 public:
+    static int GetVarIntSize(int val);
+
     static int WriteVarInt(uint8_t *target, int val);
 
     static uint8_t *CreateVarInt(int val, int *len);
