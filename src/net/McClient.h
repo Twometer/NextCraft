@@ -17,6 +17,8 @@ private:
 
     bool closeRequested = false;
 
+    int ReadVarInt();
+
 public:
     void Connect(const char *username, const char *hostname, unsigned short port);
 

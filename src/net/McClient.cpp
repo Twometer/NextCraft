@@ -48,3 +48,16 @@ void McClient::SendLogin(const char *username) {
     buf.WriteString(username);
     SendPacket(0, buf);
 }
+
+int McClient::ReadVarInt() {
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    while (true) {
+        k = (int) ((unsigned char) client->ReadByte());
+        i |= (k & 0x7F) << j++ * 7;
+        if (j > 5) return 0;
+        if ((k & 0x80) != 128) break;
+    }
+    return i;
+}

@@ -18,6 +18,8 @@ public:
 
     int Receive(uint8_t* buf, int len);
 
+    uint8_t ReadByte();
+
     void Send(uint8_t* buf, int len);
 
     void Close();

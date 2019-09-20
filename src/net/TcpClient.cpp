@@ -88,3 +88,9 @@ void TcpClient::Send(uint8_t *buf, int len) {
     if (result == SOCKET_ERROR)
         Close();
 }
+
+uint8_t TcpClient::ReadByte() {
+    uint8_t buf;
+    recv(tcpSocket, (char *) &buf, 1, 0);
+    return buf;
+}
