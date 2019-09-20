@@ -19,9 +19,17 @@ void McClient::Disconnect() {
 
 void McClient::SendPacket(int packetId, McBuffer &buffer) {
     McBuffer buf;
-    buf.WriteVarInt(NetUtils::GetVarIntSize(packetId) + buffer.GetAllocated());
-    buf.WriteVarInt(packetId);
-    buf.Write(buffer);
+
+    if (compressionThreshold > 0) {
+        buf.WriteVarInt(NetUtils::GetVarIntSize(packetId) + NetUtils::GetVarIntSize(0) + buffer.GetAllocated());
+        buf.WriteVarInt(packetId);
+        buf.WriteVarInt(0);
+        buf.Write(buffer);
+    } else {
+        buf.WriteVarInt(NetUtils::GetVarIntSize(packetId) + buffer.GetAllocated());
+        buf.WriteVarInt(packetId);
+        buf.Write(buffer);
+    }
 
     client->Send(buf.GetBytes(), buf.GetAllocated());
 }

@@ -13,6 +13,8 @@ class McClient {
 private:
     TcpClient *client = new TcpClient();
 
+    int compressionThreshold = 0;
+
     bool closeRequested = false;
 
 public:
