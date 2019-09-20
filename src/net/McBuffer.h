@@ -41,7 +41,7 @@ public:
 
     uint8_t ReadByte();
 
-    void ReadArray(uint8_t *target, int len);
+    void Read(void* target, int len);
 
     void Write(void *data, int len);
 

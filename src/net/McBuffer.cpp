@@ -7,9 +7,11 @@
 #include "McBuffer.h"
 #include "NetUtils.h"
 
+#define INITIAL_SIZE 8192
+
 McBuffer::McBuffer() {
-    this->data = new uint8_t[8192];
-    this->dataSize = 8192;
+    this->data = new uint8_t[INITIAL_SIZE];
+    this->dataSize = INITIAL_SIZE;
 };
 
 McBuffer::McBuffer(uint8_t *buf, int length) {
@@ -24,17 +26,21 @@ uint8_t *McBuffer::GetBytes() {
 uint8_t *McBuffer::ReadToEnd(int *read) {
     *read = dataSize - offset;
     auto *result = new uint8_t[*read];
-    memcpy(result, GetPosition(), *read);
+    Read(result, *read);
     return result;
 }
 
 char *McBuffer::ReadString() {
-    return nullptr;
+    int len = ReadVarInt();
+    char *result = new char[len + 1];
+    result[len] = 0; // Null byte terminator
+    Read(result, len);
+    return result;
 }
 
 int32_t McBuffer::ReadInt() {
     int32_t v = 0;
-    memcpy(&v, GetPosition(), sizeof(v));
+    Read(&v, sizeof(v));
     std::reverse(&v, &v + sizeof(v));
     return v;
 }
@@ -54,28 +60,28 @@ int32_t McBuffer::ReadVarInt() {
 
 uint64_t McBuffer::ReadULong() {
     uint64_t v = 0;
-    memcpy(&v, GetPosition(), sizeof(v));
+    Read(&v, sizeof(v));
     std::reverse(&v, &v + sizeof(v));
     return v;
 }
 
 double McBuffer::ReadDouble() {
     double v = 0;
-    memcpy(&v, GetPosition(), sizeof(v));
+    Read(&v, sizeof(v));
     std::reverse(&v, &v + sizeof(v));
     return v;
 }
 
 float McBuffer::ReadFloat() {
     float v = 0;
-    memcpy(&v, GetPosition(), sizeof(v));
+    Read(&v, sizeof(v));
     std::reverse(&v, &v + sizeof(v));
     return v;
 }
 
 int16_t McBuffer::ReadShort() {
     int16_t v = 0;
-    memcpy(&v, GetPosition(), sizeof(v));
+    Read(&v, sizeof(v));
     std::reverse(&v, &v + sizeof(v));
     return v;
 }
@@ -86,7 +92,7 @@ uint8_t McBuffer::ReadByte() {
     return b;
 }
 
-void McBuffer::ReadArray(uint8_t *target, int len) {
+void McBuffer::Read(void *target, int len) {
     memcpy(target, GetPosition(), len);
     offset += len;
 }
