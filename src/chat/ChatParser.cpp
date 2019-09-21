@@ -8,16 +8,23 @@
 
 using namespace nlohmann;
 
-ChatMessage *ChatParser::Parse(const char *jsonStr) {
-    json j = json::parse(jsonStr);
-    auto arr = j["extra"];
+std::string *ChatParser::ToString(const char *jsonStr) {
+    auto* str = new std::string();
+    json json = json::parse(jsonStr);
+
+    auto arr = json["extra"];
     for (auto &it : arr) {
         if (it.is_string()) {
-            std::cout << it.get<std::string>() << '\n';
+            (*str) += it.get<std::string>();
         } else {
             // TODO modifiers: bold, italic, underlined, obfuscated, color
-            std::cout << it["text"].get<std::string>() << '\n';
+            (*str) += it["text"].get<std::string>();
         }
     }
-    return nullptr;
+
+    if (str->length() == 0 && json["translate"] != nullptr) {
+        (*str) = json["translate"].get<std::string>();
+    }
+
+    return str;
 }

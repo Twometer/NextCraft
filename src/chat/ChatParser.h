@@ -5,11 +5,12 @@
 #ifndef NEXTCRAFT_CHATPARSER_H
 #define NEXTCRAFT_CHATPARSER_H
 
-#include "ChatMessage.h"
+#include <string>
 
 class ChatParser {
+
 public:
-    static ChatMessage *Parse(const char *json);
+    static std::string *ToString(const char *json);
 
 };
 
