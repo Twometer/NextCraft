@@ -3,12 +3,15 @@ project(NextCraft)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include_directories(${CMAKE_SOURCE_DIR}/lib)
+
 add_executable(NextCraft
         src/net/TcpClient.cpp
         src/net/McClient.cpp
         src/net/McBuffer.cpp
         src/net/NetUtils.cpp
         src/net/ZLib.cpp
+        src/chat/ChatParser.cpp
         src/main.cpp)
 
 target_link_libraries(NextCraft Ws2_32.lib z.lib)

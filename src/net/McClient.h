@@ -19,21 +19,30 @@ private:
 
     bool closeRequested = false;
 
-    int ReadVarInt();
-
 public:
     void Connect(const char *username, const char *hostname, unsigned short port);
 
     void Disconnect();
 
+private:
+    int ReadVarInt();
+
     void HandlePacket(int packetId, McBuffer &buffer);
 
     void SendPacket(int packetId, McBuffer &buffer);
 
-    void SendHandshake(int protocolVersion, const char* hostname, unsigned short port, int nextState);
+public:
+    void SendHandshake(int protocolVersion, const char *hostname, unsigned short port, int nextState);
 
-    void SendLogin(const char* username);
+    void SendLogin(const char *username);
 
+    void SendKeepAlive(int id);
+
+    void SendChat(const char *message);
+
+    void SendPosLook(double x, double y, double z, float yaw, float pitch, bool onGround);
+
+    void SendRespawn();
 };
 
 
