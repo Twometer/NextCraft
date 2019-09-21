@@ -23,13 +23,6 @@ uint8_t *McBuffer::GetBytes() {
     return data;
 }
 
-uint8_t *McBuffer::ReadToEnd(int *read) {
-    *read = dataSize - offset;
-    auto *result = new uint8_t[*read];
-    Read(result, *read);
-    return result;
-}
-
 char *McBuffer::ReadString() {
     int len = ReadVarInt();
     char *result = new char[len + 1];
@@ -139,4 +132,12 @@ void McBuffer::WriteBool(bool value) {
 
 int32_t McBuffer::GetAllocated() {
     return offset;
+}
+
+void McBuffer::DecompressRemaining(int sizeUncompressed) {
+    auto *buf = new uint8_t[sizeUncompressed];
+    ZLib::Decompress(GetPosition(), dataSize - offset, buf, sizeUncompressed);
+    this->data = buf;
+    this->dataSize = sizeUncompressed;
+    this->offset = 0;
 }

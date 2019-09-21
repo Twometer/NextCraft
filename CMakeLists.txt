@@ -8,6 +8,7 @@ add_executable(NextCraft
         src/net/McClient.cpp
         src/net/McBuffer.cpp
         src/net/NetUtils.cpp
+        src/net/ZLib.cpp
         src/main.cpp)
 
-target_link_libraries(NextCraft Ws2_32.lib)
+target_link_libraries(NextCraft Ws2_32.lib z.lib)

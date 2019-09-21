@@ -15,6 +15,8 @@ private:
 
     int compressionThreshold = 0;
 
+    bool isLoginMode = true;
+
     bool closeRequested = false;
 
     int ReadVarInt();
@@ -23,6 +25,8 @@ public:
     void Connect(const char *username, const char *hostname, unsigned short port);
 
     void Disconnect();
+
+    void HandlePacket(int packetId, McBuffer &buffer);
 
     void SendPacket(int packetId, McBuffer &buffer);
 

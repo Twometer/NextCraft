@@ -6,6 +6,7 @@
 #define NEXTCRAFT_MCBUFFER_H
 
 #include <cstdint>
+#include "ZLib.h"
 
 class McBuffer {
 
@@ -20,10 +21,6 @@ public:
     McBuffer();
 
     McBuffer(uint8_t * buf, int length);
-
-    uint8_t *GetBytes();
-
-    uint8_t *ReadToEnd(int* read);
 
     char* ReadString();
 
@@ -61,11 +58,15 @@ public:
 
     void WriteBool(bool value);
 
+    void DecompressRemaining(int sizeUncompressed);
+
     int32_t GetAllocated();
 
     inline uint8_t *GetPosition() {
         return data + offset;
     }
+
+    uint8_t *GetBytes();
 
 };
 

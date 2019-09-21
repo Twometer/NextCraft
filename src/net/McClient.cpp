@@ -2,8 +2,11 @@
 // Created by Twometer on 19/09/2019.
 //
 
+#include <iostream>
 #include "McClient.h"
 #include "NetUtils.h"
+
+#define BUF_LEN 65565
 
 void McClient::Connect(const char *username, const char *hostname, unsigned short port) {
     if (!client->Connect(hostname, port))
@@ -11,10 +14,48 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
 
     SendHandshake(47, hostname, port, 2);
     SendLogin(username);
+
+    auto *recvBuf = new uint8_t[BUF_LEN];
+
+    do {
+        int packetLen = ReadVarInt();
+        if (packetLen <= 0) continue;
+
+        int received = client->Receive(recvBuf, packetLen);
+        if (received <= 0) return;
+
+        McBuffer buffer(recvBuf, packetLen);
+
+        if (compressionThreshold > 0) {
+            int sizeUncompressed = buffer.ReadVarInt();
+            if (sizeUncompressed != 0)
+                buffer.DecompressRemaining(sizeUncompressed);
+        }
+
+        int packetId = buffer.ReadVarInt();
+        HandlePacket(packetId, buffer);
+
+    } while (!closeRequested);
+
+    if (!closeRequested)
+        std::cout << "Connection lost" << std::endl;
 }
 
 void McClient::Disconnect() {
     client->Close();
+    closeRequested = true;
+}
+
+void McClient::HandlePacket(int packetId, McBuffer &buffer) {
+    if (isLoginMode) {
+        if (compressionThreshold == 0 && packetId == 3)
+            compressionThreshold = buffer.ReadVarInt();
+        else if (packetId == 2)
+            isLoginMode = false;
+        return;
+    }
+
+    std::cout << "Handling packet " << packetId << std::endl;
 }
 
 void McClient::SendPacket(int packetId, McBuffer &buffer) {
