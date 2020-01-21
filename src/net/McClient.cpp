@@ -80,11 +80,24 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             break;
         }
         case 0x06: {
-            float health = buffer.ReadFloat();
+            player.health = buffer.ReadFloat();
+            player.hunger = buffer.ReadVarInt();
             break;
         }
         case 0x08: {
+            player.posX = buffer.ReadDouble();
+            player.posY = buffer.ReadDouble();
+            player.posZ = buffer.ReadDouble();
+
+            player.yaw = buffer.ReadFloat();
+            player.pitch = buffer.ReadFloat();
             break;
+        }
+        case 0x21: {
+
+        }
+        case 0x26: {
+
         }
         case 0x40: {
             auto msg = buffer.ReadString();

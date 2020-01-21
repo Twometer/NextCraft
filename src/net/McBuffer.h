@@ -6,12 +6,12 @@
 #define NEXTCRAFT_MCBUFFER_H
 
 #include <cstdint>
-#include "ZLib.h"
+#include "../util/ZLib.h"
 
 class McBuffer {
 
 private:
-    uint8_t* data = nullptr;
+    uint8_t *data = nullptr;
 
     int dataSize = 0;
 
@@ -20,9 +20,9 @@ private:
 public:
     McBuffer();
 
-    McBuffer(uint8_t * buf, int length);
+    McBuffer(uint8_t *buf, int length);
 
-    char* ReadString();
+    char *ReadString();
 
     int32_t ReadInt();
 
@@ -38,7 +38,7 @@ public:
 
     uint8_t ReadByte();
 
-    void Read(void* target, int len);
+    void Read(void *target, int len);
 
     void Write(void *data, int len);
 
@@ -50,7 +50,7 @@ public:
 
     void WriteULong(uint64_t value);
 
-    void WriteString(const char* value);
+    void WriteString(const char *value);
 
     void WriteDouble(double value);
 

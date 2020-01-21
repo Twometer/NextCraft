@@ -8,6 +8,7 @@
 
 #include "McBuffer.h"
 #include "TcpClient.h"
+#include "../model/Player.h"
 
 class McClient {
 private:
@@ -20,6 +21,8 @@ private:
     bool closeRequested = false;
 
 public:
+    Player player{};
+
     void Connect(const char *username, const char *hostname, unsigned short port);
 
     void Disconnect();

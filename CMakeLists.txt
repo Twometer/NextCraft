@@ -10,8 +10,8 @@ add_executable(NextCraft
         src/net/McClient.cpp
         src/net/McBuffer.cpp
         src/net/NetUtils.cpp
-        src/net/ZLib.cpp
+        src/util/ZLib.cpp
         src/chat/ChatParser.cpp
-        src/main.cpp)
+        src/main.cpp lib/concurrentqueue.h src/model/Player.h)
 
 target_link_libraries(NextCraft Ws2_32.lib z.lib)
