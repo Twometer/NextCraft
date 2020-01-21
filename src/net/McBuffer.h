@@ -38,6 +38,8 @@ public:
 
     uint8_t ReadByte();
 
+    bool ReadBool();
+
     void Read(void *target, int len);
 
     void Write(void *data, int len);

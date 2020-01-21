@@ -6,6 +6,7 @@
 #include "McClient.h"
 #include "NetUtils.h"
 #include "../chat/ChatParser.h"
+#include "../util/ChunkUtils.h"
 
 #define BUF_LEN 65565
 
@@ -97,7 +98,37 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
 
         }
         case 0x26: {
+            bool skylight = buffer.ReadBool();
+            int chunks = buffer.ReadVarInt();
 
+            ChunkData chunkData[chunks];
+            for (int i = 0; i < chunks; i++) {
+                int x = buffer.ReadInt();
+                int z = buffer.ReadInt();
+                uint16_t bitmask = buffer.ReadShort();
+                int packetSize = ChunkUtils::CalcPacketSize(bitmask, skylight, true);
+                chunkData[i] = {x, z, bitmask, packetSize};
+            }
+
+            for (int i = 0; i < chunks; i++) {
+                ChunkData &chunk = chunkData[i];
+
+                for (unsigned int j = 0; j < 16; j++) {
+                    if ((chunk.bitmask & (1u << j)) != 0) {
+                        for (int y = 0; y < 16; y++) {
+                            for (int z = 0; z < 16; z++) {
+                                for (int x = 0; x < 16; x++) {
+                                    uint16_t raw = buffer.ReadShort();
+                                    uint8_t blockId = raw >> 4u;
+                                    uint8_t meta = raw & 15u;
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
         }
         case 0x40: {
             auto msg = buffer.ReadString();

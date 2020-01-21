@@ -85,6 +85,10 @@ uint8_t McBuffer::ReadByte() {
     return b;
 }
 
+bool McBuffer::ReadBool() {
+    return ReadByte() == 0x01;
+}
+
 void McBuffer::Read(void *target, int len) {
     memcpy(target, GetPosition(), len);
     offset += len;
