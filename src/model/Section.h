@@ -18,26 +18,17 @@ namespace chunk {
     public:
         BlockData *data;
 
-        Section() {
-            this->data = new BlockData[16 * 16 * 16];
-        }
+        Section();
 
-        ~Section() {
-            delete[] data;
-        }
+        ~Section();
 
-        BlockData *GetBlockData(int x, int y, int z) {
-            int idx = (y * 16 + z) * 16 + x;
-            return data + idx;
-        }
+        BlockData *GetBlockData(int x, int y, int z);
 
-        void SetBlockData(int x, int y, int z, BlockData data) {
-            *GetBlockData(x, y, z) = data;
-        }
+        void SetBlockData(int x, int y, int z, BlockData block);
 
-        void SetBlock(int x, int y, int z, uint8_t id) {
-            GetBlockData(x, y, z)->id = id;
-        }
+        void SetBlock(int x, int y, int z, uint8_t id);
+
+        void SetMeta(int x, int y, int z, uint8_t meta);
 
     };
 

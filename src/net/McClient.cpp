@@ -80,7 +80,7 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
         }
         case 0x02: { // Chat
             auto msg = buffer.ReadString();
-            std::cout << "Chat message: " << *ChatParser::ToString(msg) << std::endl;
+            std::cout << "Chat message: " << ChatParser::ToString(msg) << std::endl;
             break;
         }
         case 0x06: {

@@ -15,7 +15,7 @@ namespace chunk {
     private:
         Section **sections;
 
-        Chunk();
+        Chunk(int x, int z);
 
     public:
         int x;

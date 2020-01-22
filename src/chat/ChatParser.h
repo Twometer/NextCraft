@@ -10,7 +10,7 @@
 class ChatParser {
 
 public:
-    static std::string *ToString(const char *json);
+    static std::string ToString(const char *json);
 
 };
 

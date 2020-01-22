@@ -14,6 +14,7 @@ add_executable(NextCraft
         src/chat/ChatParser.cpp
         src/model/Chunk.cpp
         src/model/World.cpp
-        src/main.cpp src/model/Section.h)
+        src/model/Section.cpp
+        src/main.cpp)
 
 target_link_libraries(NextCraft Ws2_32.lib z.lib)
