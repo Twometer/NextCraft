@@ -12,6 +12,7 @@ add_executable(NextCraft
         src/net/NetUtils.cpp
         src/util/ZLib.cpp
         src/chat/ChatParser.cpp
-        src/main.cpp lib/concurrentqueue.h src/model/Player.h src/net/ChunkMeta.h src/model/Chunk.h src/model/Chunk.cpp src/model/World.cpp src/model/World.h)
+        src/model/Chunk.cpp
+        src/model/World.cpp)
 
 target_link_libraries(NextCraft Ws2_32.lib z.lib)

@@ -6,7 +6,7 @@
 #define NEXTCRAFT_CHUNKMETA_H
 
 #include <cstdint>
-#include "McBuffer.h"
+#include "../McBuffer.h"
 
 namespace chunk {
 

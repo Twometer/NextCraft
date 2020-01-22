@@ -6,8 +6,9 @@
 #include "McClient.h"
 #include "NetUtils.h"
 #include "../chat/ChatParser.h"
-#include "ChunkMeta.h"
 #include "../model/Chunk.h"
+#include "obj/DigAction.h"
+#include "obj/Position.h"
 
 #define BUF_LEN 65565
 
@@ -104,7 +105,6 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
                 auto *chunk = Chunk::Create(meta, buffer);
                 world.AddChunk(chunk);
             }
-
             break;
         }
         case 0x26: {
@@ -186,6 +186,30 @@ void McClient::SendPosLook(double x, double y, double z, float yaw, float pitch,
     buf.WriteFloat(pitch);
     buf.WriteBool(onGround);
     SendPacket(0x06, buf);
+}
+
+void McClient::SendDigging(DigAction action, Position pos, uint8_t face) {
+    McBuffer buf;
+    buf.WriteVarInt(static_cast<int32_t> (action));
+    buf.WriteULong(pos.Serialize());
+    buf.Write(&face, 1);
+    SendPacket(0x07, buf);
+}
+
+void McClient::SendBlockPlacement(Position position, uint8_t face, uint8_t x, uint8_t y, uint8_t z) {
+    McBuffer buf;
+    buf.WriteULong(position.Serialize());
+    buf.Write(&face, 1);
+
+    buf.WriteUShort(0);
+    buf.WriteBool(false);
+    buf.WriteUShort(0);
+    buf.WriteBool(false);
+
+    buf.Write(&x, 1);
+    buf.Write(&y, 1);
+    buf.Write(&z, 1);
+    SendPacket(0x08, buf);
 }
 
 void McClient::SendRespawn() {

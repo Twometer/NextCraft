@@ -10,6 +10,8 @@
 #include "TcpClient.h"
 #include "../model/Player.h"
 #include "../model/World.h"
+#include "obj/Position.h"
+#include "obj/DigAction.h"
 
 class McClient {
 private:
@@ -47,6 +49,10 @@ public:
     void SendChat(const char *message);
 
     void SendPosLook(double x, double y, double z, float yaw, float pitch, bool onGround);
+
+    void SendDigging(DigAction action, Position pos, uint8_t face);
+
+    void SendBlockPlacement(Position position, uint8_t face, uint8_t x, uint8_t y, uint8_t z);
 
     void SendRespawn();
 };
