@@ -3,7 +3,9 @@ project(NextCraft)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(${CMAKE_SOURCE_DIR}/lib)
+add_subdirectory(lib/glm/glm)
+add_subdirectory(lib/glfw)
+add_subdirectory(lib/json)
 
 add_executable(NextCraft
         src/net/TcpClient.cpp
@@ -17,4 +19,5 @@ add_executable(NextCraft
         src/model/Section.cpp
         src/main.cpp)
 
-target_link_libraries(NextCraft Ws2_32.lib z.lib)
+target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
+target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)
