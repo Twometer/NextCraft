@@ -39,7 +39,6 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
 
         int packetId = buffer.ReadVarInt();
         HandlePacket(packetId, buffer);
-
     } while (!closeRequested);
 
     if (!closeRequested)

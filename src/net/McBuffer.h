@@ -17,10 +17,14 @@ private:
 
     int offset = 0;
 
+    bool isBufferReplaced = false;
+
 public:
     McBuffer();
 
     McBuffer(uint8_t *buf, int length);
+
+    ~McBuffer();
 
     char *ReadString();
 

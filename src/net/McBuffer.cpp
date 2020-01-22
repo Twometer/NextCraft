@@ -19,6 +19,11 @@ McBuffer::McBuffer(uint8_t *buf, int length) {
     this->dataSize = length;
 }
 
+McBuffer::~McBuffer() {
+    if (isBufferReplaced)
+        delete[] data;
+}
+
 uint8_t *McBuffer::GetBytes() {
     return data;
 }
@@ -144,6 +149,7 @@ void McBuffer::DecompressRemaining(int sizeUncompressed) {
     this->data = buf;
     this->dataSize = sizeUncompressed;
     this->offset = 0;
+    this->isBufferReplaced = true;
 }
 
 void McBuffer::Reverse(void *ptr, int len) {
