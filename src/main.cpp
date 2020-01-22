@@ -1,9 +1,24 @@
-#include <iostream>
-#include "net/McClient.h"
-#include "model/Section.h"
+#include <glad/glad.h>
+#include "NextCraft.h"
 
 int main() {
-    McClient client;
-    client.Connect("DevClient", "localhost", 25565);
+    if (!NextCraft::Start()) {
+        glfwTerminate();
+        return 1;
+    }
+
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+        glfwTerminate();
+        return 1;
+    }
+
+    while (!glfwWindowShouldClose(NextCraft::window)) {
+
+        glfwSwapBuffers(NextCraft::window);
+        glfwPollEvents();
+    }
+
+    NextCraft::Shutdown();
+
     return 0;
 }

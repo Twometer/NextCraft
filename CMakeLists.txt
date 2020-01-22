@@ -17,7 +17,8 @@ add_executable(NextCraft
         src/model/Chunk.cpp
         src/model/World.cpp
         src/model/Section.cpp
-        src/main.cpp)
+        src/main.cpp
+        ext/glad.c src/NextCraft.h)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)
