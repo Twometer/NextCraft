@@ -13,14 +13,16 @@ namespace chunk {
     struct ChunkMeta {
         int x;
         int z;
+        bool continuous;
         uint16_t bitmask;
     };
 
-    ChunkMeta ReadChunkMeta(McBuffer &buffer) {
+    static ChunkMeta ReadChunkMeta(McBuffer &buffer, bool bulk) {
         int x = buffer.ReadInt();
         int z = buffer.ReadInt();
+        bool continuous = bulk || buffer.ReadBool();
         uint16_t bitmask = buffer.ReadShort();
-        return {x, z, bitmask};
+        return {x, z, continuous, bitmask};
     }
 
 }

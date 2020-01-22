@@ -64,11 +64,14 @@ public:
 
     int32_t GetAllocated();
 
+    uint8_t *GetBytes();
+
+private:
+    static inline void Reverse(void *ptr, int len);
+
     inline uint8_t *GetPosition() {
         return data + offset;
     }
-
-    uint8_t *GetBytes();
 
 };
 

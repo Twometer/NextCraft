@@ -9,6 +9,7 @@
 #include "McBuffer.h"
 #include "TcpClient.h"
 #include "../model/Player.h"
+#include "../model/World.h"
 
 class McClient {
 private:
@@ -22,6 +23,8 @@ private:
 
 public:
     Player player{};
+
+    World world{};
 
     void Connect(const char *username, const char *hostname, unsigned short port);
 

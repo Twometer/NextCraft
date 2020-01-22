@@ -34,7 +34,7 @@ char *McBuffer::ReadString() {
 int32_t McBuffer::ReadInt() {
     int32_t v = 0;
     Read(&v, sizeof(v));
-    std::reverse(&v, &v + sizeof(v));
+    Reverse(&v, sizeof(v));
     return v;
 }
 
@@ -54,28 +54,28 @@ int32_t McBuffer::ReadVarInt() {
 uint64_t McBuffer::ReadULong() {
     uint64_t v = 0;
     Read(&v, sizeof(v));
-    std::reverse(&v, &v + sizeof(v));
+    Reverse(&v, sizeof(v));
     return v;
 }
 
 double McBuffer::ReadDouble() {
     double v = 0;
     Read(&v, sizeof(v));
-    std::reverse(&v, &v + sizeof(v));
+    Reverse(&v, sizeof(v));
     return v;
 }
 
 float McBuffer::ReadFloat() {
     float v = 0;
     Read(&v, sizeof(v));
-    std::reverse(&v, &v + sizeof(v));
+    Reverse(&v, sizeof(v));
     return v;
 }
 
 int16_t McBuffer::ReadShort() {
     int16_t v = 0;
     Read(&v, sizeof(v));
-    std::reverse(&v, &v + sizeof(v));
+    Reverse(&v, sizeof(v));
     return v;
 }
 
@@ -144,4 +144,9 @@ void McBuffer::DecompressRemaining(int sizeUncompressed) {
     this->data = buf;
     this->dataSize = sizeUncompressed;
     this->offset = 0;
+}
+
+void McBuffer::Reverse(void *ptr, int len) {
+    auto *bytePtr = (uint8_t *) ptr;
+    std::reverse(bytePtr, bytePtr + len);
 }

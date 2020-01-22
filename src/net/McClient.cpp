@@ -7,6 +7,7 @@
 #include "NetUtils.h"
 #include "../chat/ChatParser.h"
 #include "ChunkMeta.h"
+#include "../model/Chunk.h"
 
 #define BUF_LEN 65565
 
@@ -97,6 +98,14 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             break;
         }
         case 0x21: {
+            ChunkMeta meta = ReadChunkMeta(buffer, false);
+            if (meta.continuous && meta.bitmask == 0) {
+                world.RemoveChunk(meta.x, meta.z);
+            } else {
+                auto *chunk = Chunk::Create(meta, buffer);
+                world.AddChunk(chunk);
+            }
+
             break;
         }
         case 0x26: {
@@ -105,27 +114,13 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
 
             ChunkMeta metas[chunks];
             for (int i = 0; i < chunks; i++) {
-                metas[i] = ReadChunkMeta(buffer);
+                metas[i] = ReadChunkMeta(buffer, true);
             }
 
             for (int i = 0; i < chunks; i++) {
-                ChunkMeta &chunk = metas[i];
-
-                for (unsigned int j = 0; j < 16; j++) {
-                    if ((chunk.bitmask & (1u << j)) != 0) {
-                        for (int y = 0; y < 16; y++) {
-                            for (int z = 0; z < 16; z++) {
-                                for (int x = 0; x < 16; x++) {
-                                    uint16_t raw = buffer.ReadShort();
-                                    uint8_t blockId = raw >> 4u;
-                                    uint8_t meta = raw & 15u;
-
-                                }
-                            }
-                        }
-
-                    }
-                }
+                ChunkMeta &meta = metas[i];
+                auto *chunk = Chunk::Create(meta, buffer);
+                world.AddChunk(chunk);
             }
             break;
         }
