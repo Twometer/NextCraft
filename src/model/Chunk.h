@@ -7,10 +7,16 @@
 
 #include "../net/McBuffer.h"
 #include "../net/obj/ChunkMeta.h"
+#include "Section.h"
 
 namespace chunk {
 
     class Chunk {
+    private:
+        Section **sections;
+
+        Chunk();
+
     public:
         int x;
         int z;

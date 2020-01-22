@@ -2,9 +2,15 @@
 // Created by twome on 22/01/2020.
 //
 
+#include <cstring>
 #include "Chunk.h"
 
 using namespace chunk;
+
+Chunk::Chunk() {
+    this->sections = new Section *[16];
+    memset(this->sections, 0, sizeof(Section *) * 16);
+}
 
 Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
     auto *chunk = new Chunk();
@@ -13,6 +19,7 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
 
     for (unsigned int j = 0; j < 16; j++) { // Iterate sections
         if ((meta.bitmask & (1u << j)) != 0) { // Check if section is present
+            auto *section = new Section();
 
             // Read section
             for (int y = 0; y < 16; y++) {
@@ -21,11 +28,12 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
                         uint16_t raw = buffer.ReadShort();
                         uint8_t blockId = raw >> 4u;
                         uint8_t meta = raw & 15u;
-
+                        section->SetBlockData(x, y, z, {blockId, meta});
                     }
                 }
             }
 
+            chunk->sections[j] = section;
         }
     }
     return chunk;
