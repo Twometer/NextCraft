@@ -83,12 +83,17 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             std::cout << "Chat message: " << ChatParser::ToString(msg) << std::endl;
             break;
         }
-        case 0x06: {
+        case 0x03: { // Time
+            world.worldAge = buffer.ReadLong();
+            world.time = buffer.ReadLong();
+            break;
+        }
+        case 0x06: { // Health
             player.health = buffer.ReadFloat();
             player.hunger = buffer.ReadVarInt();
             break;
         }
-        case 0x08: {
+        case 0x08: { // PosLook
             player.posX = buffer.ReadDouble();
             player.posY = buffer.ReadDouble();
             player.posZ = buffer.ReadDouble();
@@ -97,7 +102,12 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             player.pitch = buffer.ReadFloat();
             break;
         }
-        case 0x21: {
+        case 0x1F: { // Experience
+            player.xpBar = buffer.ReadFloat();
+            player.xpLevel = buffer.ReadVarInt();
+            break;
+        }
+        case 0x21: { // Chunk data
             ChunkMeta meta = ReadChunkMeta(buffer, false);
             if (meta.continuous && meta.bitmask == 0) {
                 world.RemoveChunk(meta.x, meta.z);
@@ -107,7 +117,29 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             }
             break;
         }
-        case 0x26: {
+        case 0x22: { // Multiple block update
+            int chunkX = buffer.ReadInt();
+            int chunkZ = buffer.ReadInt();
+            Chunk *chunk = world.GetChunk(chunkX, chunkZ);
+
+            int records = buffer.ReadVarInt();
+            for (int i = 0; i < records; i++) {
+                uint8_t horizontalPosition = buffer.ReadByte();
+                uint8_t x = (horizontalPosition & 0xF0u) >> 4u;
+                uint8_t z = (horizontalPosition & 0x0Fu);
+                uint8_t y = buffer.ReadByte();
+                BlockData data = BlockData(buffer.ReadVarInt());
+                chunk->SetBlockData(x, y, z, data);
+            }
+            break;
+        }
+        case 0x23: { // Block update
+            Position pos = Position(buffer.ReadULong());
+            BlockData data = BlockData(buffer.ReadVarInt());
+            world.SetBlockData(pos.x, pos.y, pos.z, data);
+            break;
+        }
+        case 0x26: { // Chunk bulk
             bool skylight = buffer.ReadBool();
             int chunks = buffer.ReadVarInt();
 
@@ -123,7 +155,7 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             }
             break;
         }
-        case 0x40: {
+        case 0x40: { // Disconnect
             auto msg = buffer.ReadString();
             std::cout << "Kicked from server: " << msg << std::endl;
             break;

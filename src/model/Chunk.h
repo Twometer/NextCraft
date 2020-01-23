@@ -23,6 +23,8 @@ namespace chunk {
 
         static Chunk *Create(ChunkMeta &meta, McBuffer &buffer);
 
+        void SetBlockData(int x, int y, int z, BlockData data);
+
     };
 
 }

@@ -6,13 +6,9 @@
 #define NEXTCRAFT_SECTION_H
 
 #include <cstdint>
+#include "BlockData.h"
 
 namespace chunk {
-
-    struct BlockData {
-        uint8_t id;
-        uint8_t meta;
-    };
 
     struct Section {
     public:

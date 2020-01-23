@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include "NextCraft.h"
+#include "render/GameRenderer.h"
 
 int main() {
     if (!NextCraft::Start()) {
@@ -12,8 +13,9 @@ int main() {
         return 1;
     }
 
+    GameRenderer renderer;
     while (!glfwWindowShouldClose(NextCraft::window)) {
-
+        renderer.RenderFrame();
         glfwSwapBuffers(NextCraft::window);
         glfwPollEvents();
     }

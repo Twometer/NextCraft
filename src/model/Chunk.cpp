@@ -26,9 +26,7 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
                 for (int z = 0; z < 16; z++) {
                     for (int x = 0; x < 16; x++) {
                         uint16_t raw = buffer.ReadShort();
-                        uint8_t blockId = raw >> 4u;
-                        uint8_t blockMeta = raw & 15u;
-                        section->SetBlockData(x, y, z, {blockId, blockMeta});
+                        section->SetBlockData(x, y, z, BlockData(raw));
                     }
                 }
             }
@@ -37,5 +35,9 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
         }
     }
     return chunk;
+}
+
+void Chunk::SetBlockData(int x, int y, int z, BlockData data) {
+
 }
 

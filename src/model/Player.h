@@ -21,6 +21,9 @@ struct Player {
     float health;
     int hunger;
 
+    float xpBar;
+    int xpLevel;
+
 };
 
 #endif //NEXTCRAFT_PLAYER_H

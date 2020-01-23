@@ -56,6 +56,14 @@ int32_t McBuffer::ReadVarInt() {
     return i;
 }
 
+int64_t McBuffer::ReadLong() {
+    int64_t v = 0;
+    Read(&v, sizeof(v));
+    Reverse(&v, sizeof(v));
+    return v;
+}
+
+
 uint64_t McBuffer::ReadULong() {
     uint64_t v = 0;
     Read(&v, sizeof(v));
@@ -156,3 +164,4 @@ void McBuffer::Reverse(void *ptr, int len) {
     auto *bytePtr = (uint8_t *) ptr;
     std::reverse(bytePtr, bytePtr + len);
 }
+

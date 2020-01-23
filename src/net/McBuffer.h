@@ -32,6 +32,8 @@ public:
 
     int32_t ReadVarInt();
 
+    int64_t ReadLong();
+
     uint64_t ReadULong();
 
     double ReadDouble();
