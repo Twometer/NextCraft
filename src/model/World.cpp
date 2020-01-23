@@ -17,6 +17,18 @@ chunk::Chunk *World::GetChunk(int x, int z) {
     return nullptr;
 }
 
-void World::SetBlockData(int x, int y, int z, chunk::BlockData data) {
+chunk::BlockData &World::GetBlockData(int x, int y, int z) {
+    return GetChunk(x >> 4, z >> 4)->GetBlockData(x & 15, y, z & 15);
+}
 
+void World::SetBlockData(int x, int y, int z, chunk::BlockData data) {
+    GetChunk(x >> 4, z >> 4)->SetBlockData(x & 15, y, z & 15, data);
+}
+
+void World::SetBlock(int x, int y, int z, uint8_t id) {
+    GetChunk(x >> 4, z >> 4)->SetBlock(x & 15, y, z & 15, id);
+}
+
+void World::SetMeta(int x, int y, int z, uint8_t meta) {
+    GetChunk(x >> 4, z >> 4)->SetMeta(x & 15, y, z & 15, meta);
 }

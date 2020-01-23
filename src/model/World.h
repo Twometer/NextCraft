@@ -21,7 +21,13 @@ public:
 
     chunk::Chunk *GetChunk(int x, int z);
 
+    chunk::BlockData &GetBlockData(int x, int y, int z);
+
     void SetBlockData(int x, int y, int z, chunk::BlockData data);
+
+    void SetBlock(int x, int y, int z, uint8_t id);
+
+    void SetMeta(int x, int y, int z, uint8_t meta);
 
 };
 

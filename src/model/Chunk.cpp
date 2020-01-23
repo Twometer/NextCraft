@@ -37,7 +37,19 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
     return chunk;
 }
 
-void Chunk::SetBlockData(int x, int y, int z, BlockData data) {
+BlockData &Chunk::GetBlockData(int x, int y, int z) {
+    return sections[y >> 4]->GetBlockData(x, y, z);
+}
 
+void Chunk::SetBlockData(int x, int y, int z, BlockData data) {
+    sections[y >> 4]->SetBlockData(x, y, z, data);
+}
+
+void Chunk::SetBlock(int x, int y, int z, uint8_t id) {
+    sections[y >> 4]->SetBlock(x, y, z, id);
+}
+
+void Chunk::SetMeta(int x, int y, int z, uint8_t meta) {
+    sections[y >> 4]->SetMeta(x, y, z, meta);
 }
 
