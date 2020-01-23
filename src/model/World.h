@@ -5,11 +5,17 @@
 #ifndef NEXTCRAFT_WORLD_H
 #define NEXTCRAFT_WORLD_H
 
+#include <unordered_map>
+#include <glm/glm.hpp>
+#include <glm/gtx/hash.hpp>
 
 #include "Chunk.h"
 #include "BlockData.h"
 
 class World {
+private:
+    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks;
+
 public:
     long worldAge;
 

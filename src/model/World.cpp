@@ -2,19 +2,19 @@
 // Created by twome on 22/01/2020.
 //
 
-#include <iostream>
 #include "World.h"
 
 void World::AddChunk(chunk::Chunk *chunk) {
-
+    glm::ivec2 vec(chunk->x, chunk->z);
+    chunks[vec] = chunk;
 }
 
 void World::RemoveChunk(int x, int z) {
-
+    chunks.erase(glm::ivec2(x, z));
 }
 
 chunk::Chunk *World::GetChunk(int x, int z) {
-    return nullptr;
+    return chunks[glm::ivec2(x, z)];
 }
 
 chunk::BlockData &World::GetBlockData(int x, int y, int z) {
