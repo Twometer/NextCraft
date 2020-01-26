@@ -4,6 +4,7 @@
 
 #include <glad/glad.h>
 #include "GameRenderer.h"
+#include "../NextCraft.h"
 
 void GameRenderer::Initialize() {
     glEnable(GL_DEPTH_TEST);
@@ -18,9 +19,14 @@ void GameRenderer::Initialize() {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+
+    this->terrainShader = new TerrainShader();
 }
 
 void GameRenderer::RenderFrame() {
+    glViewport(0, 0, NextCraft::viewport.width, NextCraft::viewport.height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    terrainShader->Use();
+    glActiveTexture(GL_TEXTURE0);
 }

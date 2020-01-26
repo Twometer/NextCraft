@@ -13,7 +13,9 @@ int main() {
         return 1;
     }
 
-    GameRenderer renderer;
+    GameRenderer renderer{};
+    renderer.Initialize();
+
     while (!glfwWindowShouldClose(NextCraft::window)) {
         renderer.RenderFrame();
         glfwSwapBuffers(NextCraft::window);

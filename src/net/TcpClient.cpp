@@ -4,6 +4,7 @@
 
 
 #include "TcpClient.h"
+#include "../util/Logger.h"
 
 #include <string>
 #include <cstdio>
@@ -57,7 +58,7 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
     freeaddrinfo(result);
 
     if (ConnectSocket == INVALID_SOCKET) {
-        printf("Unable to connect to server!\n");
+        Logger::Error("Unable to connect to server!");
         WSACleanup();
         return false;
     }

@@ -6,7 +6,13 @@
 #define NEXTCRAFT_GAMERENDERER_H
 
 
+#include "shaders/TerrainShader.h"
+
 class GameRenderer {
+private:
+
+    TerrainShader *terrainShader;
+
 
 public:
     void Initialize();

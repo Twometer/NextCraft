@@ -9,16 +9,30 @@
 #include <thread>
 #include "net/McClient.h"
 
+struct Viewport {
+    int width;
+    int height;
+    float scaleX;
+    float scaleY;
+};
+
 class NextCraft {
 private:
     static void Connect() {
         client->Connect("DevClient", "localhost", 25565);
     }
 
+    static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+        viewport.width = width;
+        viewport.height = height;
+    }
+
 public:
     static McClient *client;
 
     static GLFWwindow *window;
+
+    static Viewport viewport;
 
     static bool Start() {
         client = new McClient();
@@ -37,6 +51,11 @@ public:
         if (!window) {
             return false;
         }
+
+        glfwGetFramebufferSize(window, &viewport.width, &viewport.height);
+        glfwGetWindowContentScale(window, &viewport.scaleX, &viewport.scaleY);
+        glfwSetFramebufferSizeCallback(window, &(NextCraft::framebuffer_size_callback));
+
         glfwMakeContextCurrent(window);
 
         new std::thread(&NextCraft::Connect);
@@ -48,8 +67,5 @@ public:
     }
 
 };
-
-McClient *NextCraft::client;
-GLFWwindow *NextCraft::window;
 
 #endif //NEXTCRAFT_NEXTCRAFT_H
