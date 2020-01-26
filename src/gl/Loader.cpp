@@ -20,6 +20,9 @@ uint8_t *Loader::ReadAllBytes(const std::string &path, size_t &size) {
     size_t length = file.tellg();
     file.seekg(0, std::ios::beg);
 
+    if (length == -1)
+        return nullptr;
+
     auto *buf = new uint8_t[length];
     file.read((char *) buf, length);
     size = length;

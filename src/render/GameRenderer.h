@@ -12,6 +12,7 @@ class GameRenderer {
 private:
 
     TerrainShader *terrainShader;
+    GLuint terrainTexture;
 
 
 public:

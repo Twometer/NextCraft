@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include "GameRenderer.h"
 #include "../NextCraft.h"
+#include "../gl/Loader.h"
 
 void GameRenderer::Initialize() {
     glEnable(GL_DEPTH_TEST);
@@ -21,6 +22,7 @@ void GameRenderer::Initialize() {
     glEnableVertexAttribArray(2);
 
     this->terrainShader = new TerrainShader();
+    this->terrainTexture = Loader::LoadTexture("assets/shaders/terrain.png");
 }
 
 void GameRenderer::RenderFrame() {
@@ -29,4 +31,5 @@ void GameRenderer::RenderFrame() {
 
     terrainShader->Use();
     glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, terrainTexture);
 }
