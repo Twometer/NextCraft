@@ -22,7 +22,7 @@ void GameRenderer::Initialize() {
     glEnableVertexAttribArray(2);
 
     this->terrainShader = new TerrainShader();
-    this->terrainTexture = Loader::LoadTexture("assets/shaders/terrain.png");
+    this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png");
 }
 
 void GameRenderer::RenderFrame() {

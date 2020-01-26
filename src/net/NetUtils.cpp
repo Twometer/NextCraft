@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "hicpp-use-auto"
 //
 // Created by Twometer on 19/09/2019.
 //
@@ -7,23 +9,25 @@
 
 int NetUtils::GetVarIntSize(int val) {
     int size = 0;
+    uint32_t uval = static_cast<uint32_t >(val);
     do {
-        val >>= 7;
+        uval >>= 7u;
         size++;
-    } while (val != 0);
+    } while (uval != 0);
     return size;
 }
 
 int NetUtils::WriteVarInt(uint8_t *target, int val) {
     int allocated = 0;
+    uint32_t uval = static_cast<uint32_t >(val);
     do {
-        uint8_t byte = (char) (val & 0b01111111);
-        val = ((unsigned int) val) >> 7;
-        if (val != 0) {
-            byte |= 0b10000000;
+        uint8_t byte = (uint8_t) (uval & 0b01111111u);
+        uval >>= 7u;
+        if (uval != 0) {
+            byte |= 0b10000000u;
         }
         target[allocated++] = byte;
-    } while (val != 0);
+    } while (uval != 0);
     return allocated;
 }
 
@@ -42,3 +46,5 @@ int NetUtils::CountBits(uint32_t n) {
     }
     return count;
 }
+
+#pragma clang diagnostic pop
