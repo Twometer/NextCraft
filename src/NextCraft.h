@@ -5,9 +5,10 @@
 #ifndef NEXTCRAFT_NEXTCRAFT_H
 #define NEXTCRAFT_NEXTCRAFT_H
 
-#include <thread>
+#include "model/block/BlockRegistry.h"
 #include "net/McClient.h"
 #include <GLFW/glfw3.h>
+#include <thread>
 
 #define GAME_TITLE "NextCraft 0.1.0"
 
@@ -61,6 +62,8 @@ public:
         glfwMakeContextCurrent(window);
 
         new std::thread(&NextCraft::Connect);
+
+        BlockRegistry::Initialize();
         return true;
     }
 
