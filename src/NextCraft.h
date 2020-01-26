@@ -5,9 +5,9 @@
 #ifndef NEXTCRAFT_NEXTCRAFT_H
 #define NEXTCRAFT_NEXTCRAFT_H
 
-#include <GLFW/glfw3.h>
 #include <thread>
 #include "net/McClient.h"
+#include <GLFW/glfw3.h>
 
 #define GAME_TITLE "NextCraft 0.1.0"
 

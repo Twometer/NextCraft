@@ -27,7 +27,7 @@ add_executable(NextCraft
         src/NextCraft.cpp
         src/main.cpp
         ext/glad.c
-        ext/spng.c)
+        ext/spng.c src/mesh/SectionMesh.cpp src/mesh/SectionMesh.h)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)

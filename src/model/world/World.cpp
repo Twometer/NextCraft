@@ -32,3 +32,7 @@ void World::SetBlock(int x, int y, int z, uint8_t id) {
 void World::SetMeta(int x, int y, int z, uint8_t meta) {
     GetChunk(x >> 4, z >> 4)->SetMeta(x & 15, y, z & 15, meta);
 }
+
+std::unordered_map<glm::ivec2, chunk::Chunk *> World::GetChunks() {
+    return chunks;
+}

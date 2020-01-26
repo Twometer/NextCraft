@@ -19,7 +19,7 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
     auto *chunk = new Chunk(meta.x, meta.z);
     for (unsigned int j = 0; j < 16; j++) { // Iterate sections
         if ((meta.bitmask & (1u << j)) != 0) { // Check if section is present
-            auto *section = new Section();
+            auto *section = new Section(meta.x, j, meta.z);
 
             // Read section
             for (int y = 0; y < 16; y++) {

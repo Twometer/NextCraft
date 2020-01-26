@@ -7,14 +7,22 @@
 
 #include <cstdint>
 #include "BlockData.h"
+#include "../../mesh/SectionMesh.h"
 
+class SectionMesh;
 namespace chunk {
 
     struct Section {
     public:
+        int x;
+        int y;
+        int z;
+
+        SectionMesh *mesh;
+
         BlockData *data;
 
-        Section();
+        Section(int x, int y, int z);
 
         ~Section();
 

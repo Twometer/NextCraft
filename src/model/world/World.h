@@ -35,6 +35,7 @@ public:
 
     void SetMeta(int x, int y, int z, uint8_t meta);
 
+    std::unordered_map<glm::ivec2, chunk::Chunk *> GetChunks();
 };
 
 

@@ -4,8 +4,12 @@
 
 #include "Section.h"
 
-chunk::Section::Section() {
+chunk::Section::Section(int x, int y, int z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
     this->data = new BlockData[16 * 16 * 16];
+    this->mesh = new SectionMesh(this);
 }
 
 chunk::Section::~Section() {

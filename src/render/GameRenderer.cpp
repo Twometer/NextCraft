@@ -39,12 +39,19 @@ void GameRenderer::RenderFrame() {
     terrainShader->Use();
     terrainShader->SetMatrix(matrix);
 
+    for (auto &pair : NextCraft::client->world.GetChunks()) {
+        chunk::Chunk *chk = pair.second;
+        for (int i = 0; i < 16; i++) {
+            chunk::Section *section = chk->GetSection(i);
+            if (section != nullptr)
+                section->mesh->Render();
+        }
+    }
 
     if (timer.HasReached()) {
         HandleTick();
         timer.Reset();
     }
-
 }
 
 void GameRenderer::HandleTick() {
