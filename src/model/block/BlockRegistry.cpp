@@ -5,6 +5,8 @@
 #include <cstring>
 #include "BlockRegistry.h"
 
+Block **BlockRegistry::blocks;
+
 void BlockRegistry::Register(int id, Texture texture) {
     blocks[id] = new Block(id, texture, texture, texture);
 }
