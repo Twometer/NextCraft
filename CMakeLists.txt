@@ -18,8 +18,10 @@ add_executable(NextCraft
         src/model/World.cpp
         src/model/Section.cpp
         src/render/GameRenderer.cpp
+        src/mesh/Mesh.cpp
+        src/mesh/Vao.cpp
         src/main.cpp
-        ext/glad.c src/model/BlockData.h)
+        ext/glad.c)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)

@@ -25,6 +25,7 @@ namespace chunk {
         void SetBlock(int x, int y, int z, uint8_t id);
 
         void SetMeta(int x, int y, int z, uint8_t meta);
+
     private:
         inline BlockData *GetBlockDataPtr(int x, int y, int z);
 

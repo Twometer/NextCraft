@@ -9,6 +9,8 @@
 class GameRenderer {
 
 public:
+    void Initialize();
+
     void RenderFrame();
 
 };
