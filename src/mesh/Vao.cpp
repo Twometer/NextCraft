@@ -6,6 +6,7 @@
 
 Vao::Vao() {
     glGenVertexArrays(1, &vaoId);
+    glBindVertexArray(vaoId);
 
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);

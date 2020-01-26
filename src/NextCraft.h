@@ -7,6 +7,7 @@
 
 #include "model/block/BlockRegistry.h"
 #include "net/McClient.h"
+#include "mesh/AsyncMeshBuilder.h"
 #include <GLFW/glfw3.h>
 #include <thread>
 
@@ -64,6 +65,7 @@ public:
         new std::thread(&NextCraft::Connect);
 
         BlockRegistry::Initialize();
+        AsyncMeshBuilder::Initialize();
         return true;
     }
 
