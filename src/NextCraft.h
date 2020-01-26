@@ -9,6 +9,8 @@
 #include <thread>
 #include "net/McClient.h"
 
+#define GAME_TITLE "NextCraft 0.1.0"
+
 struct Viewport {
     int width;
     int height;
@@ -47,7 +49,7 @@ public:
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_SAMPLES, 4);
 
-        window = glfwCreateWindow(1000, 700, "NextCraft", nullptr, nullptr);
+        window = glfwCreateWindow(1000, 700, GAME_TITLE, nullptr, nullptr);
         if (!window) {
             return false;
         }

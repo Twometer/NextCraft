@@ -8,11 +8,13 @@
 
 #include "shaders/TerrainShader.h"
 #include "Camera.h"
+#include "../util/Timer.h"
 
 class GameRenderer {
 private:
 
     Camera camera;
+    Timer timer;
 
     TerrainShader *terrainShader;
     GLuint terrainTexture;
@@ -22,6 +24,11 @@ public:
     void Initialize();
 
     void RenderFrame();
+
+private:
+    void HandleTick();
+
+    void HandleInput();
 
 };
 

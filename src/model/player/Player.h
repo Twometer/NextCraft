@@ -5,24 +5,31 @@
 #ifndef NEXTCRAFT_PLAYER_H
 #define NEXTCRAFT_PLAYER_H
 
+#include <glm/glm.hpp>
 #include <string>
 
 struct Player {
 
     std::string name;
 
-    double posX;
-    double posY;
-    double posZ;
+    double posX = 0.;
+    double posY = 0.;
+    double posZ = 0.;
 
-    float yaw;
-    float pitch;
+    float yaw = 0.f;
+    float pitch = 0.f;
 
-    float health;
-    int hunger;
+    float health = 20.f;
+    int hunger = 20;
 
-    float xpBar;
-    int xpLevel;
+    float xpBar = 0.f;
+    int xpLevel = 0;
+
+    void Move(glm::vec3 offset) {
+        posX += offset.x;
+        posY += offset.y;
+        posZ += offset.z;
+    }
 
 };
 
