@@ -9,8 +9,7 @@
 
 class TerrainShader : public IShader {
 private:
-    GLuint loc_modelMatrix;
-    GLuint loc_cameraMatrix;
+    GLuint loc_matrix;
 
 public:
     TerrainShader() {
@@ -18,16 +17,11 @@ public:
     }
 
     void BindUniforms() override {
-        loc_modelMatrix = GetLocation("modelMatrix");
-        loc_cameraMatrix = GetLocation("cameraMatrix");
+        loc_matrix = GetLocation("cameraMatrix");
     }
 
-    void SetModelMatrix(const glm::mat4 &matrix) {
-        LoadMatrix(loc_modelMatrix, matrix);
-    }
-
-    void SetCameraMatrix(const glm::mat4 &matrix) {
-        LoadMatrix(loc_cameraMatrix, matrix);
+    void SetMatrix(const glm::mat4 &matrix) {
+        LoadMatrix(loc_matrix, matrix);
     }
 
 };

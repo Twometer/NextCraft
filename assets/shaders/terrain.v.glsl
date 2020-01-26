@@ -7,12 +7,10 @@ layout(location = 2) in vec2 vertexUV;
 out vec3 fragmentColor;
 out vec2 fragmentUV;
 
-uniform mat4 modelMatrix;
-uniform mat4 cameraMatrix;
+uniform mat4 matrix;
 
 void main() {
-    vec4 worldPosition = modelMatrix * vec4(vertexPosition, 1.0f);
-    gl_Position = cameraMatrix * worldPosition;
+    gl_Position = matrix * vec4(vertexPosition, 1.0f);
 
     fragmentColor = vertexPosition;
     fragmentUV = vertexUV;

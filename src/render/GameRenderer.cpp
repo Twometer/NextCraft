@@ -29,7 +29,11 @@ void GameRenderer::RenderFrame() {
     glViewport(0, 0, NextCraft::viewport.width, NextCraft::viewport.height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    terrainShader->Use();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, terrainTexture);
+
+    glm::mat4 matrix = camera.CalculateMatrix();
+    terrainShader->Use();
+    terrainShader->SetMatrix(matrix);
+
 }

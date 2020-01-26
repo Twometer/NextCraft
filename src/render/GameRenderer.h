@@ -7,9 +7,12 @@
 
 
 #include "shaders/TerrainShader.h"
+#include "Camera.h"
 
 class GameRenderer {
 private:
+
+    Camera camera;
 
     TerrainShader *terrainShader;
     GLuint terrainTexture;
