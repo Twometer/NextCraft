@@ -5,8 +5,8 @@
 #ifndef NEXTCRAFT_CHUNK_H
 #define NEXTCRAFT_CHUNK_H
 
-#include "../net/McBuffer.h"
-#include "../net/obj/ChunkMeta.h"
+#include "../../net/McBuffer.h"
+#include "../../net/obj/ChunkMeta.h"
 #include "Section.h"
 
 namespace chunk {

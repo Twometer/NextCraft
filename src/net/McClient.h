@@ -8,8 +8,8 @@
 
 #include "McBuffer.h"
 #include "TcpClient.h"
-#include "../model/Player.h"
-#include "../model/World.h"
+#include "../model/player/Player.h"
+#include "../model/world/World.h"
 #include "obj/Position.h"
 #include "obj/DigAction.h"
 

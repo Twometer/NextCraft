@@ -6,7 +6,7 @@
 #include "McClient.h"
 #include "NetUtils.h"
 #include "../chat/ChatParser.h"
-#include "../model/Chunk.h"
+#include "../model/world/Chunk.h"
 #include "obj/DigAction.h"
 #include "obj/Position.h"
 

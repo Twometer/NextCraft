@@ -14,14 +14,16 @@ add_executable(NextCraft
         src/net/NetUtils.cpp
         src/util/ZLib.cpp
         src/chat/ChatParser.cpp
-        src/model/Chunk.cpp
-        src/model/World.cpp
-        src/model/Section.cpp
+        src/model/world/Chunk.cpp
+        src/model/world/World.cpp
+        src/model/world/Section.cpp
         src/render/GameRenderer.cpp
         src/mesh/Mesh.cpp
         src/mesh/Vao.cpp
         src/main.cpp
-        ext/glad.c)
+        ext/glad.c
+        ext/spng.c
+        src/model/block/Block.h src/gl/Loader.cpp src/gl/Loader.h src/util/Logger.cpp src/util/Logger.h)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)
