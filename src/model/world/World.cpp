@@ -18,7 +18,10 @@ chunk::Chunk *World::GetChunk(int x, int z) {
 }
 
 chunk::BlockData &World::GetBlockData(int x, int y, int z) {
-    return GetChunk(x >> 4, z >> 4)->GetBlockData(x & 15, y, z & 15);
+    chunk::Chunk *chunk = GetChunk(x >> 4, z >> 4);
+    if (chunk == nullptr)
+        return chunk::BlockData::null;
+    return chunk->GetBlockData(x & 15, y, z & 15);
 }
 
 void World::SetBlockData(int x, int y, int z, chunk::BlockData data) {

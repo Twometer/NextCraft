@@ -18,16 +18,20 @@ add_executable(NextCraft
         src/model/world/Chunk.cpp
         src/model/world/World.cpp
         src/model/world/Section.cpp
+        src/model/world/BlockData.cpp
+        src/model/block/BlockRegistry.cpp
         src/render/Camera.cpp
         src/render/GameRenderer.cpp
         src/render/shaders/IShader.cpp
         src/gl/Loader.cpp
+        src/mesh/AsyncMeshBuilder.cpp
+        src/mesh/SectionMesh.cpp
         src/mesh/Mesh.cpp
         src/mesh/Vao.cpp
         src/NextCraft.cpp
         src/main.cpp
         ext/glad.c
-        ext/spng.c src/mesh/SectionMesh.cpp src/mesh/SectionMesh.h src/model/block/BlockRegistry.cpp src/model/block/BlockRegistry.h src/mesh/Vertices.h src/mesh/AsyncMeshBuilder.cpp src/mesh/AsyncMeshBuilder.h)
+        ext/spng.c)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)

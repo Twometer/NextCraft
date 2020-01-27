@@ -12,7 +12,7 @@ Chunk::Chunk(int x, int z) {
     this->z = z;
     this->sections = new Section *[16];
 
-    memset(this->sections, 0, sizeof(Section *) * 16);
+    for (int i = 0; i < 16; i++) sections[i] = nullptr;
 }
 
 Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
@@ -38,18 +38,21 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
 }
 
 BlockData &Chunk::GetBlockData(int x, int y, int z) {
-    return sections[y >> 4]->GetBlockData(x, y, z);
+    Section *section = GetSection(y >> 4);
+    if (section == nullptr)
+        return BlockData::null;
+    return section->GetBlockData(x, y & 15, z);
 }
 
 void Chunk::SetBlockData(int x, int y, int z, BlockData data) {
-    sections[y >> 4]->SetBlockData(x, y, z, data);
+    sections[y >> 4]->SetBlockData(x, y & 15, z, data);
 }
 
 void Chunk::SetBlock(int x, int y, int z, uint8_t id) {
-    sections[y >> 4]->SetBlock(x, y, z, id);
+    sections[y >> 4]->SetBlock(x, y & 15, z, id);
 }
 
 void Chunk::SetMeta(int x, int y, int z, uint8_t meta) {
-    sections[y >> 4]->SetMeta(x, y, z, meta);
+    sections[y >> 4]->SetMeta(x, y & 15, z, meta);
 }
 

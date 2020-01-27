@@ -13,8 +13,8 @@ enum class State {
     RebuildScheduled,
     UploadScheduled,
     DeleteScheduled,
+    AwaitingRebuild,
     Rendering,
-    Waiting,
     Deleted
 };
 

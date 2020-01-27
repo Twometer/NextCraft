@@ -32,6 +32,8 @@ namespace chunk {
         void SetMeta(int x, int y, int z, uint8_t meta);
 
         inline Section *GetSection(int idx) {
+            if (idx < 0 || idx > 15)
+                return nullptr;
             return sections[idx];
         }
     };

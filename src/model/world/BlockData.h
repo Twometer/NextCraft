@@ -10,6 +10,8 @@
 namespace chunk {
 
     struct BlockData {
+        static BlockData null;
+
         uint8_t id;
         uint8_t meta;
 

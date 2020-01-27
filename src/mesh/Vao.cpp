@@ -3,10 +3,16 @@
 //
 
 #include "Vao.h"
+#include "../util/Logger.h"
 
 Vao::Vao() {
     glGenVertexArrays(1, &vaoId);
     glBindVertexArray(vaoId);
+
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -46,5 +52,6 @@ void Vao::SetData(Mesh &mesh) {
 
 void Vao::Draw() const {
     glBindVertexArray(vaoId);
+
     glDrawArrays(GL_TRIANGLES, 0, triangles);
 }

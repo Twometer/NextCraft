@@ -19,9 +19,6 @@ void GameRenderer::Initialize() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glClearColor(0.72f, 0.83f, 0.996f, 1.0f);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
 
     timer.Begin(60.0f);
 
@@ -42,6 +39,9 @@ void GameRenderer::RenderFrame() {
 
     for (auto &pair : NextCraft::client->world.GetChunks()) {
         chunk::Chunk *chk = pair.second;
+        if (chk == nullptr)
+            continue;
+
         for (int i = 0; i < 16; i++) {
             chunk::Section *section = chk->GetSection(i);
             if (section != nullptr)

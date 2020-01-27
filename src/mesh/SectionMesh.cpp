@@ -5,19 +5,19 @@
 #include "SectionMesh.h"
 #include "../NextCraft.h"
 #include "Vertices.h"
+#include "../util/Logger.h"
 
 using namespace chunk;
 
-SectionMesh::SectionMesh(Section *section) {
-    this->section = section;
-    this->xo = section->x << 4;
-    this->yo = section->y << 4;
-    this->zo = section->z << 4;
+SectionMesh::SectionMesh(Section *section)
+        : mesh(nullptr), state(State::RebuildScheduled), section(section), xo(section->x << 4), yo(section->y << 4),
+          zo(section->z << 4) {
+
 }
 
 void SectionMesh::Render() {
     if (state == State::RebuildScheduled) {
-        state = State::Waiting;
+        state = State::AwaitingRebuild;
         AsyncMeshBuilder::Schedule(section);
     } else if (state == State::UploadScheduled) {
         Upload();
@@ -28,7 +28,7 @@ void SectionMesh::Render() {
 }
 
 void SectionMesh::Build() {
-    if (state != State::Waiting)
+    if (state != State::AwaitingRebuild)
         return;
 
     delete mesh;

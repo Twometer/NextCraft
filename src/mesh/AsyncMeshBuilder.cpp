@@ -14,9 +14,8 @@ void AsyncMeshBuilder::Work() {
         chunk::Section *sec;
         if (concurrentQueue->try_dequeue(sec)) {
             sec->mesh->Build();
-        } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
 }
