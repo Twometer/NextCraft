@@ -112,7 +112,8 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             if (meta.continuous && meta.bitmask == 0) {
                 world.RemoveChunk(meta.x, meta.z);
             } else {
-                auto *chunk = Chunk::Create(meta, buffer);
+                int filledSections = 0;
+                auto *chunk = Chunk::Create(meta, buffer, filledSections);
                 world.AddChunk(chunk);
             }
             break;
@@ -149,8 +150,12 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
 
             for (int i = 0; i < chunks; i++) {
                 ChunkMeta &meta = metas[i];
-                auto *chunk = Chunk::Create(meta, buffer);
+
+                int filledSections = 0;
+                auto *chunk = Chunk::Create(meta, buffer, filledSections);
                 world.AddChunk(chunk);
+
+                buffer.Skip(ComputeRemainingChunkDataSize(meta.continuous, skylight, filledSections) - 8);
             }
             break;
         }
@@ -247,4 +252,12 @@ void McClient::SendRespawn() {
     McBuffer buf;
     buf.WriteVarInt(0);
     SendPacket(0x16, buf);
+}
+
+int McClient::ComputeRemainingChunkDataSize(bool continuous, bool skylight, int sectionsRead) {
+    // int blockData = sectionsRead * 2 * 16 * 16 * 16; // <-- This is read, don't add
+    int blocklightData = sectionsRead * 16 * 16 * 16 / 2;
+    int skylightData = skylight ? sectionsRead * 16 * 16 * 16 / 2 : 0;
+    int biomeData = continuous ? 256 : 0;
+    return blocklightData + skylightData + biomeData;
 }

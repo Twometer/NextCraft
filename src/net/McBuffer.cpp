@@ -92,6 +92,14 @@ int16_t McBuffer::ReadShort() {
     return v;
 }
 
+uint16_t McBuffer::ReadBlockData() {
+    int16_t v = 0;
+    Read(&v, sizeof(v));
+    // For whatever reason, this is the only time the
+    // byte order is little-endian
+    return v;
+}
+
 uint8_t McBuffer::ReadByte() {
     uint8_t b = *GetPosition();
     offset++;
@@ -163,5 +171,9 @@ void McBuffer::DecompressRemaining(int sizeUncompressed) {
 void McBuffer::Reverse(void *ptr, int len) {
     auto *bytePtr = (uint8_t *) ptr;
     std::reverse(bytePtr, bytePtr + len);
+}
+
+void McBuffer::Skip(int len) {
+    offset += len;
 }
 

@@ -19,15 +19,18 @@ void BlockRegistry::Initialize() {
     blocks = new Block *[256];
     memset(blocks, 0, 256 * sizeof(Block *));
 
-    Register(0, {23, 10});
-    Register(1, {2, 10});
-    Register(2, {8, 5}, {5, 5}, {30, 1});
-    Register(3, {30, 1});
+
+    Register(0, {0, 0});                                                     // Air
+    Register(1, {2, 10});                                                   // Stone
+    Register(2, {8, 5}, {5, 5}, {30, 1});         // Grass
+    Register(3, {30, 1});                                                   // Dirt
+
+    Register(255, {23, 10});                                                // Missing Texture
 }
 
 Block *BlockRegistry::Get(int id) {
     Block *block = blocks[id];
-    return block == nullptr ? blocks[0] : block;
+    return block == nullptr ? blocks[255] : block;
 }
 
 

@@ -44,6 +44,8 @@ public:
 
     uint8_t ReadByte();
 
+    uint16_t ReadBlockData();
+
     bool ReadBool();
 
     void Read(void *target, int len);
@@ -65,6 +67,8 @@ public:
     void WriteFloat(float value);
 
     void WriteBool(bool value);
+
+    void Skip(int len);
 
     void DecompressRemaining(int sizeUncompressed);
 

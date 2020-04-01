@@ -39,6 +39,8 @@ private:
 
     void SendPacket(int packetId, McBuffer &buffer);
 
+    static int ComputeRemainingChunkDataSize(bool continuous, bool skylight, int sections);
+
 public:
     void SendHandshake(int protocolVersion, const char *hostname, unsigned short port, int nextState);
 

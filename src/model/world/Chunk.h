@@ -21,7 +21,7 @@ namespace chunk {
         int x;
         int z;
 
-        static Chunk *Create(ChunkMeta &meta, McBuffer &buffer);
+        static Chunk *Create(ChunkMeta &meta, McBuffer &buffer, int &filledSections);
 
         BlockData &GetBlockData(int x, int y, int z);
 

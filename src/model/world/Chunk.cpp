@@ -15,7 +15,7 @@ Chunk::Chunk(int x, int z) {
     for (int i = 0; i < 16; i++) sections[i] = nullptr;
 }
 
-Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
+Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer, int &filledSections) {
     auto *chunk = new Chunk(meta.x, meta.z);
     for (unsigned int j = 0; j < 16; j++) { // Iterate sections
         if ((meta.bitmask & (1u << j)) != 0) { // Check if section is present
@@ -25,13 +25,14 @@ Chunk *Chunk::Create(ChunkMeta &meta, McBuffer &buffer) {
             for (int y = 0; y < 16; y++) {
                 for (int z = 0; z < 16; z++) {
                     for (int x = 0; x < 16; x++) {
-                        uint16_t raw = buffer.ReadShort();
+                        uint16_t raw = buffer.ReadBlockData();
                         section->SetBlockData(x, y, z, BlockData(raw));
                     }
                 }
             }
 
             chunk->sections[j] = section;
+            filledSections++;
         }
     }
     return chunk;
