@@ -90,7 +90,7 @@ void SectionMesh::Upload() {
 bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
     uint8_t otherId = 0;
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        return 0;
+        return true;
     else return section->GetBlockData(x, y, z).id == 0;
     //otherId = NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id;
     //else otherId = section->GetBlockData(x, y, z).id;

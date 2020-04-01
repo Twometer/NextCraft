@@ -93,7 +93,7 @@ int16_t McBuffer::ReadShort() {
 }
 
 uint16_t McBuffer::ReadBlockData() {
-    int16_t v = 0;
+    uint16_t v = 0;
     Read(&v, sizeof(v));
     // For whatever reason, this is the only time the
     // byte order is little-endian

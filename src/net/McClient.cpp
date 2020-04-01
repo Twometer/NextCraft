@@ -154,8 +154,7 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
                 int filledSections = 0;
                 auto *chunk = Chunk::Create(meta, buffer, filledSections);
                 world.AddChunk(chunk);
-
-                buffer.Skip(ComputeRemainingChunkDataSize(meta.continuous, skylight, filledSections) - 8);
+                buffer.Skip(ComputeRemainingChunkDataSize(meta.continuous, skylight, filledSections));
             }
             break;
         }

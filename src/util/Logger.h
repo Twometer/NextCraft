@@ -7,7 +7,7 @@
 
 #include <string>
 
-#define DEBUG
+// #define DEBUG
 
 #ifdef DEBUG
 #define glCheckErrors() \

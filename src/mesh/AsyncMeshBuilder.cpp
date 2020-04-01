@@ -25,7 +25,7 @@ void AsyncMeshBuilder::Initialize() {
 
     concurrentQueue = new moodycamel::ConcurrentQueue<chunk::Section *>();
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 16; i++) {
         new std::thread(&AsyncMeshBuilder::Work);
     }
 }

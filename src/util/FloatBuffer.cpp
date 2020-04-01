@@ -9,6 +9,7 @@ FloatBuffer::FloatBuffer(int capacity) {
     this->capacity = capacity;
     this->remaining = capacity;
     this->data = new GLfloat[capacity];
+    memset(data, 0, sizeof(GLfloat) * capacity);
 }
 
 FloatBuffer::~FloatBuffer() {
@@ -36,6 +37,8 @@ void FloatBuffer::Grow() {
     int newCapacity = capacity * 1.5;
 
     auto *newData = new GLfloat[newCapacity];
+    memset(newData, 0, sizeof(GLfloat) * newCapacity);
+
     int curCount = capacity - remaining;
     memcpy(newData, data, curCount);
 
