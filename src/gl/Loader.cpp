@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <spng.h>
+#include <iostream>
 #include "Loader.h"
 #include "../util/Logger.h"
 
@@ -15,7 +16,7 @@ std::string Loader::ReadAllText(const std::string &path) {
 }
 
 uint8_t *Loader::ReadAllBytes(const std::string &path, size_t &size) {
-    std::ifstream file(path);
+    std::ifstream file(path, std::ios::binary | std::ios::in);
     file.seekg(0, std::ios::end);
     size_t length = file.tellg();
     file.seekg(0, std::ios::beg);
@@ -76,7 +77,7 @@ GLuint Loader::LoadTexture(const std::string &path) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    GL_LOG();
+    glCheckErrors();
     return texture;
 }
 
@@ -116,6 +117,6 @@ GLuint Loader::LoadShader(const std::string &vertPath, const std::string &fragPa
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
 
-    GL_LOG();
+    glCheckErrors();
     return program;
 }

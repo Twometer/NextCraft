@@ -10,6 +10,7 @@
 class TerrainShader : public IShader {
 private:
     GLuint loc_matrix;
+    GLuint loc_texture;
 
 public:
     TerrainShader() {
@@ -18,10 +19,15 @@ public:
 
     void BindUniforms() override {
         loc_matrix = GetLocation("matrix");
+        loc_texture = GetLocation("tex");
     }
 
     void SetMatrix(const glm::mat4 &matrix) {
         LoadMatrix(loc_matrix, matrix);
+    }
+
+    void SetTextureUnit(const int idx) {
+        glUniform1i(loc_texture, idx);
     }
 
 };

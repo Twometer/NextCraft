@@ -10,12 +10,12 @@
 #define DEBUG
 
 #ifdef DEBUG
-#define GL_LOG() \
+#define glCheckErrors() \
             {int i = glGetError(); \
             if (i != GL_NO_ERROR) \
                 printf("GL ERROR: %s:%i: %d\n", __FILE__, __LINE__, i);}
 #else
-#define GL_LOG()
+#define glCheckErrors()
 #endif
 
 class Logger {

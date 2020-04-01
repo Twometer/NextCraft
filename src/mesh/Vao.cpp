@@ -10,14 +10,14 @@ Vao::Vao() {
 
 Vao::~Vao() {
     glDeleteBuffers(1, &vertexBuffer);
-    GL_LOG()
+    glCheckErrors()
     glDeleteBuffers(1, &colorBuffer);
-    GL_LOG()
+    glCheckErrors()
     glDeleteBuffers(1, &textureBuffer);
-    GL_LOG()
+    glCheckErrors()
 
     glDeleteVertexArrays(1, &vaoId);
-    GL_LOG()
+    glCheckErrors()
 }
 
 void Vao::SetData(Mesh &mesh) {
@@ -36,10 +36,10 @@ void Vao::SetData(Mesh &mesh) {
 
 void Vao::Draw() const {
     glBindVertexArray(vaoId);
-    GL_LOG()
+    glCheckErrors()
 
     glDrawArrays(GL_TRIANGLES, 0, triangles);
-    GL_LOG()
+    glCheckErrors()
 }
 
 void Vao::Initialize() {
@@ -47,36 +47,36 @@ void Vao::Initialize() {
         return;
 
     glGenVertexArrays(1, &vaoId);
-    GL_LOG()
+    glCheckErrors()
 
     glBindVertexArray(vaoId);
-    GL_LOG()
+    glCheckErrors()
 
     glEnableVertexAttribArray(0);
-    GL_LOG()
+    glCheckErrors()
     glEnableVertexAttribArray(1);
-    GL_LOG()
+    glCheckErrors()
     glEnableVertexAttribArray(2);
-    GL_LOG()
+    glCheckErrors()
 
     glGenBuffers(1, &vertexBuffer);
-    GL_LOG()
+    glCheckErrors()
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    GL_LOG()
+    glCheckErrors()
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, nullptr);
-    GL_LOG()
+    glCheckErrors()
 
     glGenBuffers(1, &colorBuffer);
-    GL_LOG()
+    glCheckErrors()
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    GL_LOG()
+    glCheckErrors()
     glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, nullptr);
-    GL_LOG()
+    glCheckErrors()
 
     glGenBuffers(1, &textureBuffer);
-    GL_LOG()
+    glCheckErrors()
     glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-    GL_LOG()
+    glCheckErrors()
     glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, nullptr);
-    GL_LOG()
+    glCheckErrors()
 }
