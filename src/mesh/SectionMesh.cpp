@@ -50,25 +50,25 @@ void SectionMesh::Build() {
                 int ty = me.sideTex.y;
 
                 if (ShouldRender(&me, x + 1, y, z, 0))
-                    PutVertices(PosXVertices, PosXTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(PosXVertices, PosXTextures, absX, absY, absZ, tx, ty, 0, mesh);
                 if (ShouldRender(&me, x - 1, y, z, 1))
-                    PutVertices(NegXVertices, NegXTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(NegXVertices, NegXTextures, absX, absY, absZ, tx, ty, 1, mesh);
 
                 if (ShouldRender(&me, x, y, z + 1, 2))
-                    PutVertices(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, 2, mesh);
                 if (ShouldRender(&me, x, y, z - 1, 3))
-                    PutVertices(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, 3, mesh);
 
 
                 tx = me.topTex.x;
                 ty = me.topTex.y;
                 if (ShouldRender(&me, x, y + 1, z, 4))
-                    PutVertices(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, 4, mesh);
 
                 tx = me.bottomTex.x;
                 ty = me.bottomTex.y;
                 if (ShouldRender(&me, x, y - 1, z, 5))
-                    PutVertices(NegYVertices, NegYTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(NegYVertices, NegYTextures, absX, absY, absZ, tx, ty, 5, mesh);
             }
         }
     }
@@ -99,14 +99,35 @@ bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
 }
 
 void SectionMesh::PutVertices(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
-                              int z, int texX, int texY, Mesh *mesh) {
+                              int z, int texX, int texY, int f, Mesh *mesh) {
+    float brightness;
+    switch (f) {
+        case 0:
+        case 1:
+            brightness = 0.95;
+            break;
+        case 2:
+        case 3:
+            brightness = 0.85;
+            break;
+        case 4:
+            brightness = 1.0f;
+            break;
+        case 5:
+            brightness = 0.5f;
+            break;
+        default:
+            brightness = 1.0f;
+            break;
+    }
+
     for (int i = 0; i < vertices.size(); i += 3) {
         GLfloat vx = vertices[i] + x;
         GLfloat vy = vertices[i + 1] + y;
         GLfloat vz = vertices[i + 2] + z;
 
         mesh->AddVertex(vx, vy, vz);
-        mesh->AddColor(1.0f, 1.0f, 1.0f);
+        mesh->AddColor(brightness, brightness, brightness);
     }
 
     const GLfloat d = 0.03125;
