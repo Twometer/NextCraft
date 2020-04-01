@@ -4,53 +4,44 @@
 
 #include "Mesh.h"
 
-Mesh::Mesh(int capacity) {
-    vertices = std::vector<GLfloat>();
-    colors = std::vector<GLfloat>();
-    texCoords = std::vector<GLfloat>();
-
-    vertices.reserve(capacity);
-    colors.reserve(capacity);
-    texCoords.reserve(capacity / 3 * 2);
+Mesh::Mesh(int capacity)
+        : vertices(capacity),
+          colors(capacity),
+          texCoords(capacity / 3 * 2) {
 }
 
 void Mesh::AddVertex(GLfloat x, GLfloat y, GLfloat z) {
-    vertices.push_back(x);
-    vertices.push_back(y);
-    vertices.push_back(z);
+    vertices.Add3d(x, y, z);
 }
 
 void Mesh::AddColor(GLfloat r, GLfloat g, GLfloat b) {
-    colors.push_back(r);
-    colors.push_back(g);
-    colors.push_back(b);
+    colors.Add3d(r, g, b);
 }
 
 void Mesh::AddTexCoords(GLfloat u, GLfloat v) {
-    texCoords.push_back(u);
-    texCoords.push_back(v);
+    texCoords.Add2d(u, v);
 }
 
 GLfloat *Mesh::GetVertices() {
-    return vertices.data();
+    return vertices.GetData();
 }
 
 int Mesh::GetVertexCount() {
-    return vertices.size();
+    return vertices.GetSize();
 }
 
 GLfloat *Mesh::GetColors() {
-    return colors.data();
+    return colors.GetData();
 }
 
 int Mesh::GetColorCount() {
-    return colors.size();
+    return colors.GetSize();
 }
 
 GLfloat *Mesh::GetTexCoords() {
-    return texCoords.data();
+    return texCoords.GetData();
 }
 
 int Mesh::GetTexCoordCount() {
-    return texCoords.size();
+    return texCoords.GetSize();
 }

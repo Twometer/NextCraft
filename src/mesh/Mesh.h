@@ -8,12 +8,13 @@
 
 #include <vector>
 #include <glad/glad.h>
+#include "../util/FloatBuffer.h"
 
 class Mesh {
 private:
-    std::vector<GLfloat> vertices;
-    std::vector<GLfloat> colors;
-    std::vector<GLfloat> texCoords;
+    FloatBuffer vertices;
+    FloatBuffer colors;
+    FloatBuffer texCoords;
 
 public:
     Mesh(int capacity);
