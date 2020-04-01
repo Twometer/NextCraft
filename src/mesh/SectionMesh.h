@@ -24,9 +24,9 @@ namespace chunk {
 
 class SectionMesh {
 private:
-    chunk::Section *section;
+    chunk::Section *section = nullptr;
 
-    Mesh *mesh;
+    Mesh *mesh = nullptr;
 
     State state;
     Vao vao;

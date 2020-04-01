@@ -76,6 +76,7 @@ GLuint Loader::LoadTexture(const std::string &path) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+    GL_LOG();
     return texture;
 }
 
@@ -115,5 +116,6 @@ GLuint Loader::LoadShader(const std::string &vertPath, const std::string &fragPa
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
 
+    GL_LOG();
     return program;
 }

@@ -11,18 +11,20 @@
 
 class Vao {
 private:
-    GLuint vaoId;
+    GLuint vaoId = 0;
 
-    GLuint vertexBuffer;
-    GLuint colorBuffer;
-    GLuint textureBuffer;
+    GLuint vertexBuffer = 0;
+    GLuint colorBuffer = 0;
+    GLuint textureBuffer = 0;
 
-    int triangles;
+    int triangles = 0;
 
 public:
-    explicit Vao();
+    Vao();
 
     ~Vao();
+
+    void Initialize();
 
     void SetData(Mesh &mesh);
 

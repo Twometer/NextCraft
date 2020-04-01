@@ -14,7 +14,10 @@ void World::RemoveChunk(int x, int z) {
 }
 
 chunk::Chunk *World::GetChunk(int x, int z) {
-    return chunks[glm::ivec2(x, z)];
+    glm::ivec2 vec(x, z);
+    if (chunks.find(vec) == chunks.end())
+        return nullptr;
+    return chunks[vec];
 }
 
 chunk::BlockData &World::GetBlockData(int x, int y, int z) {

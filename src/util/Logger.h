@@ -7,6 +7,17 @@
 
 #include <string>
 
+#define DEBUG
+
+#ifdef DEBUG
+#define GL_LOG() \
+            {int i = glGetError(); \
+            if (i != GL_NO_ERROR) \
+                printf("GL ERROR: %s:%i: %d\n", __FILE__, __LINE__, i);}
+#else
+#define GL_LOG()
+#endif
+
 class Logger {
 private:
     static void Print(const std::string &prefix, const std::string &message);

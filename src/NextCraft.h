@@ -71,6 +71,7 @@ public:
 
     static void Shutdown() {
         client->Disconnect();
+        glfwTerminate();
     }
 
 };

@@ -14,7 +14,7 @@
 
 class World {
 private:
-    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks;
+    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks; // = new std::unordered_map<glm::ivec2, chunk::Chunk *>;
 
 public:
     long worldAge;

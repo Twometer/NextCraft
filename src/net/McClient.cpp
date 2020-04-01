@@ -121,7 +121,6 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             int chunkX = buffer.ReadInt();
             int chunkZ = buffer.ReadInt();
             Chunk *chunk = world.GetChunk(chunkX, chunkZ);
-
             int records = buffer.ReadVarInt();
             for (int i = 0; i < records; i++) {
                 uint8_t horizontalPosition = buffer.ReadByte();

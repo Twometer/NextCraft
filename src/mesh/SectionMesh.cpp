@@ -2,10 +2,10 @@
 // Created by twome on 26/01/2020.
 //
 
+#include <iostream>
 #include "SectionMesh.h"
 #include "../NextCraft.h"
 #include "Vertices.h"
-#include "../util/Logger.h"
 
 using namespace chunk;
 
@@ -43,6 +43,9 @@ void SectionMesh::Build() {
                 const BlockData &data = section->GetBlockData(x, y, z);
                 const Block &me = *BlockRegistry::Get(data.id);
 
+                if (me.id == 0)
+                    continue;
+
                 int tx = me.sideTex.x;
                 int ty = me.sideTex.y;
 
@@ -55,6 +58,7 @@ void SectionMesh::Build() {
                     PutVertices(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, mesh);
                 if (ShouldRender(&me, x, y, z - 1, 3))
                     PutVertices(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, mesh);
+
 
                 tx = me.topTex.x;
                 ty = me.topTex.y;
@@ -76,6 +80,7 @@ void SectionMesh::Upload() {
     if (state == State::Deleted || state == State::DeleteScheduled)
         return;
 
+    vao.Initialize();
     vao.SetData(*mesh);
 
     delete mesh;
@@ -85,17 +90,20 @@ void SectionMesh::Upload() {
 bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
     uint8_t otherId = 0;
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        otherId = NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id;
-    else otherId = section->GetBlockData(x, y, z).id;
-    return otherId == 0;
+        return 0;
+    else return section->GetBlockData(x, y, z).id == 0;
+    //otherId = NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id;
+    //else otherId = section->GetBlockData(x, y, z).id;
+    //return otherId == 0;
+    return section->GetBlockData(x, y, z).id;
 }
 
 void SectionMesh::PutVertices(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
                               int z, int texX, int texY, Mesh *mesh) {
     for (int i = 0; i < vertices.size(); i += 3) {
-        GLfloat vx = vertices[x];
-        GLfloat vy = vertices[y];
-        GLfloat vz = vertices[z];
+        GLfloat vx = vertices[i] + x;
+        GLfloat vy = vertices[i + 1] + y;
+        GLfloat vz = vertices[i + 2] + z;
 
         mesh->AddVertex(vx, vy, vz);
         mesh->AddColor(1.0f, 1.0f, 1.0f);

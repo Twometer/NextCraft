@@ -7,18 +7,26 @@
 #include "GameRenderer.h"
 #include "../NextCraft.h"
 #include "../gl/Loader.h"
+#include "../util/Logger.h"
 
 void GameRenderer::Initialize() {
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D);
+    GL_LOG();
 
     glEnable(GL_CULL_FACE);
+    GL_LOG();
+
     glCullFace(GL_BACK);
+    GL_LOG();
 
     glEnable(GL_BLEND);
+    GL_LOG();
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GL_LOG();
 
     glClearColor(0.72f, 0.83f, 0.996f, 1.0f);
+    GL_LOG();
 
     timer.Begin(60.0f);
 
@@ -32,6 +40,7 @@ void GameRenderer::RenderFrame() {
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, terrainTexture);
+    GL_LOG();
 
     glm::mat4 matrix = camera.CalculateMatrix();
     terrainShader->Use();
@@ -67,19 +76,15 @@ void GameRenderer::HandleInput() {
     if (!focused) return;
 
     double mouseX, mouseY;
-    static double mouseXLast, mouseYLast;
     glfwGetCursorPos(window, &mouseX, &mouseY);
 
-    if (mouseXLast != mouseX || mouseYLast != mouseY) {
-        player.yaw -= 0.2f * (mouseX - mouseXLast);
-        player.pitch += 0.2f * (mouseY - mouseYLast);
+    if (0 != mouseX || 0 != mouseY) {
+        player.yaw -= 0.2f * mouseX;
+        player.pitch -= 0.2f * mouseY;
 
         player.pitch = glm::clamp(player.pitch, -90.f, 90.f);
 
-        mouseXLast = mouseX;
-        mouseYLast = mouseY;
-
-        glfwSetCursorPos(window, 200, 200);
+        glfwSetCursorPos(window, 0, 0);
     }
 
     float yaw = glm::radians(player.yaw);
@@ -88,8 +93,16 @@ void GameRenderer::HandleInput() {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         player.Move(direction * 0.5f);
     }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        glm::vec3 directionLeft(direction.z, 0, -direction.x);
+        player.Move(directionLeft * 0.5f);
+    }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         player.Move(-direction * 0.5f);
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        glm::vec3 directionRight(-direction.z, 0, direction.x);
+        player.Move(directionRight * 0.5f);
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         player.Move(glm::vec3(0, 0.5, 0));

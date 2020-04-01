@@ -1,6 +1,8 @@
 #include <glad/glad.h>
+#include <iostream>
 #include "NextCraft.h"
 #include "render/GameRenderer.h"
+#include "util/Logger.h"
 
 int main() {
     if (!NextCraft::Start()) {

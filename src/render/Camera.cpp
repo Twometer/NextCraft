@@ -27,7 +27,7 @@ glm::mat4 Camera::CalculateMatrix() {
             glm::cos(yaw - PI / 2.0f)
     );
 
-    glm::vec3 up = glm::cross(right, -direction);
+    glm::vec3 up = glm::cross(right, direction);
 
     projectionMatrix = glm::perspective(glm::radians(70.0f), (float) viewport.width / (float) viewport.height,
                                         0.01f, 512.0f);

@@ -17,7 +17,7 @@ public:
     }
 
     void BindUniforms() override {
-        loc_matrix = GetLocation("cameraMatrix");
+        loc_matrix = GetLocation("matrix");
     }
 
     void SetMatrix(const glm::mat4 &matrix) {
