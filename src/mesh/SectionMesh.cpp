@@ -63,7 +63,7 @@ void SectionMesh::Build() {
                 tx = me.topTex.x;
                 ty = me.topTex.y;
                 if (ShouldRender(&me, x, y + 1, z, 4))
-                    PutVertices(PosYVertices, PosZTextures, absX, absY, absZ, tx, ty, mesh);
+                    PutVertices(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, mesh);
 
                 tx = me.bottomTex.x;
                 ty = me.bottomTex.y;
