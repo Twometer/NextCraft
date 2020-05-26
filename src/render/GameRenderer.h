@@ -15,6 +15,7 @@ private:
 
     Camera camera;
     Timer timer;
+    Timer networkTimer;
 
     TerrainShader *terrainShader;
     GLuint terrainTexture;

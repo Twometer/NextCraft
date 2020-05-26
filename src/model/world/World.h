@@ -14,7 +14,9 @@
 
 class World {
 private:
-    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks; // = new std::unordered_map<glm::ivec2, chunk::Chunk *>;
+    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks;
+
+    std::vector<chunk::Chunk *> staleChunks;
 
 public:
     long worldAge;
@@ -34,6 +36,8 @@ public:
     void SetBlock(int x, int y, int z, uint8_t id);
 
     void SetMeta(int x, int y, int z, uint8_t meta);
+
+    void Cleanup();
 
     std::unordered_map<glm::ivec2, chunk::Chunk *> GetChunks();
 };

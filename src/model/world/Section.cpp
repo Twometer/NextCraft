@@ -14,6 +14,7 @@ chunk::Section::Section(int x, int y, int z) {
 
 chunk::Section::~Section() {
     delete[] this->data;
+    delete mesh;
 }
 
 chunk::BlockData &chunk::Section::GetBlockData(int x, int y, int z) {

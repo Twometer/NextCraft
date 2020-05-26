@@ -43,6 +43,8 @@ private:
 public:
     explicit SectionMesh(chunk::Section *section);
 
+    ~SectionMesh();
+
     void Render();
 
     void Build();

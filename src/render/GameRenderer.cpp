@@ -29,6 +29,7 @@ void GameRenderer::Initialize() {
     glCheckErrors();
 
     timer.Begin(60.0f);
+    networkTimer.Begin(20.0f);
 
     this->terrainShader = new TerrainShader();
     this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png");
@@ -63,6 +64,16 @@ void GameRenderer::RenderFrame() {
         HandleTick();
         timer.Reset();
     }
+
+    if (networkTimer.HasReached()) {
+        if (NextCraft::client->IsReady()) {
+            Player &player = NextCraft::client->player;
+            NextCraft::client->SendPosLook(player.posX, player.posY, player.posZ, player.yaw, player.pitch, false);
+        }
+        networkTimer.Reset();
+    }
+
+    NextCraft::client->world.Cleanup();
 }
 
 void GameRenderer::HandleTick() {

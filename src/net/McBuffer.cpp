@@ -130,10 +130,12 @@ void McBuffer::WriteVarInt(int32_t value) {
 }
 
 void McBuffer::WriteUShort(uint16_t value) {
+    Reverse(&value, sizeof(uint16_t));
     Write(&value, sizeof(value));
 }
 
 void McBuffer::WriteULong(uint64_t value) {
+    Reverse(&value, sizeof(uint64_t));
     Write(&value, sizeof(value));
 }
 
@@ -144,10 +146,12 @@ void McBuffer::WriteString(const char *value) {
 }
 
 void McBuffer::WriteDouble(double value) {
+    Reverse(&value, sizeof(double));
     Write(&value, sizeof(value));
 }
 
 void McBuffer::WriteFloat(float value) {
+    Reverse(&value, sizeof(float));
     Write(&value, sizeof(value));
 }
 

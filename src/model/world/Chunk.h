@@ -17,9 +17,13 @@ namespace chunk {
 
         Chunk(int x, int z);
 
+        void EnsureSectionExists(int y);
+
     public:
         int x;
         int z;
+
+        ~Chunk();
 
         static Chunk *Create(ChunkMeta &meta, McBuffer &buffer, int &filledSections);
 

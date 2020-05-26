@@ -10,7 +10,9 @@ void World::AddChunk(chunk::Chunk *chunk) {
 }
 
 void World::RemoveChunk(int x, int z) {
+    chunk::Chunk *removed = GetChunk(x, z);
     chunks.erase(glm::ivec2(x, z));
+    staleChunks.push_back(removed);
 }
 
 chunk::Chunk *World::GetChunk(int x, int z) {
@@ -41,4 +43,13 @@ void World::SetMeta(int x, int y, int z, uint8_t meta) {
 
 std::unordered_map<glm::ivec2, chunk::Chunk *> World::GetChunks() {
     return chunks;
+}
+
+void World::Cleanup() {
+    if (staleChunks.empty())
+        return;
+
+    for (chunk::Chunk *chk :staleChunks)
+        delete chk;
+    staleChunks.clear();
 }

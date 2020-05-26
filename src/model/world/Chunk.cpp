@@ -46,14 +46,29 @@ BlockData &Chunk::GetBlockData(int x, int y, int z) {
 }
 
 void Chunk::SetBlockData(int x, int y, int z, BlockData data) {
+    EnsureSectionExists(y);
     sections[y >> 4]->SetBlockData(x, y & 15, z, data);
 }
 
 void Chunk::SetBlock(int x, int y, int z, uint8_t id) {
+    EnsureSectionExists(y);
     sections[y >> 4]->SetBlock(x, y & 15, z, id);
 }
 
 void Chunk::SetMeta(int x, int y, int z, uint8_t meta) {
+    EnsureSectionExists(y);
     sections[y >> 4]->SetMeta(x, y & 15, z, meta);
+}
+
+void Chunk::EnsureSectionExists(int y) {
+    int yIdx = y >> 4;
+    if (sections[yIdx] == nullptr)
+        sections[yIdx] = new Section(x, yIdx, z);
+}
+
+Chunk::~Chunk() {
+    for (int i = 0; i < 16; i++)
+        delete sections[i];
+    delete[] sections;
 }
 

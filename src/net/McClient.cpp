@@ -260,3 +260,7 @@ int McClient::ComputeRemainingChunkDataSize(bool continuous, bool skylight, int 
     int biomeData = continuous ? 256 : 0;
     return blocklightData + skylightData + biomeData;
 }
+
+bool McClient::IsReady() {
+    return !isLoginMode;
+}

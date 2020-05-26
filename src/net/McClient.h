@@ -57,6 +57,8 @@ public:
     void SendBlockPlacement(Position position, uint8_t face, uint8_t x, uint8_t y, uint8_t z);
 
     void SendRespawn();
+
+    bool IsReady();
 };
 
 
