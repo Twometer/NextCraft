@@ -88,14 +88,9 @@ void SectionMesh::Upload() {
 }
 
 bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
-    uint8_t otherId = 0;
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        return true;
+        return NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id == 0;
     else return section->GetBlockData(x, y, z).id == 0;
-    //otherId = NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id;
-    //else otherId = section->GetBlockData(x, y, z).id;
-    //return otherId == 0;
-    return section->GetBlockData(x, y, z).id;
 }
 
 void SectionMesh::PutVertices(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
