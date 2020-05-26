@@ -12,6 +12,5 @@ void main() {
     if (textureColor.a < 0.1f) {
         discard;
     }
-
     color = textureColor * vec4(fragmentColor, 1.0f);
 }

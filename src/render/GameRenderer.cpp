@@ -80,11 +80,10 @@ void GameRenderer::HandleInput() {
     glfwGetCursorPos(window, &mouseX, &mouseY);
 
     if (0 != mouseX || 0 != mouseY) {
-        player.yaw -= 0.2f * mouseX;
-        player.pitch -= 0.2f * mouseY;
+        player.yaw -= 0.125f * (float) mouseX;
+        player.pitch -= 0.125f * (float) mouseY;
 
         player.pitch = glm::clamp(player.pitch, -90.f, 90.f);
-
         glfwSetCursorPos(window, 0, 0);
     }
 

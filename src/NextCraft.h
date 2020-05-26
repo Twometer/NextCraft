@@ -49,7 +49,6 @@ public:
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_SAMPLES, 4);
 
         window = glfwCreateWindow(1000, 700, GAME_TITLE, nullptr, nullptr);
         if (!window) {
@@ -59,6 +58,8 @@ public:
         glfwGetFramebufferSize(window, &viewport.width, &viewport.height);
         glfwGetWindowContentScale(window, &viewport.scaleX, &viewport.scaleY);
         glfwSetFramebufferSizeCallback(window, &(NextCraft::framebuffer_size_callback));
+
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         glfwMakeContextCurrent(window);
 

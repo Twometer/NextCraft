@@ -40,7 +40,7 @@ void FloatBuffer::Grow() {
     memset(newData, 0, sizeof(GLfloat) * newCapacity);
 
     int curCount = capacity - remaining;
-    memcpy(newData, data, curCount);
+    memcpy(newData, data, sizeof(GLfloat) * curCount);
 
     this->capacity = newCapacity;
     this->remaining = newCapacity - curCount;

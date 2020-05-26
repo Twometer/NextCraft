@@ -133,8 +133,8 @@ void SectionMesh::PutVertices(const std::vector<GLfloat> &vertices, const std::v
     const GLfloat d = 0.03125;
 
     for (int i = 0; i < textures.size(); i += 2) {
-        GLfloat u = (textures[i] + texX) * d;
-        GLfloat v = (textures[i + 1] + texY) * d;
+        GLfloat u = (textures[i] + static_cast<float>(texX)) * d;
+        GLfloat v = (textures[i + 1] + static_cast<float>(texY)) * d;
         mesh->AddTexCoords(u, v);
     }
 }
