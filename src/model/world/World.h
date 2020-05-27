@@ -5,7 +5,7 @@
 #ifndef NEXTCRAFT_WORLD_H
 #define NEXTCRAFT_WORLD_H
 
-#include <unordered_map>
+#include <map>
 #include <glm/glm.hpp>
 #include <glm/gtx/hash.hpp>
 
@@ -14,7 +14,7 @@
 
 class World {
 private:
-    std::unordered_map<glm::ivec2, chunk::Chunk *> chunks;
+    std::map<uint64_t, chunk::Chunk *> chunks;
 
     std::vector<chunk::Chunk *> staleChunks;
 
@@ -39,7 +39,10 @@ public:
 
     void Cleanup();
 
-    std::unordered_map<glm::ivec2, chunk::Chunk *> GetChunks();
+    std::map<uint64_t, chunk::Chunk *> GetChunks();
+
+private:
+    static inline uint64_t GetKey(int x, int z);
 };
 
 

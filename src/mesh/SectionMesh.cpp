@@ -88,9 +88,8 @@ void SectionMesh::Upload() {
 }
 
 bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
-    // TODO Calling GetBlockData() here crashes the client: SIGSEGV within the world map
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        return true; // NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id == 0;
+        return NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id == 0;
     else return section->GetBlockData(x, y, z).id == 0;
 }
 
