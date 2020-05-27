@@ -5,6 +5,8 @@ in vec2 fragmentUV;
 
 uniform sampler2D tex;
 
+uniform float opacity;
+
 out vec4 color;
 
 void main() {
@@ -13,4 +15,5 @@ void main() {
         discard;
     }
     color = textureColor * vec4(fragmentColor, 1.0f);
+    color.a = opacity;
 }

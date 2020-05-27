@@ -53,6 +53,10 @@ void GameRenderer::RenderFrame() {
         if (chk == nullptr)
             continue;
 
+        if (chk->fadeProgress < 100)
+            chk->fadeProgress++;
+        terrainShader->SetOpacity(chk->fadeProgress / 100.f);
+
         for (int i = 0; i < 16; i++) {
             chunk::Section *section = chk->GetSection(i);
             if (section != nullptr)

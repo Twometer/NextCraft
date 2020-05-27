@@ -11,6 +11,7 @@ class TerrainShader : public IShader {
 private:
     GLuint loc_matrix;
     GLuint loc_texture;
+    GLuint loc_opacity;
 
 public:
     TerrainShader() {
@@ -19,14 +20,19 @@ public:
 
     void BindUniforms() override {
         loc_matrix = GetLocation("matrix");
+        loc_opacity = GetLocation("opacity");
         loc_texture = GetLocation("tex");
     }
 
-    void SetMatrix(const glm::mat4 &matrix) {
+    void SetOpacity(float opacity) const {
+        glUniform1f(loc_opacity, opacity);
+    }
+
+    void SetMatrix(const glm::mat4 &matrix) const {
         LoadMatrix(loc_matrix, matrix);
     }
 
-    void SetTextureUnit(const int idx) {
+    void SetTextureUnit(const int idx) const {
         glUniform1i(loc_texture, idx);
     }
 

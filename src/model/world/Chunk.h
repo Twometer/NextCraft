@@ -22,6 +22,7 @@ namespace chunk {
     public:
         int x;
         int z;
+        float fadeProgress = 0;
 
         ~Chunk();
 
