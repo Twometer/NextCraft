@@ -14,6 +14,7 @@ add_executable(NextCraft
         src/net/NetUtils.cpp
         src/util/ZLib.cpp
         src/util/Logger.cpp
+        src/util/FloatBuffer.cpp
         src/chat/ChatParser.cpp
         src/model/world/Chunk.cpp
         src/model/world/World.cpp
@@ -24,6 +25,7 @@ add_executable(NextCraft
         src/render/GameRenderer.cpp
         src/render/shaders/IShader.cpp
         src/gl/Loader.cpp
+        src/pick/Raycast.cpp
         src/mesh/AsyncMeshBuilder.cpp
         src/mesh/SectionMesh.cpp
         src/mesh/Mesh.cpp
@@ -31,7 +33,7 @@ add_executable(NextCraft
         src/NextCraft.cpp
         src/main.cpp
         ext/glad.c
-        ext/spng.c src/util/FloatBuffer.cpp src/util/FloatBuffer.h)
+        ext/spng.c)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc)
 target_link_libraries(NextCraft glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)

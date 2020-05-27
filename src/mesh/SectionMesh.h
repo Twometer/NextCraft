@@ -37,8 +37,9 @@ private:
 
     bool ShouldRender(const Block *me, int x, int y, int z, int f);
 
-    void PutVertices(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
-                     int texX, int texY, int f, Mesh *mesh);
+    static void
+    PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
+                int texX, int texY, int f, Mesh *mesh);
 
 public:
     explicit SectionMesh(chunk::Section *section);
