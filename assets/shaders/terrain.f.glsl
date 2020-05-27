@@ -15,5 +15,5 @@ void main() {
         discard;
     }
     color = textureColor * vec4(fragmentColor, 1.0f);
-    color.a = opacity;
+    color.a *= opacity;
 }
