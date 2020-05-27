@@ -10,13 +10,16 @@
 
 class Raycast {
 private:
-    float range;
     float precision;
+    int raySteps;
 
 public:
     Raycast(float range, float precision);
 
     RaycastResult CastRay() const;
+
+private:
+    BlockFace FindFace(glm::vec3 rayPos, int x, int y, int z) const;
 };
 
 

@@ -7,10 +7,11 @@
 
 #include <glm/vec3.hpp>
 #include "../model/block/BlockFace.h"
+#include "../model/world/BlockData.h"
 
 struct RaycastResult {
 
-    glm::vec3 blockPosition;
+    glm::ivec3 blockPosition;
 
     BlockFace blockFace;
 
