@@ -3,6 +3,7 @@
 //
 
 #include "World.h"
+#include "../block/BlockRegistry.h"
 
 void World::AddChunk(chunk::Chunk *chunk) {
     chunks[GetKey(chunk->x, chunk->z)] = chunk;
@@ -57,4 +58,24 @@ uint64_t World::GetKey(int x, int z) {
     auto ux = (uint64_t) ((uint32_t) x);
     auto uz = (uint64_t) ((uint32_t) z);
     return (ux << 32ul) | uz;
+}
+
+std::vector<AABB> World::GetCubes(int xx, int xy, int xz, int r) {
+    std::vector<AABB> cubes = std::vector<AABB>();
+    for (int x = -r; x <= r; x++) {
+        for (int y = -r; y <= r; y++) {
+            for (int z = -r; z <= r; z++) {
+                uint8_t bid = GetBlockData(xx + x, xy + y, xz + z).id;
+                Block *block = BlockRegistry::Get(bid);
+
+                if (block != nullptr && bid != 0) {
+                    AABB boundingBox = AABB(glm::vec3(xx + x, xy + y, xz + z),
+                                            glm::vec3(xx + x, xy + y, xz + z));
+                    boundingBox = boundingBox.Expand(1.0, bid == 78 ? 0.1 : 1.0, 1.0);
+                    cubes.push_back(boundingBox);
+                }
+            }
+        }
+    }
+    return cubes;
 }

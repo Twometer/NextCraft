@@ -69,6 +69,7 @@ void GameRenderer::RenderFrame() {
 
     if (inputTimer.HasReached()) {
         HandleInput();
+        NextCraft::client->player.Update();
         inputTimer.Reset();
     }
 
@@ -104,25 +105,23 @@ void GameRenderer::HandleInput() {
     float yaw = glm::radians(player.yaw);
     glm::vec3 direction(glm::sin(yaw), 0, glm::cos(yaw));
 
+    const float speedMultiplier = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ? 0.045 : 0.025f;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        player.Move(direction * 0.5f);
+        player.AddVelocity(direction * speedMultiplier);
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         glm::vec3 directionLeft(direction.z, 0, -direction.x);
-        player.Move(directionLeft * 0.5f);
+        player.AddVelocity(directionLeft * speedMultiplier);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        player.Move(-direction * 0.5f);
+        player.AddVelocity(-direction * speedMultiplier);
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         glm::vec3 directionRight(-direction.z, 0, direction.x);
-        player.Move(directionRight * 0.5f);
+        player.AddVelocity(directionRight * speedMultiplier);
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        player.Move(glm::vec3(0, 0.5, 0));
-    }
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-        player.Move(glm::vec3(0, -0.5, 0));
+        player.Jump();
     }
 
     lookingAt = raycast.CastRay();

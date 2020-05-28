@@ -7,6 +7,12 @@
 
 #include <glm/glm.hpp>
 #include <string>
+#include <vector>
+#include "../world/AABB.h"
+
+
+#define GRAVITY 0.016f
+#define SLIPPERINESS 0.75f
 
 struct Player {
 
@@ -15,6 +21,10 @@ struct Player {
     double posX = 0.;
     double posY = 0.;
     double posZ = 0.;
+
+    double motionX;
+    double motionY;
+    double motionZ;
 
     float yaw = 0.f;
     float pitch = 0.f;
@@ -25,11 +35,15 @@ struct Player {
     float xpBar = 0.f;
     int xpLevel = 0;
 
-    void Move(glm::vec3 offset) {
-        posX += offset.x;
-        posY += offset.y;
-        posZ += offset.z;
-    }
+    bool onGround;
+
+    void Move(glm::vec3 offset);
+
+    void Update();
+
+    void AddVelocity(glm::vec3 velocity);
+
+    void Jump();
 
 };
 

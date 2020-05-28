@@ -11,6 +11,7 @@
 
 #include "Chunk.h"
 #include "BlockData.h"
+#include "AABB.h"
 
 class World {
 private:
@@ -40,6 +41,8 @@ public:
     void Cleanup();
 
     std::map<uint64_t, chunk::Chunk *> &GetChunks();
+
+    std::vector<AABB> GetCubes(int x, int y, int z, int radius);
 
 private:
     static inline uint64_t GetKey(int x, int z);
