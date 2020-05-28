@@ -5,8 +5,7 @@
 #include "World.h"
 
 void World::AddChunk(chunk::Chunk *chunk) {
-    auto vec = GetKey(chunk->x, chunk->z);
-    chunks[vec] = chunk;
+    chunks[GetKey(chunk->x, chunk->z)] = chunk;
 }
 
 void World::RemoveChunk(int x, int z) {

@@ -13,7 +13,7 @@ chunk::Section::Section(int x, int y, int z) {
 }
 
 chunk::Section::~Section() {
-    delete[] this->data;
+    delete[] data;
     delete mesh;
 }
 
@@ -33,7 +33,7 @@ void chunk::Section::SetMeta(int x, int y, int z, uint8_t meta) {
     GetBlockDataPtr(x, y, z)->meta = meta;
 }
 
-chunk::BlockData *chunk::Section::GetBlockDataPtr(int x, int y, int z) {
+chunk::BlockData *chunk::Section::GetBlockDataPtr(int x, int y, int z) const {
     int idx = (y * 16 + z) * 16 + x;
     return data + idx;
 }

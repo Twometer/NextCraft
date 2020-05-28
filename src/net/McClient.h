@@ -42,6 +42,8 @@ private:
     static int ComputeRemainingChunkDataSize(bool continuous, bool skylight, int sections);
 
 public:
+    ~McClient();
+
     void SendHandshake(int protocolVersion, const char *hostname, unsigned short port, int nextState);
 
     void SendLogin(const char *username);

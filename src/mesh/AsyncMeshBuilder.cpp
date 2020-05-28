@@ -36,4 +36,5 @@ void AsyncMeshBuilder::Schedule(chunk::Section *section) {
 
 void AsyncMeshBuilder::Shutdown() {
     running = false;
+    delete concurrentQueue;
 }

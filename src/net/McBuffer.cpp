@@ -12,6 +12,7 @@
 McBuffer::McBuffer() {
     this->data = new uint8_t[INITIAL_SIZE];
     this->dataSize = INITIAL_SIZE;
+    ownsBuffer = true;
 };
 
 McBuffer::McBuffer(uint8_t *buf, int length) {
@@ -20,7 +21,7 @@ McBuffer::McBuffer(uint8_t *buf, int length) {
 }
 
 McBuffer::~McBuffer() {
-    if (isBufferReplaced)
+    if (ownsBuffer)
         delete[] data;
 }
 
@@ -169,7 +170,7 @@ void McBuffer::DecompressRemaining(int sizeUncompressed) {
     this->data = buf;
     this->dataSize = sizeUncompressed;
     this->offset = 0;
-    this->isBufferReplaced = true;
+    this->ownsBuffer = true;
 }
 
 void McBuffer::Reverse(void *ptr, int len) {

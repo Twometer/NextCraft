@@ -41,6 +41,7 @@ bool NextCraft::Start() {
 
 void NextCraft::Shutdown() {
     client->Disconnect();
+    delete client;
     glfwTerminate();
 }
 

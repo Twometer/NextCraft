@@ -5,8 +5,7 @@
 #include "Vao.h"
 #include "../util/Logger.h"
 
-Vao::Vao() {
-}
+Vao::Vao() = default;
 
 Vao::~Vao() {
     glDeleteBuffers(1, &vertexBuffer);

@@ -17,7 +17,7 @@ private:
 
     int offset = 0;
 
-    bool isBufferReplaced = false;
+    bool ownsBuffer = false;
 
 public:
     McBuffer();

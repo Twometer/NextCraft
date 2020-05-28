@@ -50,6 +50,8 @@ Image Loader::LoadImage(const std::string &path) {
 
     delete[] input;
 
+    spng_ctx_free(ctx);
+
     return {output, outputSize, ihdr.width, ihdr.height};
 }
 
@@ -78,6 +80,9 @@ GLuint Loader::LoadTexture(const std::string &path) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     glCheckErrors();
+
+    delete[] img.data;
+
     return texture;
 }
 

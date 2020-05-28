@@ -27,7 +27,7 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
         if (packetLen <= 0) continue;
 
         int received = client->Receive(recvBuf, packetLen);
-        if (received <= 0) return;
+        if (received <= 0) break;
 
         McBuffer buffer(recvBuf, packetLen);
 
@@ -40,6 +40,8 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
         int packetId = buffer.ReadVarInt();
         HandlePacket(packetId, buffer);
     } while (!closeRequested);
+
+    delete[] recvBuf;
 
     if (!closeRequested)
         Logger::Error("Connection lost!");
@@ -266,4 +268,8 @@ int McClient::ComputeRemainingChunkDataSize(bool continuous, bool skylight, int 
 
 bool McClient::IsReady() {
     return !isLoginMode;
+}
+
+McClient::~McClient() {
+    delete client;
 }
