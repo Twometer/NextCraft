@@ -19,7 +19,7 @@ public:
     RaycastResult CastRay() const;
 
 private:
-    BlockFace FindFace(glm::vec3 rayPos, int x, int y, int z) const;
+    static BlockFace FindFace(glm::vec3 rayPos, int x, int y, int z);
 };
 
 

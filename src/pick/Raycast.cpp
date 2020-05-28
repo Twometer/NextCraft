@@ -16,11 +16,14 @@ RaycastResult Raycast::CastRay() const {
 
     RaycastResult result{};
 
-    glm::vec3 position = glm::vec3(player.posX, player.posY, player.posZ);
+    float yaw = glm::radians(player.yaw);
+    float pitch = glm::radians(player.pitch);
+
+    glm::vec3 position = glm::vec3(player.posX, player.posY + 1.75, player.posZ);
     glm::vec3 direction = glm::vec3(
-            glm::cos(player.pitch) * glm::sin(player.yaw),
-            glm::sin(player.pitch),
-            glm::cos(player.pitch) * glm::cos(player.yaw)
+            glm::cos(pitch) * glm::sin(yaw),
+            glm::sin(pitch),
+            glm::cos(pitch) * glm::cos(yaw)
     ) * precision;
 
     for (int i = 0; i < raySteps; i++) {
@@ -34,13 +37,14 @@ RaycastResult Raycast::CastRay() const {
         if (block.id != 0) {
             result.blockPosition = glm::vec3(x, y, z);
             result.blockFace = FindFace(position, x, y, z);
+            break;
         }
     }
 
     return result;
 }
 
-BlockFace Raycast::FindFace(glm::vec3 rayPos, int x, int y, int z) const {
+BlockFace Raycast::FindFace(glm::vec3 rayPos, int x, int y, int z) {
     float xd = glm::round(rayPos.x - x);
     float yd = glm::round(rayPos.y - y);
     float zd = glm::round(rayPos.z - z);

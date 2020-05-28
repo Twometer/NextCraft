@@ -19,10 +19,11 @@ void GameRenderer::Initialize() {
 
     glClearColor(0.72f, 0.83f, 0.996f, 1.0f);
 
-    timer.Begin(60.0f);
+    inputTimer.Begin(60.0f);
     networkTimer.Begin(20.0f);
 
     this->terrainShader = new TerrainShader();
+    this->highlightShader = new HighlightShader();
     this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png");
 }
 
@@ -57,9 +58,18 @@ void GameRenderer::RenderFrame() {
         }
     }
 
-    if (timer.HasReached()) {
-        HandleTick();
-        timer.Reset();
+    glDisable(GL_CULL_FACE);
+    highlightShader->Use();
+    highlightShader->SetViewMatrix(camera.GetViewMatrix());
+    highlightShader->SetProjectionMatrix(camera.GetProjectionMatrix());
+    highlightShader->SetOffset(lookingAt.blockPosition);
+    highlightShader->SetSize(glm::vec3(1.0f, 1.0f, 1.0f));
+    highlightRenderer.Render();
+    glEnable(GL_CULL_FACE);
+
+    if (inputTimer.HasReached()) {
+        HandleInput();
+        inputTimer.Reset();
     }
 
     if (networkTimer.HasReached()) {
@@ -71,10 +81,6 @@ void GameRenderer::RenderFrame() {
     }
 
     NextCraft::client->world.Cleanup();
-}
-
-void GameRenderer::HandleTick() {
-    HandleInput();
 }
 
 void GameRenderer::HandleInput() {
@@ -118,4 +124,6 @@ void GameRenderer::HandleInput() {
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
         player.Move(glm::vec3(0, -0.5, 0));
     }
+
+    lookingAt = raycast.CastRay();
 }
