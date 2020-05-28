@@ -7,7 +7,9 @@
 
 #include "Vao.h"
 #include "../model/world/Section.h"
+#include "../model/world/BlockData.h"
 #include "../model/block/Block.h"
+#include "../model/block/BlockFace.h"
 
 enum class State {
     RebuildScheduled,
@@ -35,7 +37,9 @@ private:
     int yo;
     int zo;
 
-    bool ShouldRender(const Block *me, int x, int y, int z, int f);
+    bool ShouldRender(const Block &me, int x, int y, int z, BlockFace face) const;
+
+    inline chunk::BlockData &GetBlockData(int x, int y, int z) const;
 
     static void
     PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,

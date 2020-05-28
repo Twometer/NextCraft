@@ -49,25 +49,24 @@ void SectionMesh::Build() {
                 int tx = me.sideTex.x;
                 int ty = me.sideTex.y;
 
-                if (ShouldRender(&me, x + 1, y, z, 0))
+                if (ShouldRender(me, x + 1, y, z, PosX))
                     PutGeometry(PosXVertices, PosXTextures, absX, absY, absZ, tx, ty, 0, mesh);
-                if (ShouldRender(&me, x - 1, y, z, 1))
+                if (ShouldRender(me, x - 1, y, z, NegX))
                     PutGeometry(NegXVertices, NegXTextures, absX, absY, absZ, tx, ty, 1, mesh);
 
-                if (ShouldRender(&me, x, y, z + 1, 2))
+                if (ShouldRender(me, x, y, z + 1, PosZ))
                     PutGeometry(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, 2, mesh);
-                if (ShouldRender(&me, x, y, z - 1, 3))
+                if (ShouldRender(me, x, y, z - 1, NegZ))
                     PutGeometry(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, 3, mesh);
-
 
                 tx = me.topTex.x;
                 ty = me.topTex.y;
-                if (ShouldRender(&me, x, y + 1, z, 4))
+                if (ShouldRender(me, x, y + 1, z, PosY))
                     PutGeometry(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, 4, mesh);
 
                 tx = me.bottomTex.x;
                 ty = me.bottomTex.y;
-                if (ShouldRender(&me, x, y - 1, z, 5))
+                if (ShouldRender(me, x, y - 1, z, NegY))
                     PutGeometry(NegYVertices, NegYTextures, absX, absY, absZ, tx, ty, 5, mesh);
             }
         }
@@ -87,10 +86,19 @@ void SectionMesh::Upload() {
     mesh = nullptr;
 }
 
-bool SectionMesh::ShouldRender(const Block *me, int x, int y, int z, int f) {
+bool SectionMesh::ShouldRender(const Block &me, int x, int y, int z, BlockFace face) const {
+    BlockData &data = GetBlockData(x, y, z);
+    if (data.id == 0)
+        return true;
+
+    Block *other = BlockRegistry::Get(data.id);
+    return (other->id == 8 || other->id == 9) && !(me.id == 8 || me.id == 9);
+}
+
+BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        return NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z).id == 0;
-    else return section->GetBlockData(x, y, z).id == 0;
+        return NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z);
+    else return section->GetBlockData(x, y, z);
 }
 
 void SectionMesh::PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
