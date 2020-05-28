@@ -9,15 +9,11 @@
 
 class Camera {
 private:
-    glm::mat4 cameraMatrix;
-
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
 
 public:
     glm::mat4 CalculateMatrix();
-
-    glm::mat4 GetMatrix();
 
     glm::mat4 GetViewMatrix();
 

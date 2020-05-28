@@ -33,11 +33,7 @@ glm::mat4 Camera::CalculateMatrix() {
                                         0.01f, 512.0f);
     viewMatrix = glm::lookAt(eyePosition, eyePosition + direction, up);
 
-    return cameraMatrix = (projectionMatrix * viewMatrix);
-}
-
-glm::mat4 Camera::GetMatrix() {
-    return cameraMatrix;
+    return projectionMatrix * viewMatrix;
 }
 
 glm::mat4 Camera::GetViewMatrix() {

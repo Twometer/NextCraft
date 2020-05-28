@@ -11,22 +11,13 @@
 
 void GameRenderer::Initialize() {
     glEnable(GL_DEPTH_TEST);
-    glCheckErrors();
-
     glEnable(GL_CULL_FACE);
-    glCheckErrors();
-
     glCullFace(GL_BACK);
-    glCheckErrors();
 
     glEnable(GL_BLEND);
-    glCheckErrors();
-
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glCheckErrors();
 
     glClearColor(0.72f, 0.83f, 0.996f, 1.0f);
-    glCheckErrors();
 
     timer.Begin(60.0f);
     networkTimer.Begin(20.0f);
@@ -41,11 +32,13 @@ void GameRenderer::RenderFrame() {
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, terrainTexture);
-    glCheckErrors();
 
-    glm::mat4 matrix = camera.CalculateMatrix();
+    camera.CalculateMatrix();
+
     terrainShader->Use();
-    terrainShader->SetMatrix(matrix);
+    terrainShader->SetViewMatrix(camera.GetViewMatrix());
+    terrainShader->SetProjectionMatrix(camera.GetProjectionMatrix());
+    terrainShader->SetSkyColor(glm::vec3(0.72f, 0.83f, 0.996f));
     terrainShader->SetTextureUnit(0);
 
     for (auto &pair : NextCraft::client->world.GetChunks()) {

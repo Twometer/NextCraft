@@ -2,12 +2,13 @@
 
 in vec3 fragmentColor;
 in vec2 fragmentUV;
-
-uniform sampler2D tex;
-
-uniform float opacity;
+in float visibility;
 
 out vec4 color;
+
+uniform sampler2D tex;
+uniform vec3 skyColor;
+uniform float opacity;
 
 void main() {
     vec4 textureColor = texture(tex, fragmentUV);
@@ -15,5 +16,6 @@ void main() {
         discard;
     }
     color = textureColor * vec4(fragmentColor, 1.0f);
+    color = mix(vec4(skyColor, 1.0), color, visibility);
     color.a *= opacity;
 }
