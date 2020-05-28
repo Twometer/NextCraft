@@ -17,7 +17,7 @@ private:
     FloatBuffer texCoords;
 
 public:
-    Mesh(int capacity);
+    explicit Mesh(int capacity);
 
     void AddVertex(GLfloat x, GLfloat y, GLfloat z);
 
@@ -36,6 +36,8 @@ public:
     GLfloat *GetTexCoords();
 
     int GetTexCoordCount();
+
+    void Clear();
 
 };
 

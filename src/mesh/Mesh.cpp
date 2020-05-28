@@ -45,3 +45,9 @@ GLfloat *Mesh::GetTexCoords() {
 int Mesh::GetTexCoordCount() {
     return texCoords.GetSize();
 }
+
+void Mesh::Clear() {
+    vertices.Clear();
+    colors.Clear();
+    texCoords.Clear();
+}

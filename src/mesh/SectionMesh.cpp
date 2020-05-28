@@ -31,8 +31,10 @@ void SectionMesh::Build() {
     if (state != State::AwaitingRebuild)
         return;
 
-    delete mesh;
-    this->mesh = new Mesh(35000);
+    if (this->mesh == nullptr)
+        this->mesh = new Mesh(35000);
+    else
+        this->mesh->Clear();
 
     for (int x = 0; x < 16; x++) {
         int absX = x + xo;

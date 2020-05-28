@@ -30,6 +30,8 @@ public:
 
     int GetSize();
 
+    void Clear();
+
 private:
     void Grow();
 };
