@@ -50,24 +50,24 @@ void SectionMesh::Build() {
                 int ty = me.sideTex.y;
 
                 if (ShouldRender(me, x + 1, y, z, PosX))
-                    PutGeometry(PosXVertices, PosXTextures, absX, absY, absZ, tx, ty, 0, mesh);
+                    PutGeometry(PosXVertices, PosXTextures, absX, absY, absZ, tx, ty, PosX, mesh);
                 if (ShouldRender(me, x - 1, y, z, NegX))
-                    PutGeometry(NegXVertices, NegXTextures, absX, absY, absZ, tx, ty, 1, mesh);
+                    PutGeometry(NegXVertices, NegXTextures, absX, absY, absZ, tx, ty, NegX, mesh);
 
                 if (ShouldRender(me, x, y, z + 1, PosZ))
-                    PutGeometry(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, 2, mesh);
+                    PutGeometry(PosZVertices, PosZTextures, absX, absY, absZ, tx, ty, PosZ, mesh);
                 if (ShouldRender(me, x, y, z - 1, NegZ))
-                    PutGeometry(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, 3, mesh);
+                    PutGeometry(NegZVertices, NegZTextures, absX, absY, absZ, tx, ty, NegZ, mesh);
 
                 tx = me.topTex.x;
                 ty = me.topTex.y;
                 if (ShouldRender(me, x, y + 1, z, PosY))
-                    PutGeometry(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, 4, mesh);
+                    PutGeometry(PosYVertices, PosYTextures, absX, absY, absZ, tx, ty, PosY, mesh);
 
                 tx = me.bottomTex.x;
                 ty = me.bottomTex.y;
                 if (ShouldRender(me, x, y - 1, z, NegY))
-                    PutGeometry(NegYVertices, NegYTextures, absX, absY, absZ, tx, ty, 5, mesh);
+                    PutGeometry(NegYVertices, NegYTextures, absX, absY, absZ, tx, ty, NegY, mesh);
             }
         }
     }
@@ -102,35 +102,34 @@ BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
 }
 
 void SectionMesh::PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
-                              int z, int texX, int texY, int f, Mesh *mesh) {
+                              int z, int texX, int texY, BlockFace face, Mesh *mesh) {
     float brightness;
-    switch (f) {
-        case 0:
-        case 1:
+    switch (face) {
+        case PosX:
+        case NegX:
             brightness = 0.85;
             break;
-        case 2:
-        case 3:
+        case PosZ:
+        case NegZ:
             brightness = 0.65;
             break;
-        case 4:
-            brightness = 1.0f;
+        case NegY:
+            brightness = 0.55;
             break;
-        case 5:
-            brightness = 0.5f;
-            break;
+        case PosY:
         default:
             brightness = 1.0f;
             break;
     }
 
     for (int i = 0; i < vertices.size(); i += 3) {
-        GLfloat vx = vertices[i] + x;
-        GLfloat vy = vertices[i + 1] + y;
-        GLfloat vz = vertices[i + 2] + z;
+        GLfloat vx = vertices[i];
+        GLfloat vy = vertices[i + 1];
+        GLfloat vz = vertices[i + 2];
+        mesh->AddVertex(vx + x, vy + y, vz + z);
 
-        mesh->AddVertex(vx, vy, vz);
-        mesh->AddColor(brightness, brightness, brightness);
+        float vertexBrightness = brightness * GetOcclusionFactor(x, y, z, (int) vx, (int) vy, (int) vz, face);
+        mesh->AddColor(vertexBrightness, vertexBrightness, vertexBrightness);
     }
 
     const GLfloat d = 0.03125;
@@ -144,4 +143,45 @@ void SectionMesh::PutGeometry(const std::vector<GLfloat> &vertices, const std::v
 
 SectionMesh::~SectionMesh() {
     delete mesh;
+}
+
+bool SectionMesh::CanOcclude(int x, int y, int z) {
+    BlockData &data = NextCraft::client->world.GetBlockData(x, y, z);
+    return !(data.id == 8 || data.id == 9 || data.id == 0);
+}
+
+float SectionMesh::GetOcclusionFactor(int x, int y, int z, int vx, int vy, int vz, BlockFace face) {
+    if (vx == 0) vx = -1;
+    if (vy == 0) vy = -1;
+    if (vz == 0) vz = -1;
+
+    switch (face) {
+        case PosX:
+        case NegX: {
+            float oc = 1.0f;
+            if (CanOcclude(x + vx, y + vy, z)) oc -= 0.2;
+            if (CanOcclude(x + vx, y + vy, z + vz)) oc -= 0.2;
+            if (CanOcclude(x + vx, y, z + vz)) oc -= 0.2;
+            return oc;
+        }
+        case PosY:
+        case NegY: {
+            float oc = 1.0f;
+            if (CanOcclude(x + vx, y + vy, z)) oc -= 0.2;
+            if (CanOcclude(x, y + vy, z + vz)) oc -= 0.2;
+            if (CanOcclude(x + vx, y + vy, z + vz)) oc -= 0.2;
+            return oc;
+        }
+        case PosZ:
+        case NegZ: {
+            float oc = 1.0f;
+            if (CanOcclude(x + vx, y, z + vz)) oc -= 0.2;
+            if (CanOcclude(x, y + vy, z + vz)) oc -= 0.2;
+            if (CanOcclude(x + vx, y + vy, z + vz)) oc -= 0.2;
+            return oc;
+        }
+        default:
+            break;
+    }
+    return 1.0f;
 }

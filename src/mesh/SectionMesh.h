@@ -43,7 +43,11 @@ private:
 
     static void
     PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
-                int texX, int texY, int f, Mesh *mesh);
+                int texX, int texY, BlockFace face, Mesh *mesh);
+
+    static bool CanOcclude(int x, int y, int z);
+
+    static float GetOcclusionFactor(int x, int y, int z, int vx, int vy, int vz, BlockFace face);
 
 public:
     explicit SectionMesh(chunk::Section *section);
