@@ -2,6 +2,7 @@
 // Created by twome on 28/05/2020.
 //
 
+#include <iostream>
 #include "Player.h"
 #include "../../NextCraft.h"
 
@@ -49,6 +50,10 @@ void Player::Update() {
     motionX *= SLIPPERINESS;
     motionY -= GRAVITY;
     motionZ *= SLIPPERINESS;
+
+    // Avoid setbacks
+    if (motionY < -2)
+        motionY = -2;
 }
 
 void Player::AddVelocity(glm::vec3 velocity) {
