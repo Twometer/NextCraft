@@ -7,7 +7,7 @@
 
 
 #include <glad/glad.h>
-#include "Mesh.h"
+#include "../mesh/Mesh.h"
 
 class Vao {
 private:

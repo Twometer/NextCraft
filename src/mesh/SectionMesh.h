@@ -5,7 +5,7 @@
 #ifndef NEXTCRAFT_SECTIONMESH_H
 #define NEXTCRAFT_SECTIONMESH_H
 
-#include "Vao.h"
+#include "../gl/Vao.h"
 #include "../model/world/Section.h"
 #include "../model/world/BlockData.h"
 #include "../model/block/Block.h"

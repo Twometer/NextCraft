@@ -1,3 +1,6 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err58-cpp"
+
 //
 // Created by twome on 26/01/2020.
 //
@@ -9,10 +12,10 @@
 #include <vector>
 
 static const std::vector<GLfloat> NegXVertices = {
-        0.0f, 0.0f, 0.0f, // Neg x
+        0.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f,
         0.0f, 1.0f, 1.0f,
-        0.0f, 0.0f, 0.0f, // Neg x
+        0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 1.0f,
         0.0f, 1.0f, 0.0f
 };
@@ -27,10 +30,10 @@ static const std::vector<GLfloat> NegXTextures = {
 };
 
 static const std::vector<GLfloat> NegYVertices = {
-        1.0f, 0.0f, 1.0f, // Neg y
+        1.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 0.0f,
         1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 1.0f, // Neg y
+        1.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 0.0f,
 };
@@ -45,10 +48,10 @@ static const std::vector<GLfloat> NegYTextures = {
 };
 
 static const std::vector<GLfloat> NegZVertices = {
-        1.0f, 1.0f, 0.0f, // Neg z
+        1.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f,  // Neg z
+        1.0f, 1.0f, 0.0f,
         1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 0.0f,
 };
@@ -63,10 +66,10 @@ static const std::vector<GLfloat> NegZTextures = {
 };
 
 static const std::vector<GLfloat> PosXVertices = {
-        1.0f, 0.0f, 0.0f, // Pos x
+        1.0f, 0.0f, 0.0f,
         1.0f, 1.0f, 1.0f,
         1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, // Pos x
+        1.0f, 1.0f, 1.0f,
         1.0f, 0.0f, 0.0f,
         1.0f, 1.0f, 0.0f,
 };
@@ -81,10 +84,10 @@ static const std::vector<GLfloat> PosXTextures = {
 };
 
 static const std::vector<GLfloat> PosYVertices = {
-        1.0f, 1.0f, 1.0f, // Pos y
+        1.0f, 1.0f, 1.0f,
         1.0f, 1.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, // Posy
+        1.0f, 1.0f, 1.0f,
         0.0f, 1.0f, 0.0f,
         0.0f, 1.0f, 1.0f,
 };
@@ -100,10 +103,10 @@ static const std::vector<GLfloat> PosYTextures = {
 
 
 static const std::vector<GLfloat> PosZVertices = {
-        0.0f, 1.0f, 1.0f, // Pos z
+        0.0f, 1.0f, 1.0f,
         0.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, // Pos z
+        1.0f, 1.0f, 1.0f,
         0.0f, 1.0f, 1.0f,
         1.0f, 0.0f, 1.0f
 };
@@ -205,16 +208,16 @@ static const std::vector<GLfloat> FlatTextures = {
 };
 
 static const std::vector<GLfloat> FlatSideVertices = {
-        0.05f, 0.0f, 0.05f, // Pos x
+        0.05f, 0.0f, 0.05f,
         0.05f, 1.0f, 0.95f,
         0.05f, 0.0f, 0.95f,
-        0.05f, 1.0f, 0.95f, // Pos x
+        0.05f, 1.0f, 0.95f,
         0.05f, 0.0f, 0.05f,
         0.05f, 1.0f, 0.05f,
-        0.05f, 0.0f, 0.05f, // Neg x
+        0.05f, 0.0f, 0.05f,
         0.05f, 0.0f, 0.95f,
         0.05f, 1.0f, 0.95f,
-        0.05f, 0.0f, 0.05f, // Neg x
+        0.05f, 0.0f, 0.05f,
         0.05f, 1.0f, 0.95f,
         0.05f, 1.0f, 0.05f
 };
@@ -235,3 +238,5 @@ static const std::vector<GLfloat> FlatSideTextures = {
 };
 
 #endif //NEXTCRAFT_VERTICES_H
+
+#pragma clang diagnostic pop

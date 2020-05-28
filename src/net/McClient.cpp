@@ -5,10 +5,9 @@
 #include <iostream>
 #include "McClient.h"
 #include "NetUtils.h"
-#include "../chat/ChatParser.h"
-#include "../model/world/Chunk.h"
+#include "chat/ChatParser.h"
 #include "obj/DigAction.h"
-#include "obj/Position.h"
+#include "../util/Logger.h"
 
 #define BUF_LEN 65565
 
@@ -43,7 +42,7 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
     } while (!closeRequested);
 
     if (!closeRequested)
-        std::cout << "Connection lost" << std::endl;
+        Logger::Error("Connection lost!");
 }
 
 void McClient::Disconnect() {
@@ -68,8 +67,10 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
     if (isLoginMode) {
         if (compressionThreshold == 0 && packetId == 3)
             compressionThreshold = buffer.ReadVarInt();
-        else if (packetId == 2)
+        else if (packetId == 2) {
             isLoginMode = false;
+            Logger::Info("Login completed");
+        }
         return;
     }
 
@@ -80,7 +81,7 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
         }
         case 0x02: { // Chat
             auto msg = buffer.ReadString();
-            std::cout << "Chat message: " << ChatParser::ToString(msg) << std::endl;
+            Logger::Info("Chat message: " + ChatParser::ToString(msg));
             break;
         }
         case 0x03: { // Time
@@ -160,9 +161,11 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
         }
         case 0x40: { // Disconnect
             auto msg = buffer.ReadString();
-            std::cout << "Kicked from server: " << msg << std::endl;
+            Logger::Info("Kicked from server: " + std::string(msg));
             break;
         }
+        default:
+            break;
     }
 }
 

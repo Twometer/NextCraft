@@ -7,7 +7,7 @@
 #include <iostream>
 
 void Logger::Print(const std::string &prefix, const std::string &message) {
-    std::cout << prefix << ": " << message << std::endl;
+    std::cout << "[" << prefix << "] " << message << std::endl;
 }
 
 void Logger::Error(const std::string &message) {

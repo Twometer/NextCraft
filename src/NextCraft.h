@@ -22,14 +22,9 @@ struct Viewport {
 
 class NextCraft {
 private:
-    static void Connect() {
-        client->Connect("DevClient", "localhost", 25565);
-    }
+    static void Connect();
 
-    static void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-        viewport.width = width;
-        viewport.height = height;
-    }
+    static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
 public:
     static McClient *client;
@@ -38,42 +33,9 @@ public:
 
     static Viewport viewport;
 
-    static bool Start() {
-        client = new McClient();
+    static bool Start();
 
-        if (!glfwInit()) {
-            return false;
-        }
-
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        window = glfwCreateWindow(1000, 700, GAME_TITLE, nullptr, nullptr);
-        if (!window) {
-            return false;
-        }
-
-        glfwGetFramebufferSize(window, &viewport.width, &viewport.height);
-        glfwGetWindowContentScale(window, &viewport.scaleX, &viewport.scaleY);
-        glfwSetFramebufferSizeCallback(window, &(NextCraft::framebuffer_size_callback));
-
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-        glfwMakeContextCurrent(window);
-
-        new std::thread(&NextCraft::Connect);
-
-        BlockRegistry::Initialize();
-        AsyncMeshBuilder::Initialize();
-        return true;
-    }
-
-    static void Shutdown() {
-        client->Disconnect();
-        glfwTerminate();
-    }
+    static void Shutdown();
 
 };
 

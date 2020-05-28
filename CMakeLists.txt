@@ -12,10 +12,10 @@ add_executable(NextCraft
         src/net/McClient.cpp
         src/net/McBuffer.cpp
         src/net/NetUtils.cpp
+        src/net/chat/ChatParser.cpp
         src/util/ZLib.cpp
         src/util/Logger.cpp
         src/util/FloatBuffer.cpp
-        src/chat/ChatParser.cpp
         src/model/world/Chunk.cpp
         src/model/world/World.cpp
         src/model/world/Section.cpp
@@ -24,12 +24,12 @@ add_executable(NextCraft
         src/render/Camera.cpp
         src/render/GameRenderer.cpp
         src/render/shaders/IShader.cpp
-        src/gl/Loader.cpp
         src/pick/Raycast.cpp
         src/mesh/AsyncMeshBuilder.cpp
         src/mesh/SectionMesh.cpp
         src/mesh/Mesh.cpp
-        src/mesh/Vao.cpp
+        src/gl/Loader.cpp
+        src/gl/Vao.cpp
         src/NextCraft.cpp
         src/main.cpp
         ext/glad.c
