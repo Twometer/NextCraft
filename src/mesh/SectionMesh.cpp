@@ -94,6 +94,8 @@ bool SectionMesh::ShouldRender(const Block &me, int x, int y, int z, BlockFace f
         return true;
 
     Block *other = BlockRegistry::Get(data.id);
+    if (me.id == 18 || other->id == 18)
+        return true;
     return (other->id == 8 || other->id == 9) && !(me.id == 8 || me.id == 9);
 }
 
