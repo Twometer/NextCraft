@@ -41,7 +41,7 @@ void World::SetMeta(int x, int y, int z, uint8_t meta) {
     GetChunk(x >> 4, z >> 4)->SetMeta(x & 15, y, z & 15, meta);
 }
 
-std::map<uint64_t, chunk::Chunk *> World::GetChunks() {
+std::map<uint64_t, chunk::Chunk *> &World::GetChunks() {
     return chunks;
 }
 

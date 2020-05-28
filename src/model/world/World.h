@@ -39,7 +39,7 @@ public:
 
     void Cleanup();
 
-    std::map<uint64_t, chunk::Chunk *> GetChunks();
+    std::map<uint64_t, chunk::Chunk *> &GetChunks();
 
 private:
     static inline uint64_t GetKey(int x, int z);
