@@ -49,7 +49,7 @@ IBlockRenderer::PutGeometry(const std::vector<GLfloat> &vertices, const std::vec
 
 bool IBlockRenderer::CanOcclude(int x, int y, int z) {
     chunk::BlockData &data = NextCraft::GetWorld().GetBlockData(x, y, z);
-    return !(data.id == 8 || data.id == 9 || data.id == 0);
+    return !(data.id == 8 || data.id == 9 || data.id == 0 || data.id == 31);
 }
 
 float IBlockRenderer::GetOcclusionFactor(int x, int y, int z, int vx, int vy, int vz, BlockFace face) {
@@ -91,3 +91,13 @@ float IBlockRenderer::GetOcclusionFactor(int x, int y, int z, int vx, int vy, in
 bool IBlockRenderer::IsShaded() const {
     return true;
 }
+
+bool IBlockRenderer::RequiresFluidMesh() const {
+    return false;
+}
+
+bool IBlockRenderer::IsTransparent() {
+    return false;
+}
+
+IBlockRenderer::~IBlockRenderer() = default;

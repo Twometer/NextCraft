@@ -14,12 +14,16 @@ class SectionMesh;
 
 class IBlockRenderer {
 public:
+    virtual ~IBlockRenderer();
+
     virtual void
     Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY, int absZ) = 0;
 
-    virtual bool RequiresFluidMesh() const = 0;
+    virtual bool RequiresFluidMesh() const;
 
     virtual bool IsShaded() const;
+
+    virtual bool IsTransparent();
 
 protected:
     void PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,

@@ -5,6 +5,7 @@
 #include <cstring>
 #include "BlockRegistry.h"
 #include "../../render/block/DefaultBlockRenderer.h"
+#include "../../render/block/PlantRenderer.h"
 
 Block **BlockRegistry::blocks;
 
@@ -14,6 +15,10 @@ void BlockRegistry::Register(int id, Texture texture) {
 
 void BlockRegistry::Register(int id, Texture top, Texture side, Texture bottom) {
     blocks[id] = new Block(id, new DefaultBlockRenderer(top, side, bottom));
+}
+
+void BlockRegistry::Register(int id, IBlockRenderer *blockRenderer) {
+    blocks[id] = new Block(id, blockRenderer);
 }
 
 void BlockRegistry::Initialize() {
@@ -45,6 +50,7 @@ void BlockRegistry::Initialize() {
     Register(22, {10, 6}); // Lapis Lazuli Block
     Register(24, {21, 9}, {19, 9}, {17, 9}); // Sandstone
     Register(25, {7, 6});  // Note block
+    Register(31, new PlantRenderer({15, 10}));  // Note block
     Register(35, {18, 11}); // Wool
     Register(45, {15, 0}); // Bricks
     Register(46, {18, 10}, {17, 10}, {16, 10}); // TNT

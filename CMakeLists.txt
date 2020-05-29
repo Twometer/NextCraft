@@ -28,6 +28,7 @@ add_executable(NextCraft
         src/render/shaders/IShader.cpp
         src/render/block/IBlockRenderer.cpp
         src/render/block/DefaultBlockRenderer.cpp
+        src/render/block/PlantRenderer.cpp
         src/input/InputHandler.cpp
         src/input/Raycast.cpp
         src/render/HighlightRenderer.cpp

@@ -15,6 +15,8 @@ private:
 
     static void Register(int id, Texture top, Texture side, Texture bottom);
 
+    static void Register(int id, IBlockRenderer *blockRenderer);
+
 public:
     static void Initialize();
 
