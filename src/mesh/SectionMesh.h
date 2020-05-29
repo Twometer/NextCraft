@@ -24,6 +24,8 @@ namespace chunk {
     class Section;
 }
 
+class IBlockRenderer;
+
 class SectionMesh {
 private:
     chunk::Section *section = nullptr;
@@ -37,18 +39,6 @@ private:
     int yo;
     int zo;
 
-    bool ShouldRender(const Block &me, int x, int y, int z, BlockFace face) const;
-
-    inline chunk::BlockData &GetBlockData(int x, int y, int z) const;
-
-    static void
-    PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
-                int texX, int texY, BlockFace face, Mesh *mesh);
-
-    static bool CanOcclude(int x, int y, int z);
-
-    static float GetOcclusionFactor(int x, int y, int z, int vx, int vy, int vz, BlockFace face);
-
 public:
     explicit SectionMesh(chunk::Section *section);
 
@@ -60,6 +50,9 @@ public:
 
     void Upload();
 
+    Mesh *GetSolidMesh();
+
+    chunk::BlockData &GetBlockData(int x, int y, int z) const;
 };
 
 

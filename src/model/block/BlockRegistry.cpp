@@ -4,15 +4,16 @@
 
 #include <cstring>
 #include "BlockRegistry.h"
+#include "../../render/block/DefaultBlockRenderer.h"
 
 Block **BlockRegistry::blocks;
 
 void BlockRegistry::Register(int id, Texture texture) {
-    blocks[id] = new Block(id, texture, texture, texture);
+    blocks[id] = new Block(id, new DefaultBlockRenderer(texture, texture, texture));
 }
 
 void BlockRegistry::Register(int id, Texture top, Texture side, Texture bottom) {
-    blocks[id] = new Block(id, top, side, bottom);
+    blocks[id] = new Block(id, new DefaultBlockRenderer(top, side, bottom));
 }
 
 void BlockRegistry::Initialize() {
