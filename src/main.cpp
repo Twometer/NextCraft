@@ -17,9 +17,11 @@ int main() {
     GameRenderer renderer{};
     renderer.Initialize();
 
-    while (!glfwWindowShouldClose(NextCraft::window)) {
+    GLFWwindow *window = NextCraft::window;
+
+    while (!glfwWindowShouldClose(window)) {
         renderer.RenderFrame();
-        glfwSwapBuffers(NextCraft::window);
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 

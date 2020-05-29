@@ -101,7 +101,7 @@ bool SectionMesh::ShouldRender(const Block &me, int x, int y, int z, BlockFace f
 
 BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
     if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
-        return NextCraft::client->world.GetBlockData(xo + x, yo + y, zo + z);
+        return NextCraft::GetWorld().GetBlockData(xo + x, yo + y, zo + z);
     else return section->GetBlockData(x, y, z);
 }
 
@@ -150,7 +150,7 @@ SectionMesh::~SectionMesh() {
 }
 
 bool SectionMesh::CanOcclude(int x, int y, int z) {
-    BlockData &data = NextCraft::client->world.GetBlockData(x, y, z);
+    BlockData &data = NextCraft::GetWorld().GetBlockData(x, y, z);
     return !(data.id == 8 || data.id == 9 || data.id == 0);
 }
 

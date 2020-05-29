@@ -21,21 +21,30 @@ struct Viewport {
 };
 
 class NextCraft {
+public:
+    static GLFWwindow *window;
+
 private:
+    static McClient *client;
+
+    static Viewport viewport;
+
     static void Connect();
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
 public:
-    static McClient *client;
-
-    static GLFWwindow *window;
-
-    static Viewport viewport;
-
     static bool Start();
 
     static void Shutdown();
+
+    static World &GetWorld();
+
+    static Player &GetPlayer();
+
+    static McClient &GetClient();
+
+    static const Viewport &GetViewport();
 
 };
 

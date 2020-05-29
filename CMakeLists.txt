@@ -26,8 +26,10 @@ add_executable(NextCraft
         src/render/Camera.cpp
         src/render/GameRenderer.cpp
         src/render/shaders/IShader.cpp
-        src/pick/Raycast.cpp
-        src/pick/HighlightRenderer.cpp
+        src/render/block/IBlockRenderer.cpp
+        src/input/InputHandler.cpp
+        src/input/Raycast.cpp
+        src/render/HighlightRenderer.cpp
         src/mesh/AsyncMeshBuilder.cpp
         src/mesh/SectionMesh.cpp
         src/mesh/Mesh.cpp

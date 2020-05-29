@@ -10,10 +10,10 @@ void Player::Move(glm::vec3 offset) {
     AABB playerBox = AABB(glm::vec3(posX - 0.33, posY, posZ - 0.33),
                           glm::vec3(posX + 0.33, posY + 1.9, posZ + 0.33));
 
-    std::vector<AABB> collision = NextCraft::client->world.GetCubes(static_cast<int>(glm::floor(posX)),
-                                                                    static_cast<int>(glm::floor(posY)),
-                                                                    static_cast<int>(glm::floor(posZ)),
-                                                                    4);
+    std::vector<AABB> collision = NextCraft::GetWorld().GetCubes(static_cast<int>(glm::floor(posX)),
+                                                                 static_cast<int>(glm::floor(posY)),
+                                                                 static_cast<int>(glm::floor(posZ)),
+                                                                 4);
 
     double dx = offset.x;
     double dy = offset.y;
@@ -47,9 +47,16 @@ void Player::Move(glm::vec3 offset) {
 
 void Player::Update() {
     Move(glm::vec3(motionX, motionY, motionZ));
-    motionX *= SLIPPERINESS;
-    motionY -= GRAVITY;
-    motionZ *= SLIPPERINESS;
+
+    if (flying) {
+        motionX *= FLY_MOTION_MUL;
+        motionY *= FLY_MOTION_MUL;
+        motionZ *= FLY_MOTION_MUL;
+    } else {
+        motionX *= SLIPPERINESS;
+        motionY -= GRAVITY;
+        motionZ *= SLIPPERINESS;
+    }
 
     // Avoid setbacks
     if (motionY < -2)

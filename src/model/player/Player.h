@@ -9,12 +9,18 @@
 #include <string>
 #include <vector>
 #include "../world/AABB.h"
+#include "GameMode.h"
 
 
 #define GRAVITY 0.016f
 #define SLIPPERINESS 0.75f
+#define FLY_MOTION_MUL 0.85
 
 struct Player {
+
+    int entityId;
+
+    GameMode gameMode;
 
     std::string name;
 
@@ -35,7 +41,8 @@ struct Player {
     float xpBar = 0.f;
     int xpLevel = 0;
 
-    bool onGround;
+    bool onGround = true;
+    bool flying = false;
 
     void Move(glm::vec3 offset);
 

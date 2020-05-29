@@ -9,12 +9,14 @@
 #include "shaders/HighlightShader.h"
 #include "Camera.h"
 #include "../util/Timer.h"
-#include "../pick/Raycast.h"
-#include "../pick/HighlightRenderer.h"
+#include "../input/InputHandler.h"
+#include "HighlightRenderer.h"
 
 class GameRenderer {
 private:
     Camera camera{};
+    InputHandler inputHandler{};
+
     Timer inputTimer;
     Timer networkTimer;
 
@@ -22,16 +24,12 @@ private:
     HighlightShader *highlightShader;
     GLuint terrainTexture;
 
-    Raycast raycast = Raycast(4.2f, 0.005f);
-    RaycastResult lookingAt;
     HighlightRenderer highlightRenderer;
+
 public:
     void Initialize();
 
     void RenderFrame();
-
-private:
-    void HandleInput();
 
 };
 

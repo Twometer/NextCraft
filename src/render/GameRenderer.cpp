@@ -28,7 +28,7 @@ void GameRenderer::Initialize() {
 }
 
 void GameRenderer::RenderFrame() {
-    glViewport(0, 0, NextCraft::viewport.width, NextCraft::viewport.height);
+    glViewport(0, 0, NextCraft::GetViewport().width, NextCraft::GetViewport().height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glActiveTexture(GL_TEXTURE0);
@@ -43,7 +43,7 @@ void GameRenderer::RenderFrame() {
     terrainShader->SetBrightness(1.0f);
     terrainShader->SetTextureUnit(0);
 
-    for (auto &pair : NextCraft::client->world.GetChunks()) {
+    for (auto &pair : NextCraft::GetWorld().GetChunks()) {
         chunk::Chunk *chk = pair.second;
         if (chk == nullptr)
             continue;
@@ -63,67 +63,24 @@ void GameRenderer::RenderFrame() {
     highlightShader->Use();
     highlightShader->SetViewMatrix(camera.GetViewMatrix());
     highlightShader->SetProjectionMatrix(camera.GetProjectionMatrix());
-    highlightShader->SetOffset(lookingAt.blockPosition);
+    highlightShader->SetOffset(inputHandler.GetLookingAt().blockPosition);
     highlightShader->SetSize(glm::vec3(1.0f, 1.0f, 1.0f));
     highlightRenderer.Render();
     glEnable(GL_CULL_FACE);
 
     if (inputTimer.HasReached()) {
-        HandleInput();
-        NextCraft::client->player.Update();
+        inputHandler.HandleInput();
         inputTimer.Reset();
     }
 
     if (networkTimer.HasReached()) {
-        if (NextCraft::client->IsReady()) {
-            Player &player = NextCraft::client->player;
-            NextCraft::client->SendPosLook(player.posX, player.posY, player.posZ, player.yaw, player.pitch, false);
+        if (NextCraft::GetClient().IsReady()) {
+            Player &player = NextCraft::GetPlayer();
+            NextCraft::GetClient().SendPosLook(player.posX, player.posY, player.posZ, player.yaw, player.pitch,
+                                               player.onGround);
         }
         networkTimer.Reset();
     }
 
-    NextCraft::client->world.Cleanup();
-}
-
-void GameRenderer::HandleInput() {
-    GLFWwindow *window = NextCraft::window;
-    Player &player = NextCraft::client->player;
-
-    bool focused = glfwGetWindowAttrib(window, GLFW_FOCUSED) == GLFW_TRUE;
-    if (!focused) return;
-
-    double mouseX, mouseY;
-    glfwGetCursorPos(window, &mouseX, &mouseY);
-
-    if (0 != mouseX || 0 != mouseY) {
-        player.yaw -= 0.125f * (float) mouseX;
-        player.pitch -= 0.125f * (float) mouseY;
-
-        player.pitch = glm::clamp(player.pitch, -90.f, 90.f);
-        glfwSetCursorPos(window, 0, 0);
-    }
-
-    float yaw = glm::radians(player.yaw);
-    glm::vec3 direction(glm::sin(yaw), 0, glm::cos(yaw));
-
-    const float speedMultiplier = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ? 0.045 : 0.025f;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        player.AddVelocity(direction * speedMultiplier);
-    }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        glm::vec3 directionLeft(direction.z, 0, -direction.x);
-        player.AddVelocity(directionLeft * speedMultiplier);
-    }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        player.AddVelocity(-direction * speedMultiplier);
-    }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        glm::vec3 directionRight(-direction.z, 0, direction.x);
-        player.AddVelocity(directionRight * speedMultiplier);
-    }
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        player.Jump();
-    }
-
-    lookingAt = raycast.CastRay();
+    NextCraft::GetWorld().Cleanup();
 }

@@ -8,8 +8,8 @@
 #define PI 3.141592653589793f
 
 glm::mat4 Camera::CalculateMatrix() {
-    Viewport &viewport = NextCraft::viewport;
-    Player &player = NextCraft::client->player;
+    const Viewport &viewport = NextCraft::GetViewport();
+    Player &player = NextCraft::GetPlayer();
 
     glm::vec3 eyePosition = glm::vec3(player.posX, player.posY + 1.75, player.posZ);
     float yaw = glm::radians(player.yaw);

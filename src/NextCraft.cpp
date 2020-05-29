@@ -53,3 +53,19 @@ void NextCraft::framebuffer_size_callback(GLFWwindow *window, int width, int hei
     viewport.width = width;
     viewport.height = height;
 }
+
+World &NextCraft::GetWorld() {
+    return client->world;
+}
+
+Player &NextCraft::GetPlayer() {
+    return client->player;
+}
+
+McClient &NextCraft::GetClient() {
+    return *client;
+}
+
+const Viewport &NextCraft::GetViewport() {
+    return viewport;
+}

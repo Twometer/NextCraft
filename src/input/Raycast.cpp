@@ -11,8 +11,8 @@ Raycast::Raycast(float range, float precision) : precision(precision),
 }
 
 RaycastResult Raycast::CastRay() const {
-    Player &player = NextCraft::client->player;
-    World &world = NextCraft::client->world;
+    Player &player = NextCraft::GetPlayer();
+    World &world = NextCraft::GetWorld();
 
     RaycastResult result{};
 

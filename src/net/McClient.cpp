@@ -81,6 +81,11 @@ void McClient::HandlePacket(int packetId, McBuffer &buffer) {
             SendKeepAlive(buffer.ReadVarInt());
             break;
         }
+        case 0x01: { // Join game
+            player.entityId = buffer.ReadInt();
+            player.gameMode = static_cast<GameMode>(buffer.ReadByte());
+            break;
+        }
         case 0x02: { // Chat
             auto msg = buffer.ReadString();
             Logger::Info("Chat message: " + ChatParser::ToString(msg));
