@@ -6,6 +6,7 @@
 #include "BlockRegistry.h"
 #include "../../render/block/DefaultBlockRenderer.h"
 #include "../../render/block/PlantRenderer.h"
+#include "../../render/block/LeavesRenderer.h"
 
 Block **BlockRegistry::blocks;
 
@@ -43,14 +44,14 @@ void BlockRegistry::Initialize() {
     Register(15, {4, 6});  // Iron Ore
     Register(16, {1, 1});  // Coal Ore
     Register(17, {29, 6}, {28, 6}, {29, 6}); // Log
-    Register(18, {13, 6}); // Leaves
+    Register(18, new LeavesRenderer({13, 6})); // Leaves
     Register(19, {0, 10}); // Sponge
     Register(20, {0, 4});  // Glass
     Register(21, {11, 6}); // Lapis Lazuli Ore
     Register(22, {10, 6}); // Lapis Lazuli Block
     Register(24, {21, 9}, {19, 9}, {17, 9}); // Sandstone
     Register(25, {7, 6});  // Note block
-    Register(31, new PlantRenderer({15, 10}));  // Note block
+    Register(31, new PlantRenderer({15, 10}));  // Grass
     Register(35, {18, 11}); // Wool
     Register(45, {15, 0}); // Bricks
     Register(46, {18, 10}, {17, 10}, {16, 10}); // TNT
