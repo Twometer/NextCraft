@@ -20,14 +20,14 @@ SectionMesh::SectionMesh(Section *section)
 void SectionMesh::Render(RenderLayer layer) {
     if (state == State::RebuildScheduled) {
         state = State::AwaitingRebuild;
-        AsyncMeshBuilder::Schedule(section);
+        AsyncMeshBuilder::Schedule(&section);
     } else if (state == State::UploadScheduled) {
         Upload();
         state = State::Rendering;
     } else if (state == State::Rendering) {
         if (layer == RenderLayer::Solid)
             solidVao.Draw();
-        else
+        else if (hasFluidMesh)
             fluidVao.Draw();
     }
 }
@@ -75,15 +75,16 @@ void SectionMesh::Upload() {
     solidVao.Initialize();
     solidVao.SetData(*solidMesh);
 
+    delete solidMesh;
+    solidMesh = nullptr;
+
     if (hasFluidMesh) {
         fluidVao.Initialize();
         fluidVao.SetData(*fluidMesh);
-    }
 
-    delete solidMesh;
-    delete fluidMesh;
-    fluidMesh = nullptr;
-    solidMesh = nullptr;
+        delete fluidMesh;
+        fluidMesh = nullptr;
+    }
 }
 
 BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
@@ -93,6 +94,7 @@ BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
 }
 
 SectionMesh::~SectionMesh() {
+    section = nullptr;
     delete solidMesh;
 }
 

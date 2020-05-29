@@ -13,14 +13,14 @@ class AsyncMeshBuilder {
 private:
     static bool running;
 
-    static moodycamel::ConcurrentQueue<chunk::Section *> *concurrentQueue;
+    static moodycamel::ConcurrentQueue<chunk::Section **> *concurrentQueue;
 
     static void Work();
 
 public:
     static void Initialize();
 
-    static void Schedule(chunk::Section *section);
+    static void Schedule(chunk::Section **section);
 
     static void Shutdown();
 
