@@ -96,7 +96,7 @@ bool IBlockRenderer::RequiresFluidMesh() const {
     return false;
 }
 
-bool IBlockRenderer::IsTransparent() {
+bool IBlockRenderer::IsTransparent() const {
     return false;
 }
 

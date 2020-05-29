@@ -6,6 +6,7 @@
 #define NEXTCRAFT_IBLOCKRENDERER_H
 
 #include "../../model/block/BlockFace.h"
+#include "../../model/world/BlockData.h"
 #include "../../mesh/SectionMesh.h"
 
 struct Block;
@@ -17,13 +18,14 @@ public:
     virtual ~IBlockRenderer();
 
     virtual void
-    Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY, int absZ) = 0;
+    Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z, int absX,
+           int absY, int absZ) = 0;
 
     virtual bool RequiresFluidMesh() const;
 
     virtual bool IsShaded() const;
 
-    virtual bool IsTransparent();
+    virtual bool IsTransparent() const;
 
 protected:
     void PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
@@ -36,3 +38,4 @@ protected:
 
 
 #endif //NEXTCRAFT_IBLOCKRENDERER_H
+

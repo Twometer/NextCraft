@@ -48,7 +48,7 @@ void SectionMesh::Build() {
                 if (me.id == 0)
                     continue;
 
-                me.blockRenderer->Render(this, me, x, y, z, absX, absY, absZ);
+                me.blockRenderer->Render(this, me, data, x, y, z, absX, absY, absZ);
             }
         }
     }

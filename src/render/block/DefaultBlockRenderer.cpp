@@ -6,8 +6,8 @@
 #include "../../mesh/Vertices.h"
 #include "../../model/block/BlockRegistry.h"
 
-void DefaultBlockRenderer::Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY,
-                                  int absZ) {
+void DefaultBlockRenderer::Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y,
+                                  int z, int absX, int absY, int absZ) {
     int tx = sideTex.x;
     int ty = sideTex.y;
 

@@ -15,9 +15,10 @@ private:
 public:
     explicit PlantRenderer(const Texture &texture);
 
-    void Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY, int absZ) override;
+    void Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z, int absX,
+                int absY, int absZ) override;
 
-    bool IsTransparent() override;
+    bool IsTransparent() const override;
 };
 
 

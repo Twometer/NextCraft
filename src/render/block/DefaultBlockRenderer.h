@@ -9,7 +9,7 @@
 #include "IBlockRenderer.h"
 
 class DefaultBlockRenderer : public IBlockRenderer {
-private:
+protected:
     Texture topTex;
     Texture sideTex;
     Texture bottomTex;
@@ -17,7 +17,8 @@ private:
 public:
     DefaultBlockRenderer(const Texture &topTex, const Texture &sideTex, const Texture &bottomTex);
 
-    void Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY, int absZ) override;
+    void Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z, int absX,
+                int absY, int absZ) override;
 
 protected:
     virtual bool ShouldRender(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, BlockFace face) const;

@@ -7,8 +7,25 @@
 LeavesRenderer::LeavesRenderer(const Texture &texture)
         : DefaultBlockRenderer(texture, texture, texture) {}
 
+void
+LeavesRenderer::Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z,
+                       int absX, int absY, int absZ) {
+    switch (data.meta & 3) {
+        case 1:
+            topTex = sideTex = bottomTex = {18, 6};
+            break;
+        case 2:
+            topTex = sideTex = bottomTex = {15, 6};
+            break;
+        case 3:
+            topTex = sideTex = bottomTex = {16, 6};
+            break;
+    }
 
-bool LeavesRenderer::IsTransparent() {
+    DefaultBlockRenderer::Render(sectionMesh, me, data, x, y, z, absX, absY, absZ);
+}
+
+bool LeavesRenderer::IsTransparent() const {
     return true;
 }
 

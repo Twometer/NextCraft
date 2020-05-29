@@ -9,11 +9,12 @@ PlantRenderer::PlantRenderer(const Texture &texture) : texture(texture) {
 }
 
 void
-PlantRenderer::Render(SectionMesh *sectionMesh, const Block &me, int x, int y, int z, int absX, int absY, int absZ) {
+PlantRenderer::Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z,
+                      int absX, int absY, int absZ) {
     PutGeometry(PlantVertices, PlantTextures, absX, absY, absZ, texture.x, texture.y, PosX,
                 sectionMesh->GetSolidMesh());
 }
 
-bool PlantRenderer::IsTransparent() {
+bool PlantRenderer::IsTransparent() const {
     return true;
 }
