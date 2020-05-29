@@ -28,8 +28,9 @@ public:
     virtual bool IsTransparent() const;
 
 protected:
-    void PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y, int z,
-                     int texX, int texY, BlockFace face, Mesh *mesh) const;
+    void
+    PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, float x, float y, float z,
+                int texX, int texY, BlockFace face, Mesh *mesh) const;
 
     static bool CanOcclude(int x, int y, int z);
 

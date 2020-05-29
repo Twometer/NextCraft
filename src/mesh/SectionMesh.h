@@ -10,6 +10,7 @@
 #include "../model/world/BlockData.h"
 #include "../model/block/Block.h"
 #include "../model/block/BlockFace.h"
+#include "../render/RenderLayer.h"
 
 enum class State {
     RebuildScheduled,
@@ -30,10 +31,14 @@ class SectionMesh {
 private:
     chunk::Section *section = nullptr;
 
-    Mesh *mesh = nullptr;
+    Mesh *solidMesh = nullptr;
+    Mesh *fluidMesh = nullptr;
 
     State state;
-    Vao vao;
+    Vao solidVao;
+    Vao fluidVao;
+
+    bool hasFluidMesh;
 
     int xo;
     int yo;
@@ -44,13 +49,17 @@ public:
 
     ~SectionMesh();
 
-    void Render();
+    void Render(RenderLayer layer);
 
     void Build();
 
     void Upload();
 
+    void EnableFluidMesh();
+
     Mesh *GetSolidMesh();
+
+    Mesh *GetFluidMesh();
 
     chunk::BlockData &GetBlockData(int x, int y, int z) const;
 };

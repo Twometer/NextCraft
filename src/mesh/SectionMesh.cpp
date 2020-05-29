@@ -7,15 +7,17 @@
 #include "../NextCraft.h"
 #include "Vertices.h"
 
+
 using namespace chunk;
 
 SectionMesh::SectionMesh(Section *section)
-        : mesh(nullptr), state(State::RebuildScheduled), section(section), xo(section->x << 4), yo(section->y << 4),
+        : solidMesh(nullptr), state(State::RebuildScheduled), section(section), xo(section->x << 4),
+          yo(section->y << 4),
           zo(section->z << 4) {
 
 }
 
-void SectionMesh::Render() {
+void SectionMesh::Render(RenderLayer layer) {
     if (state == State::RebuildScheduled) {
         state = State::AwaitingRebuild;
         AsyncMeshBuilder::Schedule(section);
@@ -23,7 +25,10 @@ void SectionMesh::Render() {
         Upload();
         state = State::Rendering;
     } else if (state == State::Rendering) {
-        vao.Draw();
+        if (layer == RenderLayer::Solid)
+            solidVao.Draw();
+        else
+            fluidVao.Draw();
     }
 }
 
@@ -31,10 +36,17 @@ void SectionMesh::Build() {
     if (state != State::AwaitingRebuild)
         return;
 
-    if (this->mesh == nullptr)
-        this->mesh = new Mesh(35000);
+    if (this->solidMesh == nullptr)
+        this->solidMesh = new Mesh(35000);
     else
-        this->mesh->Clear();
+        this->solidMesh->Clear();
+
+    if (hasFluidMesh) {
+        if (this->fluidMesh == nullptr)
+            this->fluidMesh = new Mesh(3000);
+        else
+            this->fluidMesh->Clear();
+    }
 
     for (int x = 0; x < 16; x++) {
         int absX = x + xo;
@@ -60,11 +72,18 @@ void SectionMesh::Upload() {
     if (state == State::Deleted || state == State::DeleteScheduled)
         return;
 
-    vao.Initialize();
-    vao.SetData(*mesh);
+    solidVao.Initialize();
+    solidVao.SetData(*solidMesh);
 
-    delete mesh;
-    mesh = nullptr;
+    if (hasFluidMesh) {
+        fluidVao.Initialize();
+        fluidVao.SetData(*fluidMesh);
+    }
+
+    delete solidMesh;
+    delete fluidMesh;
+    fluidMesh = nullptr;
+    solidMesh = nullptr;
 }
 
 BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
@@ -74,9 +93,17 @@ BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
 }
 
 SectionMesh::~SectionMesh() {
-    delete mesh;
+    delete solidMesh;
 }
 
 Mesh *SectionMesh::GetSolidMesh() {
-    return mesh;
+    return solidMesh;
+}
+
+Mesh *SectionMesh::GetFluidMesh() {
+    return fluidMesh;
+}
+
+void SectionMesh::EnableFluidMesh() {
+    hasFluidMesh = true;
 }

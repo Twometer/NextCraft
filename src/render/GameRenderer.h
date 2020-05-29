@@ -11,6 +11,7 @@
 #include "../util/Timer.h"
 #include "../input/InputHandler.h"
 #include "HighlightRenderer.h"
+#include "RenderLayer.h"
 
 class GameRenderer {
 private:
@@ -30,6 +31,8 @@ public:
     void Initialize();
 
     void RenderFrame();
+
+    void RenderWorld(RenderLayer layer);
 
 };
 

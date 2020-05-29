@@ -34,6 +34,8 @@ namespace chunk {
 
         void SetMeta(int x, int y, int z, uint8_t meta);
 
+        void CheckFluid(uint8_t blockId) const;
+
     private:
         inline BlockData *GetBlockDataPtr(int x, int y, int z) const;
 

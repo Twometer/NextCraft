@@ -30,6 +30,7 @@ add_executable(NextCraft
         src/render/block/DefaultBlockRenderer.cpp
         src/render/block/PlantRenderer.cpp
         src/render/block/LeavesRenderer.cpp
+        src/render/block/FluidRenderer.cpp
         src/input/InputHandler.cpp
         src/input/Raycast.cpp
         src/render/HighlightRenderer.cpp

@@ -42,22 +42,8 @@ void GameRenderer::RenderFrame() {
     terrainShader->SetSkyColor(glm::vec3(0.72f, 0.83f, 0.996f));
     terrainShader->SetBrightness(1.0f);
     terrainShader->SetTextureUnit(0);
-
-    for (auto &pair : NextCraft::GetWorld().GetChunks()) {
-        chunk::Chunk *chk = pair.second;
-        if (chk == nullptr)
-            continue;
-
-        if (chk->fadeProgress < 100)
-            chk->fadeProgress++;
-        terrainShader->SetOpacity(chk->fadeProgress / 100.f);
-
-        for (int i = 0; i < 16; i++) {
-            chunk::Section *section = chk->GetSection(i);
-            if (section != nullptr)
-                section->mesh->Render();
-        }
-    }
+    RenderWorld(RenderLayer::Solid);
+    RenderWorld(RenderLayer::Fluid);
 
     glDisable(GL_CULL_FACE);
     highlightShader->Use();
@@ -83,4 +69,23 @@ void GameRenderer::RenderFrame() {
     }
 
     NextCraft::GetWorld().Cleanup();
+}
+
+void GameRenderer::RenderWorld(RenderLayer layer) {
+    for (auto &pair : NextCraft::GetWorld().GetChunks()) {
+        chunk::Chunk *chk = pair.second;
+        if (chk == nullptr)
+            continue;
+
+        if (chk->fadeProgress < 100 && layer == RenderLayer::Solid)
+            chk->fadeProgress++;
+        terrainShader->SetOpacity(chk->fadeProgress / 100.f);
+
+        for (int i = 0; i < 16; i++) {
+            chunk::Section *section = chk->GetSection(i);
+            if (section != nullptr)
+                section->mesh->Render(layer);
+        }
+    }
+
 }

@@ -7,6 +7,7 @@
 #include "../../render/block/DefaultBlockRenderer.h"
 #include "../../render/block/PlantRenderer.h"
 #include "../../render/block/LeavesRenderer.h"
+#include "../../render/block/FluidRenderer.h"
 
 Block **BlockRegistry::blocks;
 
@@ -34,10 +35,10 @@ void BlockRegistry::Initialize() {
     Register(4, {3, 1});   // Cobblestone
     Register(5, {29, 7});  // Wooden Planks
     Register(7, {5, 0});   // Bedrock
-    Register(8, {2, 12});  // Flowing Water
-    Register(9, {26, 10}); // Still Water
-    Register(10, {0, 12}); // Flowing Lava
-    Register(11, {0, 12}); // Still Lava
+    Register(8, new FluidRenderer({2, 12}));  // Flowing Water
+    Register(9, new FluidRenderer({26, 10})); // Still Water
+    Register(10, new FluidRenderer({0, 12})); // Flowing Lava
+    Register(11, new FluidRenderer({0, 12})); // Still Lava
     Register(12, {16, 9}); // Sand
     Register(13, {9, 5});  // Gravel
     Register(14, {4, 5});  // Gold Ore

@@ -41,9 +41,7 @@ bool DefaultBlockRenderer::ShouldRender(SectionMesh *sectionMesh, const Block &m
         return true;
 
     Block *other = BlockRegistry::Get(data.id);
-    if (other->blockRenderer->IsTransparent())
-        return true;
-    return ((other->id == 8 || other->id == 9) && !(me.id == 8 || me.id == 9));
+    return other->blockRenderer->IsTransparent();
 }
 
 DefaultBlockRenderer::DefaultBlockRenderer(const Texture &topTex, const Texture &sideTex, const Texture &bottomTex)

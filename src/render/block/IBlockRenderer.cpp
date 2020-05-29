@@ -6,8 +6,8 @@
 #include "../../NextCraft.h"
 
 void
-IBlockRenderer::PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, int x, int y,
-                            int z, int texX, int texY, BlockFace face, Mesh *mesh) const {
+IBlockRenderer::PutGeometry(const std::vector<GLfloat> &vertices, const std::vector<GLfloat> &textures, float x,
+                            float y, float z, int texX, int texY, BlockFace face, Mesh *mesh) const {
     float brightness;
     switch (face) {
         case PosX:
