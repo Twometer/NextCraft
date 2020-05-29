@@ -11,11 +11,11 @@ class BlockRegistry {
 private:
     static Block **blocks;
 
-    static void Register(int id, Texture texture);
+    static Block *Register(int id, Texture texture);
 
-    static void Register(int id, Texture top, Texture side, Texture bottom);
+    static Block *Register(int id, Texture top, Texture side, Texture bottom);
 
-    static void Register(int id, IBlockRenderer *blockRenderer);
+    static Block *Register(int id, IBlockRenderer *blockRenderer);
 
 public:
     static void Initialize();

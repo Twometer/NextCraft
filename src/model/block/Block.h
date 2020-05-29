@@ -19,9 +19,24 @@ struct Block {
 
     uint8_t id;
 
+    bool noClip;
+
+    bool noSelect;
+
     IBlockRenderer *blockRenderer;
 
-    Block(uint8_t id, IBlockRenderer *blockRenderer) : id(id), blockRenderer(blockRenderer) {
+    Block(uint8_t id, IBlockRenderer *blockRenderer) : id(id), noClip(false), noSelect(false),
+                                                       blockRenderer(blockRenderer) {
+    }
+
+    Block *SetNoClip() {
+        noClip = true;
+        return this;
+    }
+
+    Block *SetNoSelect() {
+        noSelect = true;
+        return this;
     }
 
 };

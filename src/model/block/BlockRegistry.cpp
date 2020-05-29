@@ -11,16 +11,16 @@
 
 Block **BlockRegistry::blocks;
 
-void BlockRegistry::Register(int id, Texture texture) {
-    blocks[id] = new Block(id, new DefaultBlockRenderer(texture, texture, texture));
+Block *BlockRegistry::Register(int id, Texture texture) {
+    return blocks[id] = new Block(id, new DefaultBlockRenderer(texture, texture, texture));
 }
 
-void BlockRegistry::Register(int id, Texture top, Texture side, Texture bottom) {
-    blocks[id] = new Block(id, new DefaultBlockRenderer(top, side, bottom));
+Block *BlockRegistry::Register(int id, Texture top, Texture side, Texture bottom) {
+    return blocks[id] = new Block(id, new DefaultBlockRenderer(top, side, bottom));
 }
 
-void BlockRegistry::Register(int id, IBlockRenderer *blockRenderer) {
-    blocks[id] = new Block(id, blockRenderer);
+Block *BlockRegistry::Register(int id, IBlockRenderer *blockRenderer) {
+    return blocks[id] = new Block(id, blockRenderer);
 }
 
 void BlockRegistry::Initialize() {
@@ -28,17 +28,17 @@ void BlockRegistry::Initialize() {
     memset(blocks, 0, 256 * sizeof(Block *));
 
 
-    Register(0, {0, 0}); // Air
+    Register(0, {0, 0})->SetNoClip()->SetNoSelect(); // Air
     Register(1, {2, 10}); // Stone
     Register(2, {8, 5}, {5, 5}, {30, 1}); // Grass
     Register(3, {30, 1});  // Dirt
     Register(4, {3, 1});   // Cobblestone
     Register(5, {29, 7});  // Wooden Planks
     Register(7, {5, 0});   // Bedrock
-    Register(8, new FluidRenderer({2, 12}));  // Flowing Water
-    Register(9, new FluidRenderer({26, 10})); // Still Water
-    Register(10, new FluidRenderer({0, 12})); // Flowing Lava
-    Register(11, new FluidRenderer({0, 12})); // Still Lava
+    Register(8, new FluidRenderer({2, 12}))->SetNoClip()->SetNoSelect();  // Flowing Water
+    Register(9, new FluidRenderer({26, 10}))->SetNoClip()->SetNoSelect(); // Still Water
+    Register(10, new FluidRenderer({0, 12}))->SetNoClip()->SetNoSelect(); // Flowing Lava
+    Register(11, new FluidRenderer({0, 12}))->SetNoClip()->SetNoSelect(); // Still Lava
     Register(12, {16, 9}); // Sand
     Register(13, {9, 5});  // Gravel
     Register(14, {4, 5});  // Gold Ore
@@ -52,7 +52,7 @@ void BlockRegistry::Initialize() {
     Register(22, {10, 6}); // Lapis Lazuli Block
     Register(24, {21, 9}, {19, 9}, {17, 9}); // Sandstone
     Register(25, {7, 6});  // Note block
-    Register(31, new PlantRenderer({15, 10}));  // Grass
+    Register(31, new PlantRenderer({15, 10}))->SetNoClip();  // Tall grass
     Register(35, {18, 11}); // Wool
     Register(45, {15, 0}); // Bricks
     Register(46, {18, 10}, {17, 10}, {16, 10}); // TNT

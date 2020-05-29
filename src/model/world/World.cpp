@@ -68,7 +68,7 @@ std::vector<AABB> World::GetCubes(int xx, int xy, int xz, int r) {
                 uint8_t bid = GetBlockData(xx + x, xy + y, xz + z).id;
                 Block *block = BlockRegistry::Get(bid);
 
-                if (block != nullptr && bid != 0) {
+                if (!block->noClip) {
                     AABB boundingBox = AABB(glm::vec3(xx + x, xy + y, xz + z),
                                             glm::vec3(xx + x, xy + y, xz + z));
                     boundingBox = boundingBox.Expand(1.0, bid == 78 ? 0.1 : 1.0, 1.0);

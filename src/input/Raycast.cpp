@@ -34,7 +34,7 @@ RaycastResult Raycast::CastRay() const {
         int z = glm::floor(position.z);
         chunk::BlockData &block = world.GetBlockData(x, y, z);
 
-        if (block.id != 0) {
+        if (!BlockRegistry::Get(block.id)->noSelect) {
             result.blockPosition = glm::vec3(x, y, z);
             result.blockFace = FindFace(position, x, y, z);
             break;
