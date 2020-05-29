@@ -9,6 +9,7 @@ out vec4 color;
 uniform sampler2D tex;
 uniform vec3 skyColor;
 uniform float opacity;
+uniform float brightness;
 
 void main() {
     vec4 textureColor = texture(tex, fragmentUV);
@@ -17,4 +18,5 @@ void main() {
     }
     color = textureColor * vec4(fragmentColor, 1.0f);
     color = mix(vec4(skyColor, 1.0), color, opacity * visibility);
+    color.rgb *= brightness;
 }

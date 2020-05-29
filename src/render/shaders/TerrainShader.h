@@ -14,6 +14,7 @@ private:
     GLuint loc_skyColor;
     GLuint loc_texture;
     GLuint loc_opacity;
+    GLuint loc_brightness;
 
 public:
     TerrainShader() {
@@ -26,6 +27,11 @@ public:
         loc_skyColor = GetLocation("skyColor");
         loc_opacity = GetLocation("opacity");
         loc_texture = GetLocation("tex");
+        loc_brightness = GetLocation("brightness");
+    }
+
+    void SetBrightness(float brightness) const {
+        glUniform1f(loc_brightness, brightness);
     }
 
     void SetOpacity(float opacity) const {

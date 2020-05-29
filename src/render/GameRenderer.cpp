@@ -40,6 +40,7 @@ void GameRenderer::RenderFrame() {
     terrainShader->SetViewMatrix(camera.GetViewMatrix());
     terrainShader->SetProjectionMatrix(camera.GetProjectionMatrix());
     terrainShader->SetSkyColor(glm::vec3(0.72f, 0.83f, 0.996f));
+    terrainShader->SetBrightness(1.0f);
     terrainShader->SetTextureUnit(0);
 
     for (auto &pair : NextCraft::client->world.GetChunks()) {
