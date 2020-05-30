@@ -8,6 +8,7 @@
 #include "../NextCraft.h"
 #include "../gl/Loader.h"
 #include "../util/Logger.h"
+#include "../gui/MainMenuScreen.h"
 
 void GameRenderer::Initialize() {
     glEnable(GL_DEPTH_TEST);
@@ -26,7 +27,9 @@ void GameRenderer::Initialize() {
 
     this->terrainShader = new TerrainShader();
     this->highlightShader = new HighlightShader();
-    this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png").id;
+    this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png", GL_NEAREST).id;
+
+    // crystal::CrystalUI::get_instance()->get_gui_renderer()->show_screen(new MainMenuScreen());
 }
 
 void GameRenderer::RenderFrame() {
@@ -48,12 +51,18 @@ void GameRenderer::RenderFrame() {
     RenderWorld(RenderLayer::Fluid);
 
     glDisable(GL_CULL_FACE);
+
     highlightShader->Use();
     highlightShader->SetViewMatrix(camera.GetViewMatrix());
     highlightShader->SetProjectionMatrix(camera.GetProjectionMatrix());
     highlightShader->SetOffset(inputHandler.GetLookingAt().blockPosition);
     highlightShader->SetSize(glm::vec3(1.0f, 1.0f, 1.0f));
     highlightRenderer.Render();
+
+    glDisable(GL_DEPTH_TEST);
+    crystal::CrystalUI::get_instance()->draw();
+    glEnable(GL_DEPTH_TEST);
+
     glEnable(GL_CULL_FACE);
 
     if (inputTimer.HasReached()) {

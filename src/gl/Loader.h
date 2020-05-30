@@ -28,7 +28,7 @@ public:
 
     static uint8_t *ReadAllBytes(const std::string &path, size_t &size);
 
-    static crystal::Texture LoadTexture(const std::string &path);
+    static crystal::Texture LoadTexture(const std::string &path, int filtering);
 
     static GLuint LoadShader(const std::string &vertPath, const std::string &fragPath);
 };

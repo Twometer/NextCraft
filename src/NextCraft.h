@@ -29,9 +29,19 @@ private:
 
     static Viewport viewport;
 
+    static bool isCursorCaught;
+
     static void Connect();
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
+    static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+
+    static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+    static void character_callback(GLFWwindow *window, unsigned int codepoint);
+
+    static void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
 
 public:
     static bool Start();
@@ -46,6 +56,9 @@ public:
 
     static const Viewport &GetViewport();
 
+    static void SetCursorCaught(bool cursorCaught);
+
+    static bool IsCursorCaught();
 };
 
 #endif //NEXTCRAFT_NEXTCRAFT_H

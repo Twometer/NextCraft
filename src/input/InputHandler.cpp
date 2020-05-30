@@ -7,7 +7,7 @@
 #include "../NextCraft.h"
 
 void InputHandler::HandleInput() {
-    if (!NextCraft::GetClient().IsReady())
+    if (!NextCraft::GetClient().IsReady() || !NextCraft::IsCursorCaught())
         return;
 
     GLFWwindow *window = NextCraft::window;

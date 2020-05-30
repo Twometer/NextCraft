@@ -2,10 +2,12 @@
 // Created by twome on 26/01/2020.
 //
 #include "NextCraft.h"
+#include <crystal/CrystalUI.h>
 
 McClient *NextCraft::client;
 GLFWwindow *NextCraft::window;
 Viewport NextCraft::viewport{};
+bool NextCraft::isCursorCaught = true;
 
 bool NextCraft::Start() {
     client = new McClient();
@@ -27,6 +29,10 @@ bool NextCraft::Start() {
     glfwGetFramebufferSize(window, &viewport.width, &viewport.height);
     glfwGetWindowContentScale(window, &viewport.scaleX, &viewport.scaleY);
     glfwSetFramebufferSizeCallback(window, &(NextCraft::framebuffer_size_callback));
+    glfwSetMouseButtonCallback(window, &(NextCraft::mouse_button_callback));
+    glfwSetCharCallback(window, &(NextCraft::character_callback));
+    glfwSetKeyCallback(window, &(NextCraft::key_callback));
+    glfwSetCursorPosCallback(window, &(NextCraft::cursor_position_callback));
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -52,6 +58,7 @@ void NextCraft::Connect() {
 void NextCraft::framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     viewport.width = width;
     viewport.height = height;
+    crystal::CrystalUI::get_instance()->get_gui_renderer()->layout();
 }
 
 World &NextCraft::GetWorld() {
@@ -68,4 +75,38 @@ McClient &NextCraft::GetClient() {
 
 const Viewport &NextCraft::GetViewport() {
     return viewport;
+}
+
+void NextCraft::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    double mouseX, mouseY;
+    glfwGetCursorPos(window, &mouseX, &mouseY);
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+        crystal::CrystalUI::get_instance()->get_gui_renderer()->on_mouse_down(glm::vec2(mouseX, mouseY));
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+        crystal::CrystalUI::get_instance()->get_gui_renderer()->on_mouse_up(glm::vec2(mouseX, mouseY));
+}
+
+void NextCraft::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    crystal::CrystalUI::get_instance()->get_gui_renderer()->on_key_event(key, action);
+}
+
+void NextCraft::character_callback(GLFWwindow *window, unsigned int codepoint) {
+    crystal::CrystalUI::get_instance()->get_gui_renderer()->on_character_typed(codepoint);
+}
+
+void NextCraft::cursor_position_callback(GLFWwindow *window, double xpos, double ypos) {
+    crystal::CrystalUI::get_instance()->get_gui_renderer()->on_mouse_move(glm::vec2(xpos, ypos));
+}
+
+void NextCraft::SetCursorCaught(bool cursorCaught) {
+    isCursorCaught = cursorCaught;
+    if (cursorCaught)
+        glfwSetInputMode(NextCraft::window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    else
+        glfwSetInputMode(NextCraft::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+bool NextCraft::IsCursorCaught() {
+    return isCursorCaught;
 }

@@ -1,3 +1,5 @@
+#define CRYSTALUI_DEBUGLOG false
+
 #include <glad/glad.h>
 #include <iostream>
 #include "NextCraft.h"

@@ -35,6 +35,7 @@ add_executable(NextCraft
         src/input/InputHandler.cpp
         src/input/Raycast.cpp
         src/gui/GuiHandler.cpp
+        src/gui/MainMenuScreen.cpp
         src/mesh/AsyncMeshBuilder.cpp
         src/mesh/SectionMesh.cpp
         src/mesh/Mesh.cpp
@@ -45,5 +46,5 @@ add_executable(NextCraft
         ext/glad.c
         ext/spng.c)
 
-target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc lib/CrystalUI/src)
+target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc lib/CrystalUI/src lib/CrystalUI/inc)
 target_link_libraries(NextCraft CrystalUI glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)

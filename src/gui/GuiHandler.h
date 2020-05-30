@@ -29,6 +29,10 @@ public:
 
     glm::vec2 get_viewport_size() override;
 
+    void on_screen_shown(crystal::Screen *screen) override;
+
+    void on_screen_closed() override;
+
 };
 
 #endif //NEXTCRAFT_GUIHANDLER_H

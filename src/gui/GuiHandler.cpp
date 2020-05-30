@@ -22,7 +22,7 @@ Texture *GuiHandler::load_texture(const std::string &path) {
     if (textures.count(path)) {
         return &textures[path];
     } else {
-        Texture tex = Loader::LoadTexture("assets/textures/" + path + ".png");
+        Texture tex = Loader::LoadTexture(path, GL_LINEAR);
         textures[path] = tex;
         return &textures[path];
     }
@@ -40,4 +40,14 @@ GuiHandler::GuiHandler() {
 
 void GuiHandler::Initialize() {
     crystal::CrystalUI::initialize(this, "assets/fonts/nirmala");
+}
+
+void GuiHandler::on_screen_shown(Screen *screen) {
+    if (screen->blocks_game_inputs()) {
+        NextCraft::SetCursorCaught(false);
+    }
+}
+
+void GuiHandler::on_screen_closed() {
+    NextCraft::SetCursorCaught(true);
 }

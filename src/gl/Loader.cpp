@@ -33,6 +33,8 @@ uint8_t *Loader::ReadAllBytes(const std::string &path, size_t &size) {
 }
 
 Image Loader::LoadImage(const std::string &path) {
+    Logger::Debug("Loading image " + path);
+
     spng_ctx *ctx = spng_ctx_new(0);
 
     size_t inputSize;
@@ -65,7 +67,7 @@ void Loader::CheckShader(const std::string &name, GLuint shader) {
     }
 }
 
-crystal::Texture Loader::LoadTexture(const std::string &path) {
+crystal::Texture Loader::LoadTexture(const std::string &path, int filtering) {
     Image img = LoadImage(path);
 
     GLuint texture;
@@ -74,8 +76,8 @@ crystal::Texture Loader::LoadTexture(const std::string &path) {
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width, img.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img.data);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
