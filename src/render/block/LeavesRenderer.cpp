@@ -4,7 +4,7 @@
 
 #include "LeavesRenderer.h"
 
-LeavesRenderer::LeavesRenderer(const Texture &texture)
+LeavesRenderer::LeavesRenderer(const Sprite &texture)
         : DefaultBlockRenderer(texture, texture, texture) {}
 
 void

@@ -11,9 +11,9 @@ class BlockRegistry {
 private:
     static Block **blocks;
 
-    static Block *Register(int id, Texture texture);
+    static Block *Register(int id, Sprite texture);
 
-    static Block *Register(int id, Texture top, Texture side, Texture bottom);
+    static Block *Register(int id, Sprite top, Sprite side, Sprite bottom);
 
     static Block *Register(int id, IBlockRenderer *blockRenderer);
 

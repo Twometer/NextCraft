@@ -10,7 +10,7 @@
 class LeavesRenderer : public DefaultBlockRenderer {
 
 public:
-    LeavesRenderer(const Texture &texture);
+    LeavesRenderer(const Sprite &texture);
 
     bool IsTransparent() const override;
 

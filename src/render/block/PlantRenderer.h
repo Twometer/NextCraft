@@ -10,10 +10,10 @@
 
 class PlantRenderer : public IBlockRenderer {
 private:
-    Texture texture;
+    Sprite texture;
 
 public:
-    explicit PlantRenderer(const Texture &texture);
+    explicit PlantRenderer(const Sprite &texture);
 
     void Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z, int absX,
                 int absY, int absZ) override;

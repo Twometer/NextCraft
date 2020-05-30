@@ -22,9 +22,11 @@ void GameRenderer::Initialize() {
     inputTimer.Begin(60.0f);
     networkTimer.Begin(20.0f);
 
+    guiHandler.Initialize();
+
     this->terrainShader = new TerrainShader();
     this->highlightShader = new HighlightShader();
-    this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png");
+    this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png").id;
 }
 
 void GameRenderer::RenderFrame() {

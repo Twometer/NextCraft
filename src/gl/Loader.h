@@ -5,6 +5,7 @@
 #ifndef NEXTCRAFT_LOADER_H
 #define NEXTCRAFT_LOADER_H
 
+#include <crystal/gl/Texture.h>
 #include <glad/glad.h>
 #include <string>
 #include <cstdint>
@@ -27,7 +28,7 @@ public:
 
     static uint8_t *ReadAllBytes(const std::string &path, size_t &size);
 
-    static GLuint LoadTexture(const std::string &path);
+    static crystal::Texture LoadTexture(const std::string &path);
 
     static GLuint LoadShader(const std::string &vertPath, const std::string &fragPath);
 };

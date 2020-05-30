@@ -8,7 +8,7 @@
 #include <cstdint>
 #include "../../render/block/IBlockRenderer.h"
 
-struct Texture {
+struct Sprite {
     int x;
     int y;
 };

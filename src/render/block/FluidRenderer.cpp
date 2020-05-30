@@ -36,7 +36,7 @@ bool FluidRenderer::IsShaded() const {
     return false;
 }
 
-FluidRenderer::FluidRenderer(const Texture &texture) : texture(texture) {}
+FluidRenderer::FluidRenderer(const Sprite &texture) : texture(texture) {}
 
 bool FluidRenderer::ShouldRender(SectionMesh *mesh, int x, int y, int z) {
     chunk::BlockData &data = mesh->GetBlockData(x, y, z);

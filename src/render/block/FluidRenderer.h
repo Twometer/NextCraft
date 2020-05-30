@@ -10,10 +10,10 @@
 
 class FluidRenderer : public IBlockRenderer {
 private:
-    Texture texture;
+    Sprite texture;
 
 public:
-    explicit FluidRenderer(const Texture &texture);
+    explicit FluidRenderer(const Sprite &texture);
 
     void Render(SectionMesh *sectionMesh, const Block &me, const chunk::BlockData &data, int x, int y, int z, int absX,
                 int absY, int absZ) override;

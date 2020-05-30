@@ -5,7 +5,7 @@
 #include "PlantRenderer.h"
 #include "../../mesh/Vertices.h"
 
-PlantRenderer::PlantRenderer(const Texture &texture) : texture(texture) {
+PlantRenderer::PlantRenderer(const Sprite &texture) : texture(texture) {
 }
 
 void

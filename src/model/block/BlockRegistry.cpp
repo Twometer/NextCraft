@@ -11,11 +11,11 @@
 
 Block **BlockRegistry::blocks;
 
-Block *BlockRegistry::Register(int id, Texture texture) {
+Block *BlockRegistry::Register(int id, Sprite texture) {
     return blocks[id] = new Block(id, new DefaultBlockRenderer(texture, texture, texture));
 }
 
-Block *BlockRegistry::Register(int id, Texture top, Texture side, Texture bottom) {
+Block *BlockRegistry::Register(int id, Sprite top, Sprite side, Sprite bottom) {
     return blocks[id] = new Block(id, new DefaultBlockRenderer(top, side, bottom));
 }
 

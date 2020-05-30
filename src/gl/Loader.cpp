@@ -65,7 +65,7 @@ void Loader::CheckShader(const std::string &name, GLuint shader) {
     }
 }
 
-GLuint Loader::LoadTexture(const std::string &path) {
+crystal::Texture Loader::LoadTexture(const std::string &path) {
     Image img = LoadImage(path);
 
     GLuint texture;
@@ -83,7 +83,7 @@ GLuint Loader::LoadTexture(const std::string &path) {
 
     delete[] img.data;
 
-    return texture;
+    return {texture, img.width, img.height};
 }
 
 GLuint Loader::LoadShader(const std::string &vertPath, const std::string &fragPath) {

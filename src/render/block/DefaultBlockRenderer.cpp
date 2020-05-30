@@ -44,6 +44,6 @@ bool DefaultBlockRenderer::ShouldRender(SectionMesh *sectionMesh, const Block &m
     return other->blockRenderer->IsTransparent();
 }
 
-DefaultBlockRenderer::DefaultBlockRenderer(const Texture &topTex, const Texture &sideTex, const Texture &bottomTex)
+DefaultBlockRenderer::DefaultBlockRenderer(const Sprite &topTex, const Sprite &sideTex, const Sprite &bottomTex)
         : topTex(topTex), sideTex(sideTex), bottomTex(bottomTex) {
 }

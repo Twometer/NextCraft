@@ -12,11 +12,13 @@
 #include "../input/InputHandler.h"
 #include "HighlightRenderer.h"
 #include "RenderLayer.h"
+#include "../gui/GuiHandler.h"
 
 class GameRenderer {
 private:
     Camera camera{};
     InputHandler inputHandler{};
+    GuiHandler guiHandler{};
 
     Timer inputTimer;
     Timer networkTimer;
