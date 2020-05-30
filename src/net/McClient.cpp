@@ -42,14 +42,15 @@ void McClient::Connect(const char *username, const char *hostname, unsigned shor
     } while (!closeRequested);
 
     delete[] recvBuf;
+    client->Close();
 
     if (!closeRequested)
         Logger::Error("Connection lost!");
 }
 
 void McClient::Disconnect() {
-    client->Close();
     closeRequested = true;
+    Logger::Info("Disconnecting from server");
 }
 
 int McClient::ReadVarInt() {

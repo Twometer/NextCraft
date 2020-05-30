@@ -45,10 +45,13 @@ bool NextCraft::Start() {
     return true;
 }
 
+void NextCraft::Close() {
+    glfwSetWindowShouldClose(window, true);
+}
+
 void NextCraft::Shutdown() {
     client->Disconnect();
-    delete client;
-    glfwTerminate();
+    AsyncMeshBuilder::Shutdown();
 }
 
 void NextCraft::Connect() {
@@ -109,4 +112,8 @@ void NextCraft::SetCursorCaught(bool cursorCaught) {
 
 bool NextCraft::IsCursorCaught() {
     return isCursorCaught;
+}
+
+NextCraft::~NextCraft() {
+    delete client;
 }

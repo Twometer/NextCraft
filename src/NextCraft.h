@@ -48,6 +48,8 @@ public:
 
     static void Shutdown();
 
+    static void Close();
+
     static World &GetWorld();
 
     static Player &GetPlayer();
@@ -59,6 +61,8 @@ public:
     static void SetCursorCaught(bool cursorCaught);
 
     static bool IsCursorCaught();
+
+    ~NextCraft();
 };
 
 #endif //NEXTCRAFT_NEXTCRAFT_H

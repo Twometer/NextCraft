@@ -29,7 +29,7 @@ void GameRenderer::Initialize() {
     this->highlightShader = new HighlightShader();
     this->terrainTexture = Loader::LoadTexture("assets/textures/atlas_blocks.png", GL_NEAREST).id;
 
-    // crystal::CrystalUI::get_instance()->get_gui_renderer()->show_screen(new MainMenuScreen());
+     crystal::CrystalUI::get_instance()->get_gui_renderer()->show_screen(new MainMenuScreen());
 }
 
 void GameRenderer::RenderFrame() {

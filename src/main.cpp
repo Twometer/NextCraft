@@ -4,6 +4,7 @@
 #include <iostream>
 #include "NextCraft.h"
 #include "render/GameRenderer.h"
+#include "util/Logger.h"
 
 int main() {
     if (!NextCraft::Start()) {
@@ -27,7 +28,9 @@ int main() {
         glfwPollEvents();
     }
 
+    Logger::Info("Shutting down...");
     NextCraft::Shutdown();
+    glfwTerminate();
 
     return 0;
 }

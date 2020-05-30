@@ -6,11 +6,11 @@
                HorizontalAlignment="CENTER"/>
         <Label Id="subtitleLabel" Row="1" Text="(c) 2020 Twometer Apps" FontSize="0.25" VerticalAlignment="CENTER"
                HorizontalAlignment="CENTER" Margin="0,8"/>
-        <Button Id="btnNewGame" Row="2" Text="Connect" FontSize="0.55" Margin="32,8" Padding="32,0"
+        <Button Id="btnJoinGame" Row="2" Text="Join game" FontSize="0.55" Margin="32,8" Padding="32,0"
                 HorizontalAlignment="STRETCH"/>
-        <Button Id="btnLoadGame" Row="3" Text="Settings" FontSize="0.55" Margin="32,8" Padding="32,0"
+        <Button Id="btnSettings" Row="3" Text="Settings" FontSize="0.55" Margin="32,8" Padding="32,0"
                 HorizontalAlignment="STRETCH"/>
-        <Button Id="btnExitGame" Row="4" Text="Exit" FontSize="0.55" Margin="32,8" Padding="32,0"
+        <Button Id="btnExitGame" Row="4" Text="Exit game" FontSize="0.55" Margin="32,8" Padding="32,0"
                 HorizontalAlignment="STRETCH"/>
     </Panel>
 </Screen>
