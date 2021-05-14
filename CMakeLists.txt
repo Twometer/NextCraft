@@ -7,6 +7,11 @@ add_subdirectory(lib/glfw)
 add_subdirectory(lib/json)
 add_subdirectory(lib/CrystalUI)
 
+option(MINGW_STDTHREADS_GENERATE_STDHEADERS "" ON)
+add_subdirectory(lib/mingw_stdthreads)
+
+add_definitions(-D_WIN32_WINNT=0x0600)
+
 add_executable(NextCraft
         src/net/TcpClient.cpp
         src/net/McClient.cpp
@@ -47,4 +52,4 @@ add_executable(NextCraft
         ext/spng.c)
 
 target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc lib/CrystalUI/src lib/CrystalUI/inc)
-target_link_libraries(NextCraft CrystalUI glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib)
+target_link_libraries(NextCraft CrystalUI glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib mingw_stdthreads)

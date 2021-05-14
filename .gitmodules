@@ -10,3 +10,6 @@
 [submodule "lib/CrystalUI"]
 	path = lib/CrystalUI
 	url = https://github.com/Twometer/CrystalUI/
+[submodule "lib/mingw_stdthreads"]
+	path = lib/mingw_stdthreads
+	url = https://github.com/meganz/mingw-std-threads
