@@ -48,8 +48,8 @@ add_executable(NextCraft
         src/gl/Vao.cpp
         src/NextCraft.cpp
         src/main.cpp
-        ext/glad.c
-        ext/spng.c)
+        lib/glad/glad.c
+        lib/spng/spng.c)
 
-target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc lib/CrystalUI/src lib/CrystalUI/inc)
+target_include_directories(NextCraft PRIVATE lib/glm lib/glfw/include inc lib/CrystalUI/src lib/CrystalUI/inc lib/concurrentqueue lib/glad/include lib/spng)
 target_link_libraries(NextCraft CrystalUI glfw ${GLFW_LIBRARIES} nlohmann_json::nlohmann_json Ws2_32.lib z.lib mingw_stdthreads)
