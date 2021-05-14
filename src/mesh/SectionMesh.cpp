@@ -48,12 +48,12 @@ void SectionMesh::Build() {
             this->fluidMesh->Clear();
     }
 
-    for (int x = 0; x < 16; x++) {
-        int absX = x + xo;
-        for (int y = 0; y < 16; y++) {
-            int absY = y + yo;
-            for (int z = 0; z < 16; z++) {
-                int absZ = z + zo;
+    for (int y = 0; y < 16; y++) {
+        int absY = y + yo;
+        for (int z = 0; z < 16; z++) {
+            int absZ = z + zo;
+            for (int x = 0; x < 16; x++) {
+                int absX = x + xo;
                 const BlockData &data = section->GetBlockData(x, y, z);
                 const Block &me = *BlockRegistry::Get(data.id);
 
@@ -88,7 +88,10 @@ void SectionMesh::Upload() {
 }
 
 BlockData &SectionMesh::GetBlockData(int x, int y, int z) const {
-    if (x < 0 || y < 0 || z < 0 || x > 15 || y > 15 || z > 15)
+    auto ux = (unsigned int) x;
+    auto uy = (unsigned int) y;
+    auto uz = (unsigned int) z;
+    if (ux > 15 || uy > 15 || uz > 15)
         return NextCraft::GetWorld().GetBlockData(xo + x, yo + y, zo + z);
     else return section->GetBlockData(x, y, z);
 }

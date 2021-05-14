@@ -20,11 +20,11 @@ void InputHandler::HandleInput() {
     glfwGetCursorPos(window, &mouseX, &mouseY);
 
     if (0 != mouseX || 0 != mouseY) {
-        player.yaw -= 0.125f * (float) mouseX;
-        player.pitch -= 0.125f * (float) mouseY;
+        player.yaw -= 0.125f * (float) (mouseX - 100);
+        player.pitch -= 0.125f * (float) (mouseY - 100);
 
         player.pitch = glm::clamp(player.pitch, -90.f, 90.f);
-        glfwSetCursorPos(window, 0, 0);
+        glfwSetCursorPos(window, 100, 100);
     }
 
     float yaw = glm::radians(player.yaw);
@@ -46,14 +46,14 @@ void InputHandler::HandleInput() {
         player.AddVelocity(directionRight * speedMultiplier);
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        if (player.flying)
-            player.motionY = 0.2f;
-        else
-            player.Jump();
-
         if (!spacebarHeld && !player.onGround && glfwGetTime() - prevSpacebarHit < 0.25 &&
             player.gameMode == GameMode::Creative) {
             player.flying = !player.flying;
+        } else {
+            if (player.flying)
+                player.motionY = 0.2f;
+            else
+                player.Jump();
         }
 
         prevSpacebarHit = glfwGetTime();
