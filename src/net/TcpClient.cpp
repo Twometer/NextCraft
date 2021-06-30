@@ -8,7 +8,7 @@
 
 #include <string>
 #include <cstdio>
-
+#ifdef _WIN32
 bool TcpClient::Connect(const char *host, unsigned short port) {
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
@@ -95,3 +95,59 @@ uint8_t TcpClient::ReadByte() {
     recv(tcpSocket, (char *) &buf, 1, 0);
     return buf;
 }
+#else
+
+bool TcpClient::Connect(const char *host, unsigned short port) {
+    tcpSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if(tcpSocket == -1) {
+        printf("Cannot create socket.\n");
+        return false;
+    }
+
+    memset(&addr_in, 0, sizeof(addr_in));
+    addr_in.sin_family = AF_INET;
+    addr_in.sin_addr.s_addr = inet_addr(host);
+    addr_in.sin_port = htons(port);
+
+    int status = ::connect(tcpSocket, (struct sockaddr *)&addr_in, sizeof(addr_in));
+    printf("Status: %d\n", status);
+    if(status == 0) {
+        printf("Connected to %s\n", host);
+    }
+    else {
+        Close();
+        return false;
+    }
+
+    return true;
+}
+
+void TcpClient::Close() {
+    close(tcpSocket);
+}
+
+int TcpClient::Receive(uint8_t *buf, int len) {
+    int read = 0;
+    int c = 0;
+    while (read < len) {
+        c = recv(tcpSocket, (char *) (buf + read), len - read, 0);
+        if (c < 0)
+            return c;
+        read += c;
+    }
+    return read > 0 ? read : -1;
+}
+
+void TcpClient::Send(uint8_t *buf, int len) {
+    int result = send(tcpSocket, (char *) buf, len, 0);
+    if (result == SO_ERROR)
+        Close();
+}
+
+uint8_t TcpClient::ReadByte() {
+    uint8_t buf;
+    recv(tcpSocket, (char *) &buf, 1, 0);
+    return buf;
+}
+
+#endif
