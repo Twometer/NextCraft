@@ -7,6 +7,7 @@ NextCraft is a light and fast 3D Minecraft Client for 1.8
 - Full 3D world rendering
 - Clean and fast codebase
 - Smooth chunk loading
+- Supports Windows and macOS
 
 ## Known issues
 - Not all blocks implemented (hence the missing textures)
